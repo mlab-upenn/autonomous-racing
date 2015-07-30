@@ -90,6 +90,7 @@ float get_random_radian(float ang_low, float ang_high) {
 equation_parameters calculate_linear_regression(float degree1, float degree2, int iter) {
   int nonzero_count = 0;
   equation_parameters temp;
+  temp.avg_err = 0;
   equation_parameters best;
   best.m = temp.m = 0;
   best.b = temp.m = 0;
@@ -113,14 +114,16 @@ equation_parameters calculate_linear_regression(float degree1, float degree2, in
     int j_max = get_index(degree2, DEGREE);
     for(;j <= j_max; j++){
       lidar_dist dp = get_dist_from_ind(j);
-      if(dp.dist_y || dp.dist_x){
-        temp.avg_err += abs((rd2.dist_y - rd1.dist_y) * dp.dist_x - 
+      	temp.avg_err += abs( (rd2.dist_x - rd1.dist_x) * (rd1.dist_y - dp.dist_y) -
+      						 (rd1.dist_x - dp.dist_x) * (rd2.dist_y - rd1.dist_y) ) /
+      						  sqrt(pow(rd2.dist_y   - rd1.dist_y,2) + 
+                                  pow(rd2.dist_x   - rd1.dist_x,2));
+        /*temp.avg_err += abs((rd2.dist_y - rd1.dist_y) * dp.dist_x - 
                             (rd2.dist_x  - rd1.dist_x) * dp.dist_y +
                             rd2.dist_x  * rd1.dist_y - rd2.dist_y  * rd1.dist_x)/
                             (sqrt(pow(rd2.dist_y   - rd1.dist_y,2) + 
-                                  pow(rd2.dist_x   - rd1.dist_x,2)));
+                                  pow(rd2.dist_x   - rd1.dist_x,2)));*/
         nonzero_count++;
-      }
     }
     temp.avg_err /= nonzero_count;
     if(temp.avg_err < best.avg_err){
