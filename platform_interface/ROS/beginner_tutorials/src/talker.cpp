@@ -4,18 +4,22 @@
 #include "std_msgs/Float32.h"
  #include <sstream>
 #include "beginner_tutorials/Num.h"
+#include "beginner_tutorials/driveCmd.h"
+
 #include "custom_messages/driveMessage.h"
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
 int stable_throttle = 9830; // This value might not lead to a 0 velocity/swivel signal
+int stable_steering = 9830;
+
 int incremental_PWM = 7; // This increment in the 16bit register should give an increment of 0.1mph
 
 float throttle_cmd = 0;
 float steering_cmd = 0;
 
-void mapDriveCmd_PWM(float);
-
+void mapDriveCmd_PWM(float, float);
+beginner_tutorials::Num inputMessage;
 
 custom_messages::driveMessage drive_it;
 
@@ -23,11 +27,13 @@ custom_messages::driveMessage drive_it;
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
 
-void driveControl_listen(const std_msgs::Float32::ConstPtr& msg)
+void driveControl_listen(const beginner_tutorials::driveCmd& msg)
 {	
-	throttle_cmd = msg->data;
+	throttle_cmd = msg.throttle;
+	steering_cmd = msg.steering;
 	ROS_INFO("I heard the drive controller: %f",throttle_cmd);
-	mapDriveCmd_PWM(throttle_cmd);
+	mapDriveCmd_PWM(throttle_cmd, steering_cmd );
+        
 //        std::cout<<drive_it.throttle<<"\n";
 
 }
@@ -76,11 +82,11 @@ int main(int argc, char **argv)
 //  ros::Publisher chatter_pub = n.advertise<std_msgs::UInt8>("chatter", 1000);
 
   ros::Publisher chatter_pub = n.advertise<custom_messages::driveMessage>("chatter", 1000);
-  ros::Subscriber drive_subscriber = n.subscribe("drive_cmd_channel",1000,driveControl_listen);
+  ros::Subscriber drive_subscriber = n.subscribe("teleop_commands",1000,driveControl_listen);
 
 //  custom_messages::driveMessage drive_it;
   
-  drive_it.steering = 28;
+  drive_it.steering = steering_cmd;
   drive_it.throttle = throttle_cmd;
   beginner_tutorials::Num myMsg;
   
@@ -131,12 +137,12 @@ int main(int argc, char **argv)
 
 
 
-void mapDriveCmd_PWM(float drive_cmd)
+void mapDriveCmd_PWM(float drive_cmd_t, float drive_cmd_s)
 {
 	int scaled_cmd;
-	scaled_cmd = (int)100*drive_cmd;
+	scaled_cmd = (int)100*drive_cmd_t;
 	int base;
-	base = int(drive_cmd);
+	base = int(drive_cmd_t);
         drive_it.throttle = stable_throttle + base*655;
 //        std::cout<<drive_it.throttle<<"\n";	
 	// the precision part
@@ -145,5 +151,19 @@ void mapDriveCmd_PWM(float drive_cmd)
 		drive_it.throttle = drive_it.throttle - incremental_PWM*rem;
 	else		
 		drive_it.throttle = drive_it.throttle + incremental_PWM*rem;
+
+//	int scaled_cmd;
+	scaled_cmd = (int)100*drive_cmd_s;
+//	int base;
+	base = int(drive_cmd_s);
+        drive_it.steering = stable_steering + base*655;
+//        std::cout<<drive_it.throttle<<"\n";	
+	// the precision part
+         rem = std::abs(scaled_cmd) % 100;
+	if (base < 0)
+		drive_it.steering = drive_it.steering - incremental_PWM*rem;
+	else		
+		drive_it.steering = drive_it.steering + incremental_PWM*rem;
+
 
 }
