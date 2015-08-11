@@ -41,3 +41,7 @@ add_executable(teleop_traxxas src/teleop_traxxas.cpp)
 target_link_libraries(teleop_traxxas ${catkin_LIBRARIES} ncurses)
 add_dependencies(teleop_traxxas beginner_tutorials_generate_messages_cpp)
 
+add_executable(PID_Euler src/PID_Euler.cpp)
+target_link_libraries(PID_Euler ${catkin_LIBRARIES} ncurses)
+add_dependencies(PID_Euler beginner_tutorials_generate_messages_cpp)
+
