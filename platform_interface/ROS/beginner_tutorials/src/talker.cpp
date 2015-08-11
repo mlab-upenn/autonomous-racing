@@ -31,8 +31,8 @@ void driveControl_listen(const beginner_tutorials::driveCmd& msg)
 {	
 	throttle_cmd = msg.throttle;
 	steering_cmd = msg.steering;
-	ROS_INFO("I heard the drive controller: %f",throttle_cmd);
-	mapDriveCmd_PWM(throttle_cmd, steering_cmd );
+//	ROS_INFO("I heard the drive controller: Throttle: %f; Steering: %f",throttle_cmd, steering_cmd);
+	mapDriveCmd_PWM(throttle_cmd, steering_cmd);
         
 //        std::cout<<drive_it.throttle<<"\n";
 
@@ -139,15 +139,26 @@ int main(int argc, char **argv)
 
 void mapDriveCmd_PWM(float drive_cmd_t, float drive_cmd_s)
 {
+	int heading = 0;
+	int turn; //Left is negative
 	int scaled_cmd;
 	scaled_cmd = (int)100*drive_cmd_t;
 	int base;
-	base = int(drive_cmd_t);
-        drive_it.throttle = stable_throttle + base*655;
+
+	//decides the direction
+	if (drive_cmd_t < 0)
+		heading = -1;
+	else
+		heading = 1;
+
+	base = std::abs(int(drive_cmd_t));
+
+	
+        drive_it.throttle = stable_throttle +heading*base*655; //The 0.01% change in speed;
 //        std::cout<<drive_it.throttle<<"\n";	
 	// the precision part
         int rem = std::abs(scaled_cmd) % 100;
-	if (base < 0)
+	if (heading < 0)
 		drive_it.throttle = drive_it.throttle - incremental_PWM*rem;
 	else		
 		drive_it.throttle = drive_it.throttle + incremental_PWM*rem;
@@ -155,12 +166,18 @@ void mapDriveCmd_PWM(float drive_cmd_t, float drive_cmd_s)
 //	int scaled_cmd;
 	scaled_cmd = (int)100*drive_cmd_s;
 //	int base;
-	base = int(drive_cmd_s);
-        drive_it.steering = stable_steering + base*655;
+	
+	if (drive_cmd_s < 0)
+		turn = -1;
+	else
+		turn = 1;
+
+	base = std::abs(int(drive_cmd_s));
+        drive_it.steering = stable_steering +turn* base*655;
 //        std::cout<<drive_it.throttle<<"\n";	
 	// the precision part
          rem = std::abs(scaled_cmd) % 100;
-	if (base < 0)
+	if (turn < 0)
 		drive_it.steering = drive_it.steering - incremental_PWM*rem;
 	else		
 		drive_it.steering = drive_it.steering + incremental_PWM*rem;
