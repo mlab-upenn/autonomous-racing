@@ -139,6 +139,30 @@ equation_parameters calculate_linear_regression(float degree1, float degree2, in
   return best;
 }
 
+/* Todo:	1. either make ang_des an argument or allow it to be changed elsewhere 
+*					2. reset function for integral term if using it  */ 
+void pid_angle_control(equation_parameters cur_res) {
+	static const float kp = 0.0;
+	static const float kd = 0.0;
+	static const float ki = 0.0;
+
+	static const float ang_des = 0.0;
+
+	static float err_cur = 0.0;
+	static float err_old = 0.0;
+	static float err_sum = 0.0;	
+
+	err_old = err_cur;
+	err_sum += err_cur;
+	err_cur = ang_des - cur_res.m;
+
+	float err_change = err_cur - err_old;
+
+	float out = kp*err_cur + ki * err_sum - kd*err_change;
+
+	return out;
+}
+
 void scanReceiveCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 	//ROS_INFO("%f %f %d", msg->angle_min, msg->angle_max, msg->ranges.size());
 
@@ -202,8 +226,12 @@ int main(int argc, char **argv)
 }
 
 /* To do: 
- * 1. pid
+ * 1. pid for angle
+ *		a. determine whether or not to scale readings
+ *		b. determine direction to turn
+ *		c. gains
  * 2. motor command interface 
+ *		a. what message to publish
  * 3. see what happens on the car with the noisy RANSAC measurement. Some ways
  *		to potentially improve the algorithm:
  *		a. ignore bad data - seems risky, lose current info
@@ -213,4 +241,5 @@ int main(int argc, char **argv)
  *			 add the origina point to the buffer. Else, discard it.
  *    d. increase ransac cycles - limited amount of computation, though, and may not be worth devoting so
  *			 many clock cycles to RANSAC
+ * 4. pid for distance away from a wall, too?	 
  */
