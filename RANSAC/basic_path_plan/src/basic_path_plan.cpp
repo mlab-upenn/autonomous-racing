@@ -65,6 +65,7 @@ int get_index(float angle, angle_type ang_type) {
   return index;
 }
 
+/* Returns distance information given an index */
 lidar_dist get_dist_from_ind(int index) {
   return ranges[index];
 }
@@ -98,13 +99,14 @@ equation_parameters calculate_linear_regression(float degree1, float degree2, in
 
   for(int i = 0; i < iter; i++){
     temp.avg_err = 0;
+    nonzero_count = 0;
 
     lidar_dist rd1 = get_dist_from_ang(get_random_degree(degree1, degree2), DEGREE);
     lidar_dist rd2 = get_dist_from_ang(get_random_degree(degree1, degree2), DEGREE);
     
-    if(rd2.dist_x - rd1.dist_x == 0){
+    if(rd1.dist_x == rd2.dist_x && rd1.dist_y == rd2.dist_x){
       continue;
-    }else {   
+    } else {   
       temp.m = (rd2.dist_y - rd1.dist_y )/(rd2.dist_x  - rd1.dist_x );
     }
     temp.b =  rd1.dist_y -temp.m*rd1.dist_x;
@@ -114,15 +116,15 @@ equation_parameters calculate_linear_regression(float degree1, float degree2, in
     int j_max = get_index(degree2, DEGREE);
     for(;j <= j_max; j++){
       lidar_dist dp = get_dist_from_ind(j);
-      	temp.avg_err += abs( (rd2.dist_x - rd1.dist_x) * (rd1.dist_y - dp.dist_y) -
+      	/*temp.avg_err += abs( (rd2.dist_x - rd1.dist_x) * (rd1.dist_y - dp.dist_y) -
       						 (rd1.dist_x - dp.dist_x) * (rd2.dist_y - rd1.dist_y) ) /
       						  sqrt(pow(rd2.dist_y   - rd1.dist_y,2) + 
-                                  pow(rd2.dist_x   - rd1.dist_x,2));
-        /*temp.avg_err += abs((rd2.dist_y - rd1.dist_y) * dp.dist_x - 
+                                  pow(rd2.dist_x   - rd1.dist_x,2));*/
+        temp.avg_err += abs((rd2.dist_y - rd1.dist_y) * dp.dist_x - 
                             (rd2.dist_x  - rd1.dist_x) * dp.dist_y +
                             rd2.dist_x  * rd1.dist_y - rd2.dist_y  * rd1.dist_x)/
                             (sqrt(pow(rd2.dist_y   - rd1.dist_y,2) + 
-                                  pow(rd2.dist_x   - rd1.dist_x,2)));*/
+                                  pow(rd2.dist_x   - rd1.dist_x,2)));
         nonzero_count++;
     }
     temp.avg_err /= nonzero_count;
@@ -170,7 +172,6 @@ void scanReceiveCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 
   //ROS_INFO("==%f==", get_dist_from_ang(0.0, DEGREE).range);
   equation_parameters temp = calculate_linear_regression(-45.0, 45.0, 5000);
-  sum_m += temp.m;
   if(num_m < 5) {
     m_buf[4-num_m] = temp.m;
     num_m++;
@@ -179,7 +180,14 @@ void scanReceiveCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
     sum_m -= m_buf[4];
     shift_into_buf(m_buf, 5, temp.m);
   }
-  ROS_INFO("%f %f", sum_m/num_m, temp.b);
+  sum_m += temp.m;
+
+  float res = -.08f +  (sum_m/num_m);	
+	printf("%1.3f %.3f\n", res, temp.b);
+	printf("%f\n", m_buf[4] - m_buf[3]);
+	printf("---\n");
+	//ROS_INFO("%1.3f %.3f", res, temp.b);
+  //ROS_INFO("%d", msg->ranges.size());  
 }
 
 int main(int argc, char **argv)
@@ -192,3 +200,17 @@ int main(int argc, char **argv)
   free(ranges);
 	return 0;
 }
+
+/* To do: 
+ * 1. pid
+ * 2. motor command interface 
+ * 3. see what happens on the car with the noisy RANSAC measurement. Some ways
+ *		to potentially improve the algorithm:
+ *		a. ignore bad data - seems risky, lose current info
+ *    b. check point against data, if it's bad, factor it into the current average but keep it
+ *		   out of the buffer
+ *    c. if a point is a freak outlier, place it in a loser's buffer. if the next point is close
+ *			 add the origina point to the buffer. Else, discard it.
+ *    d. increase ransac cycles - limited amount of computation, though, and may not be worth devoting so
+ *			 many clock cycles to RANSAC
+ */
