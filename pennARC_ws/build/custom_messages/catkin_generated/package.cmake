@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "custom_messages")
+set(custom_messages_MAINTAINER "pari <pari@todo.todo>")
+set(custom_messages_DEPRECATED "")
+set(custom_messages_VERSION "1.0.0")
+set(custom_messages_BUILD_DEPENDS "roscpp" "rospy" "std_msgs" "message_generation")
+set(custom_messages_RUN_DEPENDS "roscpp" "rospy" "std_msgs" "message_runtime")
+set(custom_messages_BUILDTOOL_DEPENDS "catkin")
