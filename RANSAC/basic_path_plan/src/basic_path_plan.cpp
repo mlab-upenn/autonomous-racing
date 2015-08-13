@@ -3,8 +3,9 @@
 #include "sensor_msgs/LaserScan.h"
 #include "math.h"
 #include <stdlib.h>
-
 #include <sstream>
+#include "basic_path_plan/driveCmd.h"
+
 
 /* Contains information about a particular lidar data point in polar and
  * Cartesian coordinates */
@@ -33,10 +34,18 @@ float ang_inc_deg = -1;
 int num_ranges = -1;
 lidar_dist * ranges = NULL;
 
+/* RANSAC result FIR */
 float m_buf[5];
 float sum_m = 0.0;
 int num_m = 0;
 
+/* Drive commands */
+const float throttle_cmd = .4;	// Constant until we want to change it 
+float steering_cmd;
+const float STEERING_CMD_MAX = 5.0;
+const float STEERING_CMD_MIN = -5.0;
+
+ros::Publisher drive_cmd_publisher;
 
 void shift_into_buf(float *buf, int buf_size, float val) {
   int i;
@@ -139,9 +148,13 @@ equation_parameters calculate_linear_regression(float degree1, float degree2, in
   return best;
 }
 
+float saturate_float(float val, float min, float max) {
+	return (val < min ? min : (val > max ? max : val));
+}
+
 /* Todo:	1. either make ang_des an argument or allow it to be changed elsewhere 
 *					2. reset function for integral term if using it  */ 
-void pid_angle_control(equation_parameters cur_res) {
+float pid_steering(float cur_slope) {
 	static const float kp = 0.0;
 	static const float kd = 0.0;
 	static const float ki = 0.0;
@@ -154,13 +167,13 @@ void pid_angle_control(equation_parameters cur_res) {
 
 	err_old = err_cur;
 	err_sum += err_cur;
-	err_cur = ang_des - cur_res.m;
+	err_cur = ang_des - cur_slope;
 
 	float err_change = err_cur - err_old;
 
 	float out = kp*err_cur + ki * err_sum - kd*err_change;
 
-	return out;
+	return saturate_float(out, STEERING_CMD_MIN, STEERING_CMD_MAX);
 }
 
 void scanReceiveCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
@@ -212,13 +225,26 @@ void scanReceiveCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 	printf("---\n");
 	//ROS_INFO("%1.3f %.3f", res, temp.b);
   //ROS_INFO("%d", msg->ranges.size());  
+
+  basic_path_plan::driveCmd drive_cmd;
+	drive_cmd.throttle = throttle_cmd;
+	drive_cmd.steering = pid_steering(sum_m / num_m); 	
+	drive_cmd_publisher.publish(drive_cmd);
 }
 
 int main(int argc, char **argv)
 {
+	/* Initialize node */
   ros::init(argc, argv, "planner");
   ros::NodeHandle n;
+
+	/* Initialize subscriber */
   ros::Subscriber sub = n.subscribe("scan", 1000, scanReceiveCallback);
+
+	/* Initialize publisher */
+	drive_cmd_publisher = n.advertise<basic_path_plan::driveCmd>("lidar_path_plan", 1000);
+
+
 	ros::spin();
 
   free(ranges);
@@ -241,5 +267,4 @@ int main(int argc, char **argv)
  *			 add the origina point to the buffer. Else, discard it.
  *    d. increase ransac cycles - limited amount of computation, though, and may not be worth devoting so
  *			 many clock cycles to RANSAC
- * 4. pid for distance away from a wall, too?	 
  */
