@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "vanishing")
+set(vanishing_MAINTAINER "ubuntu <ubuntu@todo.todo>")
+set(vanishing_DEPRECATED "")
+set(vanishing_VERSION "0.0.0")
+set(vanishing_BUILD_DEPENDS "cv_bridge" "image_transport" "roscpp" "sensor_msgs" "std_msgs" "OpenCV")
+set(vanishing_RUN_DEPENDS "cv_bridge" "image_transport" "roscpp" "sensor_msgs" "std_msgs" "OpenCV")
+set(vanishing_BUILDTOOL_DEPENDS "catkin")

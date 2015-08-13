@@ -1,0 +1,8 @@
+prefix=/home/ubuntu/camera_ws/install
+
+Name: vanishing
+Description: Description of vanishing
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/ubuntu/camera_ws/install/lib 
+Requires: 
