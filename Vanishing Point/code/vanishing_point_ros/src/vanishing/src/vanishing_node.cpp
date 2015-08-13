@@ -95,10 +95,10 @@ public:
   {
     cv::destroyWindow(OPENCV_WINDOW);
     // delete arrays to avoid memory leaks
-    //for (int i = 0; i<2; i++) {
-    //  delete [] window[i];
-    //}
-    //delete [] window;
+    for (int i = 0; i<2; i++) {
+      delete [] window[i];
+    }
+    delete [] window;
     delete [] running_sum;
   }
 
