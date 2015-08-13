@@ -34,14 +34,11 @@ RM = /usr/bin/cmake -E remove -f
 # Escaping for special characters.
 EQUALS = =
 
-# The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pari/pennARC_ws/src
+CMAKE_SOURCE_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pari/pennARC_ws/build
+CMAKE_BINARY_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build
 
 # Utility rule file for tests.
 
@@ -63,6 +60,6 @@ CMakeFiles/tests.dir/clean:
 .PHONY : CMakeFiles/tests.dir/clean
 
 CMakeFiles/tests.dir/depend:
-	cd /home/pari/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pari/pennARC_ws/src /home/pari/pennARC_ws/src /home/pari/pennARC_ws/build /home/pari/pennARC_ws/build /home/pari/pennARC_ws/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/tests.dir/depend
 

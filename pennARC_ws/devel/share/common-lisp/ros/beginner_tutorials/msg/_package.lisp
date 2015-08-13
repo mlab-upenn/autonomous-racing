@@ -1,16 +1,16 @@
 (cl:defpackage beginner_tutorials-msg
   (:use )
   (:export
-   "<DRIVECMD>"
-   "DRIVECMD"
    "<NUM>"
    "NUM"
+   "<DRIVECMD>"
+   "DRIVECMD"
    "<DRIVEMESSAGE>"
    "DRIVEMESSAGE"
-   "<DRIVECMD>"
-   "DRIVECMD"
    "<NUM>"
    "NUM"
+   "<DRIVECMD>"
+   "DRIVECMD"
    "<DRIVEMESSAGE>"
    "DRIVEMESSAGE"
   ))

@@ -1,2 +1,2 @@
 beginner_tutorials:custom_messages
--DCATKIN_DEVEL_PREFIX=/home/pari/pennARC_ws/devel -DCMAKE_INSTALL_PREFIX=/home/pari/pennARC_ws/install -G Unix Makefiles
+-DCATKIN_DEVEL_PREFIX=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/install -G Unix Makefiles

@@ -1,7 +1,7 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/driveControl.dir/src/driveControl.cpp.o"
-  "/home/pari/pennARC_ws/devel/lib/beginner_tutorials/driveControl.pdb"
-  "/home/pari/pennARC_ws/devel/lib/beginner_tutorials/driveControl"
+  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/driveControl.pdb"
+  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/driveControl"
 )
 
 # Per-language clean rules from dependency scanning.
