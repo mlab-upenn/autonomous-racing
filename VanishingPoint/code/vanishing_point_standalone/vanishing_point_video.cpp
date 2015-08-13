@@ -19,7 +19,7 @@
 /* ---------------------------------- Parameters ----------------------------------*/
  Mat frame, edges;
  Mat frame_gray;
- Mat standard_hough, probabilistic_hough;
+ Mat standard_hough;
  int min_threshold = 50;
  int max_trackbar = 150;
  // canny 
@@ -35,7 +35,7 @@
  int height = 480;
 
  // ransac parameters
- int N_iterations = 100; // # of iterations for ransac
+ int N_iterations = 50; // # of iterations for ransac
  int threshold_ransac = 10; // distance within which the hypothesis is classified as an inlier
 
  // low pass parameters
@@ -104,12 +104,12 @@ bool findIntersectingPoint(float r_1, float t_1, float r_2, float t_2, Point& in
 
 /* ------------------------------------------findInliers --------------------------------------------*/
 
-int findInliers(const vector<Vec2f>& s_lines, const Point& intersectingPt, Mat tempImg) 
+int findInliers(const vector<Vec2f>& s_lines, const Point& intersectingPt) 
 {
   int inliers = 0;
   //print//cout << "Distance: ";
   for (int i = 0; i < static_cast<int>(s_lines.size()); i++) {
-    Mat tmp = tempImg.clone();
+    //Mat tmp = tempImg.clone();
     // find error: shortest distance between intersectingPt and line
     float r = s_lines[i][0], t = s_lines[i][1];
     double a = cos(t), b = sin(t);
@@ -213,13 +213,14 @@ int* lowPass (int vp_x, int vp_y)
   {
     // ransac
     // input: s_lines | 
-    Mat tempImg;
+    //Mat tempImg;
     //cout << "Size of image: " << standard_hough.rows << ", "<< standard_hough.cols << endl;
     int maxInliers = 0;
     Point vp, vp_lp;
     for (int i = 0; i<N_iterations; i++) 
     {
-      tempImg = standard_hough.clone();;
+      
+      //tempImg = standard_hough.clone();;
       // 1. randomly select 2 lines
       int a = rand() % static_cast<int>(s_lines.size());
       int b = rand() % static_cast<int>(s_lines.size());
@@ -256,7 +257,8 @@ int* lowPass (int vp_x, int vp_y)
 
       // 3. find error for each line (shortest distance b/w point above and line: perpendicular bisector)
       // 4. find # inliers (error < threshold)
-      int inliers = findInliers(s_lines, intersectingPt, tempImg);
+      //int inliers = findInliers(s_lines, intersectingPt, tempImg);
+      int inliers = findInliers(s_lines, intersectingPt);
       //print//cout << "Num of inliers: " << inliers << endl;
 
       // 5. if # inliers > maxInliers, save model
