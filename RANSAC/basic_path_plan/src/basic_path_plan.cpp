@@ -208,7 +208,7 @@ void scanReceiveCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
   }
 
   //ROS_INFO("==%f==", get_dist_from_ang(0.0, DEGREE).range);
-  equation_parameters temp = calculate_linear_regression(-45.0, 45.0, 5000);
+  equation_parameters temp = calculate_linear_regression(-110, -80, 5000);
   if(num_m < 5) {
     m_buf[4-num_m] = temp.m;
     num_m++;

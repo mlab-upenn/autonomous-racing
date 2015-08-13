@@ -9,8 +9,8 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   sensor_msgs
-	genmsg
-	message_generation
+  genmsg
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -84,7 +84,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
  # INCLUDE_DIRS include
- # LIBRARIES basic_path_pla CATKIN_DEPENDS roscpp rospy std_msgs sensor_msgs message_runtime
+  LIBRARIES basic_path_plan CATKIN_DEPENDS roscpp rospy std_msgs sensor_msgs message_runtime
  # DEPENDS system_lib
 )
 
@@ -101,7 +101,7 @@ include_directories(
 
 add_executable(basic_path_plan src/basic_path_plan)
 target_link_libraries(basic_path_plan ${catkin_LIBRARIES})
-add_dependencies(basic_path_plan ${catkin_EXPORTED_TARGETS})
+add_dependencies(basic_path_plan basic_path_plan_gencpp ${catkin_EXPORTED_TARGETS})
 # Declare a cpp library
 # add_library(basic_path_plan
 #   src/${PROJECT_NAME}/basic_path_plan.cpp
