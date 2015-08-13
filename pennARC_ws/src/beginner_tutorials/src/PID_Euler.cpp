@@ -16,7 +16,7 @@ static float ff_steer = 0; //ff term for steer
 
 void SaturateSignal(float signal, const float lb, const float ub); // function to act as saturator
 
-ros::Rate loop_rate(sampling_rate);
+//ros::Rate loop_rate(sampling_rate);
 
 float temp_steer_float;
 int temp_steer_int;
@@ -36,6 +36,8 @@ int main(int argc, char **argv)
 {
 	ros::init(argc,argv,"PID_Euler");
 	ros::NodeHandle n;
+ros::Rate loop_rate(sampling_rate);
+	
 	// listen to sensor message in order to compute e(k)
 	//Declare the publisher
 	ros::Publisher pub_teleop = n.advertise<beginner_tutorials::driveCmd>("teleop_commands",1000);
@@ -78,7 +80,7 @@ int main(int argc, char **argv)
 		// PID for velocity
 
 		// feed forward term if any for vel
-		ff_vel = 0;
+		ff_vel = 0.4;
 
 		//error signal for velocity
 		//progress time first, information is old
@@ -87,7 +89,7 @@ int main(int argc, char **argv)
 		e_k_vel = 0; //compute e_k
 
 		u_km1_vel = u_k_vel;
-		u_k_vel = u_km1_vel + (1/h)*(Kp_vel*h + Kd_vel + Ki_vel*h*h)*e_k_vel + (1/h)*(-Kp_vel*h-2*Kd_vel)*e_km1_vel + (1/h)*Kd_vel*e_km2_vel + ff_vel;
+		u_k_vel = ff_vel;/*u_km1_vel + (1/h)*(Kp_vel*h + Kd_vel + Ki_vel*h*h)*e_k_vel + (1/h)*(-Kp_vel*h-2*Kd_vel)*e_km1_vel + (1/h)*Kd_vel*e_km2_vel + ff_vel;*/
 
 
 		// PID for steering
