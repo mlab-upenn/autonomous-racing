@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 {
 	ros::init(argc,argv,"PID_Euler");
 	ros::NodeHandle n;
-ros::Rate loop_rate(sampling_rate);
+	ros::Rate loop_rate(sampling_rate);
 	
 	// listen to sensor message in order to compute e(k)
 	//Declare the publisher
@@ -69,7 +69,7 @@ ros::Rate loop_rate(sampling_rate);
 	const float Kd_vel = 0;
 	const float Ki_vel = 0;
 
-	const float Kp_steer = 0;
+	const float Kp_steer = ;
 	const float Kd_steer = 0;
 	const float Ki_steer = 0;
 
@@ -89,7 +89,7 @@ ros::Rate loop_rate(sampling_rate);
 		e_k_vel = 0; //compute e_k
 
 		u_km1_vel = u_k_vel;
-		u_k_vel = ff_vel;/*u_km1_vel + (1/h)*(Kp_vel*h + Kd_vel + Ki_vel*h*h)*e_k_vel + (1/h)*(-Kp_vel*h-2*Kd_vel)*e_km1_vel + (1/h)*Kd_vel*e_km2_vel + ff_vel;*/
+		u_k_vel = u_km1_vel + (1/h)*(Kp_vel*h + Kd_vel + Ki_vel*h*h)*e_k_vel + (1/h)*(-Kp_vel*h-2*Kd_vel)*e_km1_vel + (1/h)*Kd_vel*e_km2_vel;
 
 
 		// PID for steering
@@ -104,13 +104,17 @@ ros::Rate loop_rate(sampling_rate);
 		e_k_steer = 0; //compute e_k
 
 		u_km1_steer = u_k_steer;
-		u_k_steer = u_km1_steer + (1/h)*(Kp_steer*h + Kd_steer + Ki_steer*h*h)*e_k_steer + (1/h)*(-Kp_steer*h-2*Kd_steer)*e_km1_steer + (1/h)*Kd_steer*e_km2_steer + ff_steer;
+		u_k_steer = u_km1_steer + (1/h)*(Kp_steer*h + Kd_steer + Ki_steer*h*h)*e_k_steer + (1/h)*(-Kp_steer*h-2*Kd_steer)*e_km1_steer + (1/h)*Kd_steer*e_km2_steer;
 
 		//check between -5 and +5 publish 
 
-		SaturateSignal(u_k_steer,ub,lb); // saturator
-		SaturateSignal(u_k_vel,ub,lb);
+                 
+		tele_cmd.steering = u_k_steer + ff_steer;
+		tele_cmd.throttle = u_k_vel + ff_vel;
 
+		SaturateSignal(tele_cmd.steering,ub,lb); // saturator
+		SaturateSignal(tele_cmd.throttle,ub,lb);
+		
 		ROS_INFO("Steering: %f; Throttle %f", tele_cmd.steering, tele_cmd.throttle);
 		pub_teleop.publish(tele_cmd);
 
