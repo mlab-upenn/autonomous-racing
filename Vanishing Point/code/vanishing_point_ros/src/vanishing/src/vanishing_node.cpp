@@ -10,8 +10,14 @@
 #include <string>
 
 #define LP_WINDOW 10
+#define DISPLAY_IMG 1
 
 static const std::string OPENCV_WINDOW = "Vanishing point";
+// topic where the error is being published
+static const std::string VP_TOPIC = "vanishing_point_topic";
+// topic where the image is being published
+static const std::string VP_IMG_TOPIC = "/vp/output_video";
+
 
 using namespace cv;
 using namespace std;
@@ -21,8 +27,11 @@ class VanishingPoint
   ros::NodeHandle nh_;
   image_transport::ImageTransport it_;
   image_transport::Subscriber image_sub_;
+  image_transport::Publisher image_pub_;
   ros::Publisher vp_pub_; 
   std_msgs::Int16 error_;
+  cv_bridge::CvImagePtr cv_ptr_;
+  cv_bridge::CvImagePtr out_msg_;
 
   // vanishing point algo parameters
   Mat frame, edges;
@@ -55,9 +64,10 @@ public:
   VanishingPoint(): it_(nh_)
   {
     // create a publisher object with topic: vanishing point
-    vp_pub_ = nh_.advertise<std_msgs::Int16>("vanishing_point_topic", 1000);
+    vp_pub_ = nh_.advertise<std_msgs::Int16>(VP_TOPIC, 1000);
     // Subscribe to input video feed and publish output video feed
     image_sub_ = it_.subscribe("/camera/image_raw", 1, &VanishingPoint::imageCB, this);
+    image_pub_ = it_.advertise(VP_IMG_TOPIC, 1);
 
     // init vp parameters
     min_threshold = 50;
@@ -95,20 +105,20 @@ public:
   {
     cv::destroyWindow(OPENCV_WINDOW);
     // delete arrays to avoid memory leaks
-    //for (int i = 0; i<2; i++) {
-    //  delete [] window[i];
-    //}
-    //delete [] window;
+    for (int i = 0; i<2; i++) {
+      delete [] window[i];
+    }
+    delete [] window;
     delete [] running_sum;
   }
 
   void imageCB(const sensor_msgs::ImageConstPtr& msg)
   {
     // convert ROS raw image to CV::mat (mono8) mono16 required?
-    cv_bridge::CvImagePtr cv_ptr;
+    
     try
     {
-      cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::MONO8);
+      cv_ptr_ = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::MONO8);
     }
     catch (cv_bridge::Exception& e)
     {
@@ -119,7 +129,7 @@ public:
     // // Draw an example circle on the video stream
     // if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60)
     //   cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
-    frame = cv_ptr->image;
+    frame = cv_ptr_->image;
     vp_detection();
 
     // Update GUI Window
@@ -284,8 +294,19 @@ void VanishingPoint::vp_detection()
   Point pt2_h( width, cvRound(height/2.0));
   line( standard_hough, pt1_h, pt2_h, Scalar(0,255,255), 1, CV_AA);
 
-  imshow( "houghlines", standard_hough );
-  imshow("Original", frame);
+  // display edge+hough+vp for degbugging
+  if (DISPLAY_IMG)
+  {
+    imshow( "houghlines", standard_hough );
+    imshow("Original", frame);
+  }
+  
+  // Debugging: Output modified video stream
+  out_msg_->header = cv_ptr_->header;
+  out_msg_->encoding = sensor_msgs::image_encodings::BGR8;
+  out_msg_->image = standard_hough;
+
+  image_pub_.publish(out_msg_->toImageMsg());
 }
 
 /* -------------------------------------- findIntersectingPt --------------------------------------------*/
