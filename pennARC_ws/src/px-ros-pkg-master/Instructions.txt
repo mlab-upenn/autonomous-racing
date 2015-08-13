@@ -1,0 +1,4 @@
+1. Check if in drivers/px4flow/launch px4flow_parameters.yaml has the right port specified.
+2. Do the same in the .sh file in that folder
+3. Give the right permissions to the .sh file, or to the device if you don't want to run the script
+4. Run the script or the launch file, check rostopic list to see px4flow messages
