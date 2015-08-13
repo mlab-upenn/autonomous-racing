@@ -1,6 +1,6 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/custom_messages_generate_messages_cpp"
-  "/home/pari/pennARC_ws/devel/include/custom_messages/driveMessage.h"
+  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/include/custom_messages/driveMessage.h"
 )
 
 # Per-language clean rules from dependency scanning.

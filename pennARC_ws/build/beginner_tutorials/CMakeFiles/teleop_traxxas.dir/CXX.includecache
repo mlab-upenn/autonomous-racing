@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/pari/pennARC_ws/devel/include/beginner_tutorials/Num.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/include/beginner_tutorials/Num.h
 string
 -
 vector
@@ -22,7 +22,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/pari/pennARC_ws/devel/include/beginner_tutorials/driveCmd.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/include/beginner_tutorials/driveCmd.h
 string
 -
 vector
@@ -38,7 +38,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/pari/pennARC_ws/devel/include/custom_messages/driveMessage.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/include/custom_messages/driveMessage.h
 string
 -
 vector
@@ -54,19 +54,19 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/pari/pennARC_ws/src/beginner_tutorials/src/teleop_traxxas.cpp
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/teleop_traxxas.cpp
 ros/ros.h
-/home/pari/pennARC_ws/src/beginner_tutorials/src/ros/ros.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/ros/ros.h
 std_msgs/String.h
-/home/pari/pennARC_ws/src/beginner_tutorials/src/std_msgs/String.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/std_msgs/String.h
 beginner_tutorials/Num.h
-/home/pari/pennARC_ws/src/beginner_tutorials/src/beginner_tutorials/Num.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/beginner_tutorials/Num.h
 custom_messages/driveMessage.h
-/home/pari/pennARC_ws/src/beginner_tutorials/src/custom_messages/driveMessage.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/custom_messages/driveMessage.h
 std_msgs/Float32.h
-/home/pari/pennARC_ws/src/beginner_tutorials/src/std_msgs/Float32.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/std_msgs/Float32.h
 beginner_tutorials/driveCmd.h
-/home/pari/pennARC_ws/src/beginner_tutorials/src/beginner_tutorials/driveCmd.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/beginner_tutorials/driveCmd.h
 stdio.h
 -
 termios.h

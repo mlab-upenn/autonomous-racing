@@ -12,6 +12,17 @@
 echo "Installing ros camera drivers(camera1394).."
 sudo apt-get install ros-indigo-camera-drivers
 
+# above doesn't work! download drivers from git and install!
+git clone https://github.com/ros-drivers/camera1394.git
+export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:~/myGit/autonomous-racing/VanishingPoint/camera-1394-drivers/camera1394
+source ~/.bashrc
+rosdep install camera1394
+rosmake camera1394
+cd camera1394
+cmake .
+make 
+cd ..
+
 # install relevant dependencies
 sudo apt-get install libraw1394-11 libgtk2.0-0 libgtkmm-2.4-dev libglademm-2.4-dev libgtkglextmm-x11-1.2-dev libusb-1.0-0
 

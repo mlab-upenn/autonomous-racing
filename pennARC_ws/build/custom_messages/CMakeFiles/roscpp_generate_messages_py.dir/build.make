@@ -34,14 +34,11 @@ RM = /usr/bin/cmake -E remove -f
 # Escaping for special characters.
 EQUALS = =
 
-# The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pari/pennARC_ws/src
+CMAKE_SOURCE_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pari/pennARC_ws/build
+CMAKE_BINARY_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build
 
 # Utility rule file for roscpp_generate_messages_py.
 
@@ -59,10 +56,10 @@ custom_messages/CMakeFiles/roscpp_generate_messages_py.dir/build: roscpp_generat
 .PHONY : custom_messages/CMakeFiles/roscpp_generate_messages_py.dir/build
 
 custom_messages/CMakeFiles/roscpp_generate_messages_py.dir/clean:
-	cd /home/pari/pennARC_ws/build/custom_messages && $(CMAKE_COMMAND) -P CMakeFiles/roscpp_generate_messages_py.dir/cmake_clean.cmake
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/custom_messages && $(CMAKE_COMMAND) -P CMakeFiles/roscpp_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : custom_messages/CMakeFiles/roscpp_generate_messages_py.dir/clean
 
 custom_messages/CMakeFiles/roscpp_generate_messages_py.dir/depend:
-	cd /home/pari/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/pari/pennARC_ws/src /home/pari/pennARC_ws/src/custom_messages /home/pari/pennARC_ws/build /home/pari/pennARC_ws/build/custom_messages /home/pari/pennARC_ws/build/custom_messages/CMakeFiles/roscpp_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/custom_messages /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/custom_messages /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/custom_messages/CMakeFiles/roscpp_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : custom_messages/CMakeFiles/roscpp_generate_messages_py.dir/depend
 

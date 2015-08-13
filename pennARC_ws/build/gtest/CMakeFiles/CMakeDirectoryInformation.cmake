@@ -3,7 +3,7 @@
 
 # Relative path conversion top directories.
 SET(CMAKE_RELATIVE_PATH_TOP_SOURCE "/usr/src/gtest")
-SET(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/pari/pennARC_ws/build")
+SET(CMAKE_RELATIVE_PATH_TOP_BINARY "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build")
 
 # Force unix paths in dependencies.
 SET(CMAKE_FORCE_UNIX_PATHS 1)

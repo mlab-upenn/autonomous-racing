@@ -7,12 +7,12 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/pari/pennARC_ws/devel:$CMAKE_PREFIX_PATH"
-export CPATH="/home/pari/pennARC_ws/devel/include:$CPATH"
-export LD_LIBRARY_PATH="/home/pari/pennARC_ws/devel/lib:/home/pari/pennARC_ws/devel/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH"
-export PATH="/home/pari/pennARC_ws/devel/bin:/opt/ros/indigo/bin:~/bin:/home/pari/anaconda/bin:/home/pari/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games"
-export PKG_CONFIG_PATH="/home/pari/pennARC_ws/devel/lib/pkgconfig:/home/pari/pennARC_ws/devel/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
-export PWD="/home/pari/pennARC_ws/build"
-export PYTHONPATH="/home/pari/pennARC_ws/devel/lib/python2.7/dist-packages:$PYTHONPATH"
-export ROSLISP_PACKAGE_DIRECTORIES="/home/pari/pennARC_ws/devel/share/common-lisp"
-export ROS_PACKAGE_PATH="/home/pari/pennARC_ws/src:/opt/ros/indigo/share:/opt/ros/indigo/stacks"
+export CMAKE_PREFIX_PATH="/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel:$CMAKE_PREFIX_PATH"
+export CPATH="/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/include:$CPATH"
+export LD_LIBRARY_PATH="/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib:/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/arm-linux-gnueabihf:/opt/ros/indigo/lib/arm-linux-gnueabihf:/opt/ros/indigo/lib:/usr/local/cuda/lib"
+export PATH="/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/bin:$PATH"
+export PKG_CONFIG_PATH="/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/pkgconfig:/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/arm-linux-gnueabihf/pkgconfig:/opt/ros/indigo/lib/arm-linux-gnueabihf/pkgconfig:/opt/ros/indigo/lib/pkgconfig"
+export PWD="/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build"
+export PYTHONPATH="/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/python2.7/dist-packages:$PYTHONPATH"
+export ROSLISP_PACKAGE_DIRECTORIES="/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/share/common-lisp"
+export ROS_PACKAGE_PATH="/home/pari/pennARC_ws/src:/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src:$ROS_PACKAGE_PATH"
