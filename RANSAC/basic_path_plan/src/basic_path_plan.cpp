@@ -19,7 +19,8 @@ typedef struct lidar_dist {
 typedef struct equation_parameters {
   double m;
   double b;
-  double avg_err;
+  double cost;
+	int flag;
 } equation_parameters;
 
 typedef enum angle_type {
@@ -42,8 +43,8 @@ int num_m = 0;
 /* Drive commands */
 const float throttle_cmd = .4;	// Constant until we want to change it 
 float steering_cmd;
-const float STEERING_CMD_MAX = 5.0;
-const float STEERING_CMD_MIN = -5.0;
+const float STEERING_CMD_MAX = 2.0;
+const float STEERING_CMD_MIN = -2.0;
 
 ros::Publisher drive_cmd_publisher;
 
@@ -97,54 +98,143 @@ float get_random_radian(float ang_low, float ang_high) {
   return to_radian(get_random_degree(to_degree(ang_low), to_degree(ang_high)));
 }
 
-equation_parameters calculate_linear_regression(float degree1, float degree2, int iter) {
-  int nonzero_count = 0;
+float msac_dist(lidar_dist p1, lidar_dist p2, lidar_dist p_test) {
+	float a = (p2.dist_y - p1.dist_y) * p_test.dist_x;
+	float b = (p2.dist_x - p1.dist_x) * p_test.dist_y;
+	float c = p2.dist_x * p1.dist_y - p2.dist_y * p1.dist_x;
+	float d = sqrt(pow(p2.dist_y - p1.dist_y, 2) + pow(p2.dist_x - p1.dist_x, 2));
+
+	float res = ((p2.dist_y - p1.dist_y) * p_test.dist_x - 
+						 (p2.dist_x - p1.dist_x) * p_test.dist_y +
+						  p2.dist_x * p1.dist_y - p2.dist_y * p1.dist_x) /
+						 (sqrt(pow(p2.dist_y - p1.dist_y, 2) + 
+									 pow(p2.dist_x - p1.dist_x, 2))); 
+
+	if(res < 0) res = -res;
+
+	return res;
+}
+
+/* Finds best model for points [degree1, degree2] using the MSAC flavor of RANSAC
+ * and a linear regression algorithm on the set inliers generated from MSAC */
+equation_parameters run_msac_and_regression(float degree1, float degree2, int iter) {
+	static const float dist_thresh = 0.05;	// Maximum allowable threshold, in meters for inlier classification
+
   equation_parameters temp;
-  temp.avg_err = 0;
   equation_parameters best;
+
   best.m = temp.m = 0;
   best.b = temp.m = 0;
-  best.avg_err = 100000000;
+  best.cost = 100000000;
 
-  for(int i = 0; i < iter; i++){
-    temp.avg_err = 0;
-    nonzero_count = 0;
+  int num_inliers_cur, num_inliers_best = 0;
+  lidar_dist p1_best, p2_best;
+
+  int min_ind = get_index(degree1, DEGREE);
+  int max_ind = get_index(degree2, DEGREE);
+
+	if(min_ind > max_ind) { 
+		int t = min_ind;
+		min_ind = max_ind;
+		max_ind = t;
+	}
+
+	/* Run MSAC to get best-fitting model */
+  for(int i = 0; i < iter; i++) {
+    temp.cost = 0;
+		num_inliers_cur = 0;
 
     lidar_dist rd1 = get_dist_from_ang(get_random_degree(degree1, degree2), DEGREE);
     lidar_dist rd2 = get_dist_from_ang(get_random_degree(degree1, degree2), DEGREE);
     
-    if(rd1.dist_x == rd2.dist_x && rd1.dist_y == rd2.dist_x){
-      continue;
+    if(rd1.dist_x == rd2.dist_x && rd1.dist_y == rd2.dist_y){
+    	continue;
     } else {   
       temp.m = (rd2.dist_y - rd1.dist_y )/(rd2.dist_x  - rd1.dist_x );
     }
-    temp.b =  rd1.dist_y -temp.m*rd1.dist_x;
-    
-    int j = get_index(degree1, DEGREE);
+	    temp.b =  rd1.dist_y - temp.m*rd1.dist_x;
+	    
+	    for(int j = min_ind; j <= max_ind; j++){
+				lidar_dist dp = get_dist_from_ind(j);
 
-    int j_max = get_index(degree2, DEGREE);
-    for(;j <= j_max; j++){
-      lidar_dist dp = get_dist_from_ind(j);
-      	/*temp.avg_err += abs( (rd2.dist_x - rd1.dist_x) * (rd1.dist_y - dp.dist_y) -
-      						 (rd1.dist_x - dp.dist_x) * (rd2.dist_y - rd1.dist_y) ) /
-      						  sqrt(pow(rd2.dist_y   - rd1.dist_y,2) + 
-                                  pow(rd2.dist_x   - rd1.dist_x,2));*/
-        temp.avg_err += abs((rd2.dist_y - rd1.dist_y) * dp.dist_x - 
-                            (rd2.dist_x  - rd1.dist_x) * dp.dist_y +
-                            rd2.dist_x  * rd1.dist_y - rd2.dist_y  * rd1.dist_x)/
-                            (sqrt(pow(rd2.dist_y   - rd1.dist_y,2) + 
-                                  pow(rd2.dist_x   - rd1.dist_x,2)));
-        nonzero_count++;
-    }
-    temp.avg_err /= nonzero_count;
-    if(temp.avg_err < best.avg_err){
-      best.m = temp.m;
-      best.b = temp.b;
-      best.avg_err = temp.avg_err;
-      
-    } 
+	      float dist_cur = msac_dist(rd1, rd2, dp);
+	 
+	      if(dist_cur < dist_thresh) {
+					temp.cost += dist_cur;
+					num_inliers_cur++; }
+				else {
+					temp.cost += dist_thresh;
+				}
+	    }
+
+	    if(temp.cost < best.cost){
+	      best = temp;
+				p1_best = rd1;
+				p2_best = rd2;
+				num_inliers_best = num_inliers_cur;
+	    }
   }
-  
+	
+	best.flag = 0;
+
+  if(num_inliers_best != 0) {
+		/* Generate set of inliers */	
+		lidar_dist *inlier_set = (lidar_dist *)malloc(sizeof(lidar_dist) * num_inliers_best);
+		if(!inlier_set) {
+			printf("Warning; malloc failed in %s\n", __func__);
+		}
+		
+		int inlier_count = 0;
+		for(int i = min_ind; i <= max_ind; i++) {
+			lidar_dist p_test = get_dist_from_ind(i);
+			float dist_cur = msac_dist(p1_best, p2_best, p_test);
+
+			if(dist_cur < dist_thresh) {
+				inlier_set[inlier_count] = p_test;
+				inlier_count++;
+			}		
+		}
+
+		/* Get linear regression inputs */
+		float x_avg = 0.0, y_avg = 0.0, xy_avg = 0.0, x2_avg = 0;
+		for(int i = 0; i < num_inliers_best; i++) {
+
+			if((inlier_set[i].dist_x == inlier_set[i].dist_x) && abs(inlier_set[i].dist_x) < 100000){
+				x_avg += inlier_set[i].dist_x;
+				x2_avg += inlier_set[i].dist_x * inlier_set[i].dist_x;
+			}
+			if((inlier_set[i].dist_y == inlier_set[i].dist_y) && abs(inlier_set[i].dist_y) < 100000){
+				y_avg += inlier_set[i].dist_y;
+				xy_avg += inlier_set[i].dist_x * inlier_set[i].dist_y;
+			}
+		}		 
+
+	// printf("%d\n",num_inliers_best);
+
+		x_avg /= num_inliers_best;
+	
+		y_avg /= num_inliers_best;
+		xy_avg /= num_inliers_best;
+		x2_avg /= num_inliers_best;
+
+		/* Compute regression parameters */
+		best.m = (xy_avg - (x_avg * y_avg)) /  (x2_avg - (x_avg * x_avg));
+		best.b = y_avg - (best.m * x_avg);
+
+		printf("Regression results: %d inliers / %d points\n", num_inliers_best, max_ind - min_ind + 1);
+			
+		lidar_dist origin;
+		origin.dist_x = 0;
+		origin.dist_y = 0;
+		best.b = msac_dist(p1_best, p2_best, origin);
+		free(inlier_set);
+	}
+
+	else {
+		best.flag = 1;
+		printf("=====================================================\n");
+	}
+
   return best;
 }
 
@@ -155,11 +245,11 @@ float saturate_float(float val, float min, float max) {
 /* Todo:	1. either make ang_des an argument or allow it to be changed elsewhere 
 *					2. reset function for integral term if using it  */ 
 float pid_steering(float cur_slope) {
-	static const float kp = 0.0;
+	static const float kp = 1.0;
 	static const float kd = 0.0;
 	static const float ki = 0.0;
 
-	static const float ang_des = 0.0;
+	static const float ang_des = 4.5;
 
 	static float err_cur = 0.0;
 	static float err_old = 0.0;
@@ -179,7 +269,6 @@ float pid_steering(float cur_slope) {
 void scanReceiveCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 	//ROS_INFO("%f %f %d", msg->angle_min, msg->angle_max, msg->ranges.size());
 
-  /* Maybe make code to change range array if any of these three values changes ?*/
   if(!hokuyo_data_set) {
     ang_min = msg->angle_min;
     ang_max = msg->angle_max;
@@ -190,13 +279,18 @@ void scanReceiveCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
     hokuyo_data_set = 1;
   }
 
+	/* On first receipt of scan data, create an array to hold the incoming data */	
   if(ranges == NULL) {
-    if( (ranges = (lidar_dist *)malloc(sizeof(lidar_dist) * msg->ranges.size())) == NULL) {
+    if( (ranges = (lidar_dist *)malloc(sizeof(lidar_dist) * num_ranges)) == NULL) {
       ROS_INFO("malloc failed for range array. exiting.");
       exit(1);
     }
-  }
-
+		else {
+			ROS_INFO("Now storing range data for %d points", num_ranges);
+		}
+	}
+ 
+	/* Store incoming data in polar and cartesian coordinates */
   for(int i = 0; i < num_ranges; i++) {
     float ang_cur = ang_min + i*ang_inc_rad;
     float range_cur = msg->ranges[i];
@@ -207,8 +301,9 @@ void scanReceiveCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
     ranges[i].dist_y = range_cur * cos(ang_cur);
   }
 
+	/* Check for a wall */
   //ROS_INFO("==%f==", get_dist_from_ang(0.0, DEGREE).range);
-  equation_parameters temp = calculate_linear_regression(-110, -80, 5000);
+  equation_parameters temp = run_msac_and_regression(-110, -70, 500);
   if(num_m < 5) {
     m_buf[4-num_m] = temp.m;
     num_m++;
@@ -217,18 +312,24 @@ void scanReceiveCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
     sum_m -= m_buf[4];
     shift_into_buf(m_buf, 5, temp.m);
   }
-  sum_m += temp.m;
+  if(temp.m != temp.m ){
+  	sum_m += temp.m;
+	}
 
-  float res = -.08f +  (sum_m/num_m);	
-	printf("%1.3f %.3f\n", res, temp.b);
-	printf("%f\n", m_buf[4] - m_buf[3]);
-	printf("---\n");
-	//ROS_INFO("%1.3f %.3f", res, temp.b);
-  //ROS_INFO("%d", msg->ranges.size());  
+  float res = (sum_m/num_m);
+	printf("%1.3f %.3f\n\n", temp.m, temp.b);
+	//printf("%f\n", m_buf[4] - m_buf[3]);
+	//printf("---\n");
+	//printf("%f\n", get_dist_from_ang(-110.0, DEGREE).range);
+	
+	float steering_correction = pid_steering(sum_m/num_m);
+	//printf("%f %f %f %f %f\n", m_buf[0], m_buf[1], m_buf[2], m_buf[3], m_buf[4]);
+  // printf("%f\n", get_dist_from_ang(0.0, DEGREE).range);
+	// printf("M: %f || C: %.3f\n", sum_m/num_m, steering_correction);
 
   basic_path_plan::driveCmd drive_cmd;
 	drive_cmd.throttle = throttle_cmd;
-	drive_cmd.steering = pid_steering(sum_m / num_m); 	
+	drive_cmd.steering = steering_correction; 	
 	drive_cmd_publisher.publish(drive_cmd);
 }
 
@@ -246,8 +347,9 @@ int main(int argc, char **argv)
 
 
 	ros::spin();
-
-  free(ranges);
+	if(ranges){
+  		free(ranges);
+  	}
 	return 0;
 }
 
