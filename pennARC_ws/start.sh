@@ -1,3 +1,7 @@
+# catkin_make
+echo "Running catkin_make..."
+catkin_make
+
 # start roscore
 echo "Starting roscore..."
 screen -dmS roscore 

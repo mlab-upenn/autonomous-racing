@@ -1,8 +1,11 @@
+# catkin_make
+echo "Running catkin_make..."
+catkin_make
+
 # start roscore
 echo "Starting roscore..."
 screen -dmS roscore 
 screen -S roscore -X stuff 'roscore^M'
-
 
 # start reading frames into the camera
 echo "Starting to read camera frames..."

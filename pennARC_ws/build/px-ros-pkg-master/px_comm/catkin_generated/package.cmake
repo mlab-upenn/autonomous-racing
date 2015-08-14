@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "px_comm")
+set(px_comm_MAINTAINER "Lionel Heng <hengli@inf.ethz.ch>")
+set(px_comm_DEPRECATED "")
+set(px_comm_VERSION "0.1.0")
+set(px_comm_BUILD_DEPENDS "message_generation")
+set(px_comm_RUN_DEPENDS "message_runtime")
+set(px_comm_BUILDTOOL_DEPENDS "catkin")
