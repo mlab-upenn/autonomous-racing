@@ -1,0 +1,148 @@
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+#include "beginner_tutorials/Num.h"
+#include "custom_messages/driveMessage.h"
+#include "std_msgs/Float32.h"
+#include "std_msgs/Int16.h"
+#include "beginner_tutorials/driveCmd.h"
+#include "math.h"
+
+const float sampling_rate = 10; //sampling rate in hz
+const float ub = 5; // upper and lower bounds on control signal 
+const float lb = -5; // same for throttle and steering as of now
+
+static float ff_vel = 0; //feed forward term for vel
+static float ff_steer = 0; //ff term for steer
+
+//sampling rate for PID using Euler
+
+float h = 1/sampling_rate;
+
+// variables for PID for velocity and steering
+static float u_km1_vel = 0; // u(k-1)
+static float u_k_vel  = 0; // u(k) 
+static float e_km1_vel = 0; // e(k-1)
+static float e_km2_vel = 0; // e(k-2)
+static float e_k_vel = 0; // e(k)
+
+
+static float u_km1_steer = 0; // u(k-1)
+static float u_k_steer  = 0; // u(k) 
+static float e_km1_steer = 0; // e(k-1)
+static float e_km2_steer = 0; // e(k-2)
+static float e_k_steer = 0; // e(k)
+
+
+// PID gains
+const float Kp_vel = 0;
+const float Kd_vel = 0;
+const float Ki_vel = 0;
+
+const float Kp_steer = 0.01;
+const float Kd_steer = 0;
+const float Ki_steer = 0;
+
+// For vanishing point error signal
+float temp_steer_float;
+int temp_steer_int;
+
+// publisher for PID
+
+ros::Publisher pub_teleop = n.advertise<beginner_tutorials::driveCmd>("teleop_commands",1000);
+
+
+
+float SaturateSignal(float signal, const float lb, const float ub); // function to act as saturator
+
+//ros::Rate loop_rate(sampling_rate);
+
+void vp_listen(const std_msgs::Int16::ConstPtr& msg)
+{
+	ROS_INFO("I Heard vp");
+	temp_steer_int = msg->data;
+	temp_steer_float = 1.0*temp_steer_int; // this goes to e_k_steer
+	// PID for velocity
+
+	// feed forward term if any for vel
+	ff_vel = 0.4;
+
+	//error signal for velocity
+	//progress time first, information is old
+	e_km2_vel = e_km1_vel;
+	e_km1_vel = e_k_vel;
+	e_k_vel = 0; //compute e_k
+
+	u_km1_vel = u_k_vel;
+	u_k_vel = u_km1_vel + (1/h)*(Kp_vel*h + Kd_vel + Ki_vel*h*h)*e_k_vel + (1/h)*(-Kp_vel*h-2*Kd_vel)*e_km1_vel + (1/h)*Kd_vel*e_km2_vel;
+
+
+	// PID for steering
+
+	// feed forward term if any for steer
+	ff_steer = 0;
+
+	//error signal for steering
+	//progress time first, information is old
+	e_km2_steer = e_km1_steer;
+	e_km1_steer = e_k_steer;
+	e_k_steer = temp_steer_float; //compute e_k
+
+	u_km1_steer = u_k_steer;
+	u_k_steer = u_km1_steer + (1/h)*(Kp_steer*h + Kd_steer + Ki_steer*h*h)*e_k_steer + (1/h)*(-Kp_steer*h-2*Kd_steer)*e_km1_steer + (1/h)*Kd_steer*e_km2_steer;
+
+	//check between -5 and +5 publish 
+
+
+	tele_cmd.steering = u_k_steer + ff_steer;
+	tele_cmd.throttle = u_k_vel + ff_vel;
+
+	tele_cmd.steering = SaturateSignal(tele_cmd.steering,ub,lb); // saturator
+	tele_cmd.throttle = SaturateSignal(tele_cmd.throttle,ub,lb);
+
+	ROS_INFO("Steering: %f; Throttle %f", tele_cmd.steering, tele_cmd.throttle);
+	pub_teleop.publish(tele_cmd);
+
+
+
+}
+
+
+
+
+int main(int argc, char **argv)
+{
+	ros::init(argc,argv,"PID_Euler");
+	ros::NodeHandle n;
+	//ros::Rate loop_rate(sampling_rate);
+
+	// listen to sensor message in order to compute e(k)
+	//Declare the publisher
+	ros::Subscriber vp_subscribe = n.subscribe("vanishing_point_topic",1000,vp_listen);
+	ros::spin();
+	return 0;
+	/*	while(ros::ok())
+		{
+		e_k_steer = temp_steer_float;
+	// maintain rate
+	ros::spinOnce();
+	loop_rate.sleep();
+	} */
+
+
+
+
+}
+
+
+float SaturateSignal(float signal, const float ub, const float lb)
+{
+	if(signal<=ub && signal>=lb) 
+		signal=signal;
+	else if(signal>ub) 
+		signal = ub;
+	else if(signal<lb) 
+		signal = lb;
+	return signal;
+
+}
+
