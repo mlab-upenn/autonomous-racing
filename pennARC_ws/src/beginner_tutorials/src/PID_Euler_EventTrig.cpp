@@ -7,7 +7,8 @@
 #include "beginner_tutorials/driveCmd.h"
 #include "math.h"
 
-const float sampling_rate = 10; //sampling rate in hz
+const float sampling_rate = 10; //sampling rate in hz, make it match the estimator/
+				// error signal gen rate
 const float ub = 5; // upper and lower bounds on control signal 
 const float lb = -5; // same for throttle and steering as of now
 
