@@ -47,9 +47,9 @@ float temp_steer_float;
 int temp_steer_int;
 
 // publisher for PID
-
+ros::NodeHandle n;
 ros::Publisher pub_teleop = n.advertise<beginner_tutorials::driveCmd>("teleop_commands",1000);
-
+beginner_tutorials::driveCmd tele_cmd;
 
 
 float SaturateSignal(float signal, const float lb, const float ub); // function to act as saturator
@@ -111,8 +111,8 @@ void vp_listen(const std_msgs::Int16::ConstPtr& msg)
 
 int main(int argc, char **argv)
 {
-	ros::init(argc,argv,"PID_Euler");
-	ros::NodeHandle n;
+	ros::init(argc,argv,"PID_Euler_EventTrig");
+	//	ros::NodeHandle n;
 	//ros::Rate loop_rate(sampling_rate);
 
 	// listen to sensor message in order to compute e(k)
