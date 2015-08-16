@@ -164,6 +164,20 @@ PID_Euler/fast:
 .PHONY : PID_Euler/fast
 
 # Convenience name for target.
+beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/rule:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/rule
+.PHONY : beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/rule
+
+# Convenience name for target.
+PID_Euler_Event: beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/rule
+.PHONY : PID_Euler_Event
+
+# fast build rule for target.
+PID_Euler_Event/fast:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/build.make beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/build
+.PHONY : PID_Euler_Event/fast
+
+# Convenience name for target.
 beginner_tutorials/CMakeFiles/_beginner_tutorials_generate_messages_check_deps_Num.dir/rule:
 	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 beginner_tutorials/CMakeFiles/_beginner_tutorials_generate_messages_check_deps_Num.dir/rule
 .PHONY : beginner_tutorials/CMakeFiles/_beginner_tutorials_generate_messages_check_deps_Num.dir/rule
@@ -495,6 +509,30 @@ src/PID_Euler.cpp.s:
 	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/PID_Euler.dir/build.make beginner_tutorials/CMakeFiles/PID_Euler.dir/src/PID_Euler.cpp.s
 .PHONY : src/PID_Euler.cpp.s
 
+src/PID_Euler_EventTrig.o: src/PID_Euler_EventTrig.cpp.o
+.PHONY : src/PID_Euler_EventTrig.o
+
+# target to build an object file
+src/PID_Euler_EventTrig.cpp.o:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/build.make beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/src/PID_Euler_EventTrig.cpp.o
+.PHONY : src/PID_Euler_EventTrig.cpp.o
+
+src/PID_Euler_EventTrig.i: src/PID_Euler_EventTrig.cpp.i
+.PHONY : src/PID_Euler_EventTrig.i
+
+# target to preprocess a source file
+src/PID_Euler_EventTrig.cpp.i:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/build.make beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/src/PID_Euler_EventTrig.cpp.i
+.PHONY : src/PID_Euler_EventTrig.cpp.i
+
+src/PID_Euler_EventTrig.s: src/PID_Euler_EventTrig.cpp.s
+.PHONY : src/PID_Euler_EventTrig.s
+
+# target to generate assembly for a file
+src/PID_Euler_EventTrig.cpp.s:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/build.make beginner_tutorials/CMakeFiles/PID_Euler_Event.dir/src/PID_Euler_EventTrig.cpp.s
+.PHONY : src/PID_Euler_EventTrig.cpp.s
+
 src/driveControl.o: src/driveControl.cpp.o
 .PHONY : src/driveControl.o
 
@@ -646,6 +684,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... PID_Euler"
+	@echo "... PID_Euler_Event"
 	@echo "... _beginner_tutorials_generate_messages_check_deps_Num"
 	@echo "... _beginner_tutorials_generate_messages_check_deps_driveCmd"
 	@echo "... _beginner_tutorials_generate_messages_check_deps_driveMessage"
@@ -678,6 +717,9 @@ help:
 	@echo "... src/PID_Euler.o"
 	@echo "... src/PID_Euler.i"
 	@echo "... src/PID_Euler.s"
+	@echo "... src/PID_Euler_EventTrig.o"
+	@echo "... src/PID_Euler_EventTrig.i"
+	@echo "... src/PID_Euler_EventTrig.s"
 	@echo "... src/driveControl.o"
 	@echo "... src/driveControl.i"
 	@echo "... src/driveControl.s"

@@ -56,7 +56,7 @@ float SaturateSignal(float signal, const float lb, const float ub); // function 
 
 //ros::Rate loop_rate(sampling_rate);
 
-void vp_listen(const std_msgs::Int16::ConstPtr& msg)
+void vp_listen(const std_msgs::Int16::ConstPtr& msg, ros::NodeHandle n)
 {
 	ROS_INFO("I Heard vp");
 	temp_steer_int = msg->data;

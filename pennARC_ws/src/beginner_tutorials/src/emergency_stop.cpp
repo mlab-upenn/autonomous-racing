@@ -52,7 +52,7 @@ int main(int argc, char **argv)
   //ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 //  ros::Publisher chatter_pub = n.advertise<std_msgs::UInt8>("chatter", 1000);
 
-  ros::Publisher emergency_publisher = n.advertise<std_msgs::UInt8>("nine11", 1000);
+  ros::Publisher emergency_publisher = n.advertise<std_msgs::UInt8>("/nine11", 1000);
   
   custom_messages::driveMessage drive_it;
   
