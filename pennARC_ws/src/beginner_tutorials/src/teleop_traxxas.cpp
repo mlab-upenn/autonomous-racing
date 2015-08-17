@@ -73,12 +73,17 @@ int main(int argc, char **argv)
 			key = getchar();
 			if(key == 65)
 			{
+				if (heading == -1)
+					current_throttle_state = 0;
 				heading = 1;
 //				ROS_INFO("U");
 			}
 			else if(key == 66)
 			{
+				if (heading == 1)
+					current_throttle_state = 0;
 				heading = -1;
+			
 //				ROS_INFO("D");
 			}
 			else if(key == 67)
@@ -103,14 +108,14 @@ int main(int argc, char **argv)
 		}
 		else if (ch == 119)
 		{
-		        current_throttle_state = old_throttle_state + 0.1;
+		        current_throttle_state = old_throttle_state + 0.01;
 			if (current_throttle_state > 1)
 				current_throttle_state = 1;
 //			ROS_INFO("w");
 		}
 		else if (ch == 115)
 		{
-			current_throttle_state = old_throttle_state - 0.1;
+			current_throttle_state = old_throttle_state - 0.01;
 			if (current_throttle_state < 0.1)
 				current_throttle_state = 0;
 //			ROS_INFO("s");

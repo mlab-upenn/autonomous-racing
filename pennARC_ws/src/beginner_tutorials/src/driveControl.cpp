@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 //	currentDrive_cmd.x = 0; //This is manually set right now, will be mapped to a 16bit register(PWM)
 //	currentDrive_cmd.y = 0; //This is manually set right now, will be mapped to a 16bit register(PWM)
       
-        DRIVE_FEED.throttle = 0.5;
+        DRIVE_FEED.throttle = 0.0;
 	DRIVE_FEED.steering = 0.8;
 
 	ros::Rate loop_rate(10); //10 times a second - publish @

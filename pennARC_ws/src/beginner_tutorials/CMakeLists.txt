@@ -43,8 +43,12 @@ target_link_libraries(teleop_traxxas ${catkin_LIBRARIES} ncurses)
 add_dependencies(teleop_traxxas beginner_tutorials_generate_messages_cpp)
 
 add_executable(PID_Euler src/PID_Euler.cpp)
-target_link_libraries(PID_Euler ${catkin_LIBRARIES} ncurses)
+target_link_libraries(PID_Euler ${catkin_LIBRARIES})
 add_dependencies(PID_Euler beginner_tutorials_generate_messages_cpp)
+
+add_executable(PID_Euler_Event src/PID_Euler_EventTrig.cpp)
+target_link_libraries(PID_Euler_Event ${catkin_LIBRARIES})
+add_dependencies(PID_Euler_Event beginner_tutorials_generate_messages_cpp)
 
 add_executable(vanishing_node src/vanishing_node.cpp)
 target_link_libraries(vanishing_node

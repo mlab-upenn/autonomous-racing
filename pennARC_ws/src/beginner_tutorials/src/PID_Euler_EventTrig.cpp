@@ -40,10 +40,14 @@ class PID_Event_Trig
 	float h;
 
 
+<<<<<<< HEAD
 
 	// For vanishing point error signal
 	float temp_steer_float;
 	int temp_steer_int;
+=======
+float SaturateSignal(float signal, const float lb, const float ub); // function to act as saturator
+>>>>>>> 7364cc0ace3d0c3744c5924590e3cd4ea13a7560
 
 	// variables for PID for velocity and steering
 	float u_km1_vel; // u(k-1)
@@ -127,6 +131,14 @@ class PID_Event_Trig
 		void PID_Event_vel();
 		void PublishCommand();*/
 
+<<<<<<< HEAD
+=======
+int main(int argc, char **argv)
+{
+	ros::init(argc,argv,"PID_Euler_EventTrig");
+	//ros::NodeHandle n;
+	//ros::Rate loop_rate(sampling_rate);
+>>>>>>> 7364cc0ace3d0c3744c5924590e3cd4ea13a7560
 
 
 

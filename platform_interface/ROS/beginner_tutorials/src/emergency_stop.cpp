@@ -28,7 +28,9 @@ int main(int argc, char **argv)
    * The first NodeHandle constructed will fully initialize this node, and the last
    * NodeHandle destructed will close down the node.
    */
-  ros::NodeHandle n;
+  ros::NodeHandle n("~");
+  int ip = 0;
+  n.getParam("stop",ip);
 
   /**
    * The advertise() function is how you tell ROS that you want to
@@ -63,7 +65,7 @@ int main(int argc, char **argv)
  
  std_msgs:: UInt8 em_msg;
 
- em_msg.data = 1;
+ em_msg.data = ip;
 
   ros::Rate loop_rate(10); // 10 times a second
 
