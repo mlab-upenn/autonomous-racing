@@ -34,8 +34,7 @@ class VanishingPoint
 
   // vanishing point algo parameters
   Mat frame, edges;
-  Mat frame_gray;
-  Mat standard_hough, probabilistic_hough;
+  Mat standard_hough;
   int min_threshold;
   int max_trackbar;
   // canny 
@@ -97,12 +96,12 @@ public:
 
     running_sum = new int[2]();
 
-    cv::namedWindow(OPENCV_WINDOW);
+    //cv::namedWindow(OPENCV_WINDOW);
   } 
 
   ~VanishingPoint()
   {
-    cv::destroyWindow(OPENCV_WINDOW);
+    //cv::destroyWindow(OPENCV_WINDOW);
     // delete arrays to avoid memory leaks
     for (int i = 0; i<2; i++) {
       delete [] window[i];

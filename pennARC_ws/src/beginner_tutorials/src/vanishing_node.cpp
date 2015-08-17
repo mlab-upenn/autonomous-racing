@@ -35,7 +35,6 @@ class VanishingPoint
 
   // vanishing point algo parameters
   Mat frame, edges;
-  Mat frame_gray;
   Mat standard_hough;
   int min_threshold;
   int max_trackbar;
