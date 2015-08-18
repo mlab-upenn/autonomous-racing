@@ -72,9 +72,12 @@ class PID_Event_Trig
 		pub_teleop = n.advertise<beginner_tutorials::driveCmd>("teleop_commands",1000);
 		// subscribe to vanishing point
 		vp_subscribe = n.subscribe("vanishing_point_topic",1000,&PID_Event_Trig::vp_listen,this);
-
+		tele_cmd.steering = 0;
+		tele_cmd.throttle = 0;
+		pub_teleop.publish(tele_cmd);		
+		ROS_INFO("Initialised motors with 0 throttle and steering");
 		// init PID params
-		sampling_rate = 10; //in Hz
+		sampling_rate = 7.5; //in Hz
 		h = 1/sampling_rate;
 		ub = 5;
 		lb = -5;
@@ -117,6 +120,7 @@ class PID_Event_Trig
 
 		PID_Event_Trig::PID_Event_steer();
 		PID_Event_Trig::PID_Event_vel();
+		
 		PID_Event_Trig::PublishCommand();
 
 	}
@@ -201,7 +205,9 @@ int main(int argc, char **argv)
 {
 	ros::init(argc,argv,"PID_Euler_EventTrig");
 	PID_Event_Trig pid;
+//	ROS_INFO("B_S");	
 	ros::spin();
+//	ROS_INFO("A_S");
 	return 0;
 }
 

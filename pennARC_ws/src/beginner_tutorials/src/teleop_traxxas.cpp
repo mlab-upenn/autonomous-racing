@@ -88,14 +88,14 @@ int main(int argc, char **argv)
 			}
 			else if(key == 67)
 			{
-				current_steer_state = old_steer_state + 0.1;
+				current_steer_state = old_steer_state + 0.01;
 					if (current_steer_state > 4)
 						current_steer_state = 4;
 //				ROS_INFO("R");
 			}
 			else if(key == 68)
 			{
-				current_steer_state = old_steer_state - 0.1;
+				current_steer_state = old_steer_state - 0.01;
 				if(current_steer_state < -4)
 					current_steer_state = -4;
 //				ROS_INFO("L");
@@ -108,14 +108,14 @@ int main(int argc, char **argv)
 		}
 		else if (ch == 119)
 		{
-		        current_throttle_state = old_throttle_state + 0.01;
+		        current_throttle_state = old_throttle_state + 0.1;
 			if (current_throttle_state > 1)
 				current_throttle_state = 1;
 //			ROS_INFO("w");
 		}
 		else if (ch == 115)
 		{
-			current_throttle_state = old_throttle_state - 0.01;
+			current_throttle_state = old_throttle_state - 0.1;
 			if (current_throttle_state < 0.1)
 				current_throttle_state = 0;
 //			ROS_INFO("s");
@@ -123,7 +123,7 @@ int main(int argc, char **argv)
 		else
 		{
 	//		current_throttle_state = 0;
-			current_steer_state = 0;
+//			current_steer_state = 0;
 //			ROS_INFO("%d\n",key);
 		}
 
