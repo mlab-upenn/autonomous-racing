@@ -7,6 +7,7 @@
 
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/opencv.hpp"
 #include <iostream>
 #include <stdio.h>  
 #include <string>
@@ -44,6 +45,10 @@
  int lp_pointer = 0;
  int running_sum [2] = {};
 
+ unsigned long ind = 0;
+
+ vector<int> compression_params;
+
  // Function Headers
  void help();
  void Standard_Hough( int, void* );
@@ -57,6 +62,9 @@
 
   if( !capture.isOpened() )
     throw "Error when reading video";
+
+  compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
+  compression_params.push_back(0);
 
     // capture loop
     char key = 0;
@@ -286,8 +294,8 @@ int* lowPass (int vp_x, int vp_y)
     cout << "Vanishing point = " << vp.x << "," << vp.y << "| Inliers: " << maxInliers << "| error: "<< error << endl;
 
     // plot vanishing point on images
-    circle(standard_hough, vp, 2,  Scalar(0,0,255), 2, 8, 0 );
-    circle(frame, vp, 3,  Scalar(0,0,255), 2, 8, 0 );
+    // circle(standard_hough, vp, 2,  Scalar(0,0,255), 2, 8, 0 );
+    // circle(frame, vp, 3,  Scalar(0,0,255), 2, 8, 0 );
     circle(standard_hough, vp_lp, 2,  Scalar(0,255,0), 2, 8, 0 );
     circle(frame, vp_lp, 3,  Scalar(0,255,0), 2, 8, 0 );
 
@@ -303,6 +311,18 @@ int* lowPass (int vp_x, int vp_y)
 
   imshow( standard_name, standard_hough );
   imshow("Original", frame);
+
+  char str[50], str2[50];
+  sprintf(str, "images_og/image_%lu.png",ind);
+  sprintf(str2, "images_behind_the_scenes/image_%lu.png",ind);
+
+
+  imwrite( str, frame , compression_params);
+  imwrite( str2, standard_hough, compression_params );
+  cout << "Writing image " << ind << endl;
+  ind++;
+
+
 }
 
 
