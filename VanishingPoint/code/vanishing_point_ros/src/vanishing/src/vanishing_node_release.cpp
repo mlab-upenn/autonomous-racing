@@ -10,14 +10,13 @@
 #include <string>
 
 #define LP_WINDOW 10
-#define DISPLAY_IMG 0
+#define DISPLAY_IMG 1
 
 static const std::string OPENCV_WINDOW = "Vanishing point";
 // topic where the error is being published
 static const std::string VP_TOPIC = "vanishing_point_topic";
 // topic where the image is being published
 static const std::string VP_IMG_TOPIC = "/vp/output_video";
-
 
 using namespace cv;
 using namespace std;
@@ -31,7 +30,7 @@ class VanishingPoint
   ros::Publisher vp_pub_; 
   std_msgs::Int16 error_;
   cv_bridge::CvImagePtr cv_ptr_;
-  cv_bridge::CvImage out_msg_;
+  cv_bridge::CvImagePtr out_msg_;
 
   // vanishing point algo parameters
   Mat frame, edges;
@@ -147,7 +146,7 @@ public:
 private:
   void vp_detection();
   bool findIntersectingPoint(float, float, float, float, Point&);
-  int findInliers(const vector<Vec2f>&, const Point&);
+  int findInliers(const vector<Vec2f>&, const Point&, Mat);
   int* lowPass (int, int); 
 };
 
@@ -198,13 +197,13 @@ void VanishingPoint::vp_detection()
   {
     // ransac
     // input: s_lines | 
-    //Mat tempImg;
+    Mat tempImg;
     //cout << "Size of image: " << standard_hough.rows << ", "<< standard_hough.cols << endl;
     int maxInliers = 0;
     Point vp, vp_lp;
     for (int i = 0; i<N_iterations; i++) 
     {
-      //tempImg = standard_hough.clone();;
+      tempImg = standard_hough.clone();;
       // 1. randomly select 2 lines
       int a = rand() % static_cast<int>(s_lines.size());
       int b = rand() % static_cast<int>(s_lines.size());
@@ -241,8 +240,7 @@ void VanishingPoint::vp_detection()
 
       // 3. find error for each line (shortest distance b/w point above and line: perpendicular bisector)
       // 4. find # inliers (error < threshold)
-      //int inliers = findInliers(s_lines, intersectingPt, tempImg);
-      int inliers = findInliers(s_lines, intersectingPt);
+      int inliers = findInliers(s_lines, intersectingPt, tempImg);
       //print//cout << "Num of inliers: " << inliers << endl;
 
       // 5. if # inliers > maxInliers, save model
@@ -285,8 +283,8 @@ void VanishingPoint::vp_detection()
     circle(frame, vp_lp, 3,  Scalar(0,255,0), 2, 8, 0 );
 
   } // end of ransac (if > 2 lines available)
- else {ROS_INFO("not enough lines!"); }
-  //idraw cross hair
+
+  // draw cross hair
   Point pt1_v( cvRound(width/2.0), 0);
   Point pt2_v( cvRound(width/2.0), height);
   line( standard_hough, pt1_v, pt2_v, Scalar(0,255,255), 1, CV_AA);
@@ -302,15 +300,11 @@ void VanishingPoint::vp_detection()
   }
   
   // Debugging: Output modified video stream
-  //out_msg_->header = cv_ptr_->header;
-  //out_msg_->encoding = sensor_msgs::image_encodings::BGR8;
-  //out_msg_->image = standard_hough;
+  out_msg_->header = cv_ptr_->header;
+  out_msg_->encoding = sensor_msgs::image_encodings::BGR8;
+  out_msg_->image = standard_hough;
 
-  //out_msg_.header = cv_ptr_->header;
-  //out_msg_.encoding = sensor_msgs::image_encodings::BGR8;
-  //out_msg_.image = standard_hough;
-
-  //image_pub_.publish(out_msg_.toImageMsg());
+  image_pub_.publish(out_msg_->toImageMsg());
 }
 
 /* -------------------------------------- findIntersectingPt --------------------------------------------*/
@@ -331,12 +325,12 @@ bool VanishingPoint::findIntersectingPoint(float r_1, float t_1, float r_2, floa
 
 /* ------------------------------------------findInliers --------------------------------------------*/
 
-int VanishingPoint::findInliers(const vector<Vec2f>& s_lines, const Point& intersectingPt) 
+int VanishingPoint::findInliers(const vector<Vec2f>& s_lines, const Point& intersectingPt, Mat tempImg) 
 {
   int inliers = 0;
   //print//cout << "Distance: ";
   for (int i = 0; i < static_cast<int>(s_lines.size()); i++) {
-    //Mat tmp = tempImg.clone();
+    Mat tmp = tempImg.clone();
     // find error: shortest distance between intersectingPt and line
     float r = s_lines[i][0], t = s_lines[i][1];
     double a = cos(t), b = sin(t);

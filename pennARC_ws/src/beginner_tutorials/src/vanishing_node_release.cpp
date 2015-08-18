@@ -5,6 +5,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "std_msgs/Int16.h"
+#include "std_msgs/Float32.h"
 #include <iostream>
 #include <stdio.h>  
 #include <string>
@@ -63,7 +64,7 @@ public:
   VanishingPoint(): it_(nh_)
   {
     // create a publisher object with topic: vanishing point
-    vp_pub_ = nh_.advertise<std_msgs::Int16>(VP_TOPIC, 1000);
+    vp_pub_ = nh_.advertise<std_msgs::Float32>(VP_TOPIC, 1000);
     // Subscribe to input video feed and publish output video feed
     image_sub_ = it_.subscribe("/camera/image_raw", 1, &VanishingPoint::imageCB, this);
     image_pub_ = it_.advertise(VP_IMG_TOPIC, 1);
@@ -180,17 +181,17 @@ void VanishingPoint::vp_detection()
   ////////////////////////////////////////////////////
   /// Show the result
   //print//printf("number of lines: %zu\n",s_lines.size());
-  for( size_t i = 0; i < s_lines.size(); i++ )
-  {
-    float r = s_lines[i][0], t = s_lines[i][1];
-    double cos_t = cos(t), sin_t = sin(t);
-    double x0 = r*cos_t, y0 = r*sin_t;
-    double alpha = 1000;
+  // for( size_t i = 0; i < s_lines.size(); i++ )
+  // {
+  //   float r = s_lines[i][0], t = s_lines[i][1];
+  //   double cos_t = cos(t), sin_t = sin(t);
+  //   double x0 = r*cos_t, y0 = r*sin_t;
+  //   double alpha = 1000;
 
-    Point pt1( cvRound(x0 + alpha*(-sin_t)), cvRound(y0 + alpha*cos_t) );
-    Point pt2( cvRound(x0 - alpha*(-sin_t)), cvRound(y0 - alpha*cos_t) );
-    line( standard_hough, pt1, pt2, Scalar(255,0,0), 1, CV_AA);
-  }
+  //   Point pt1( cvRound(x0 + alpha*(-sin_t)), cvRound(y0 + alpha*cos_t) );
+  //   Point pt2( cvRound(x0 - alpha*(-sin_t)), cvRound(y0 - alpha*cos_t) );
+  //   line( standard_hough, pt1, pt2, Scalar(255,0,0), 1, CV_AA);
+  // }
   ////////////////////////////////////////////////////
 
   // 3. RANSAC if > 2 lines available
@@ -268,31 +269,30 @@ void VanishingPoint::vp_detection()
     free(avg); // free avg to avoid memory leaks
 
     // compute error signal 
-    int error = (vp_lp.x - cvRound(width/2.0));
-    cout << "Vanishing point = " << vp.x << "," << vp.y << "| Inliers: " << maxInliers << "| error: "<< error << endl;
-    cout << "VP_LP_x: " << vp_lp.x << " | " << "center: " << cvRound(width/2.0) << endl;
-    // compute vanishing point and error
+    float error = (vp_lp.x - cvRound(width/2.0)) / width;
+    // cout << "Vanishing point = " << vp.x << "," << vp.y << "| Inliers: " << maxInliers << "| error: "<< error << endl;
+    // cout << "VP_LP_x: " << vp_lp.x << " | " << "center: " << cvRound(width/2.0) << endl;
     error_.data = error;
-    ROS_INFO("%d", error_.data);
+    ROS_INFO("Error: %.4f | VP_LP_x: %d | center_x: %d ", error_.data, vp_lp.x, (width/2.0));
 
     // publish the error to topic defined before (vanishing_point_topic)
     vp_pub_.publish(error_);
 
     // plot vanishing point on images
-    circle(standard_hough, vp, 2,  Scalar(0,0,255), 2, 8, 0 );
-    circle(frame, vp, 3,  Scalar(0,0,255), 2, 8, 0 );
-    circle(standard_hough, vp_lp, 2,  Scalar(0,255,0), 2, 8, 0 );
-    circle(frame, vp_lp, 3,  Scalar(0,255,0), 2, 8, 0 );
+    // circle(standard_hough, vp, 2,  Scalar(0,0,255), 2, 8, 0 );
+    // circle(frame, vp, 3,  Scalar(0,0,255), 2, 8, 0 );
+    // circle(standard_hough, vp_lp, 2,  Scalar(0,255,0), 2, 8, 0 );
+    // circle(frame, vp_lp, 3,  Scalar(0,255,0), 2, 8, 0 );
 
   } // end of ransac (if > 2 lines available)
- else {ROS_INFO("not enough lines!"); }
-  //idraw cross hair
-  Point pt1_v( cvRound(width/2.0), 0);
-  Point pt2_v( cvRound(width/2.0), height);
-  line( standard_hough, pt1_v, pt2_v, Scalar(0,255,255), 1, CV_AA);
-  Point pt1_h( 0, cvRound(height/2.0));
-  Point pt2_h( width, cvRound(height/2.0));
-  line( standard_hough, pt1_h, pt2_h, Scalar(0,255,255), 1, CV_AA);
+
+  // draw cross hair
+  // Point pt1_v( cvRound(width/2.0), 0);
+  // Point pt2_v( cvRound(width/2.0), height);
+  // line( standard_hough, pt1_v, pt2_v, Scalar(0,255,255), 1, CV_AA);
+  // Point pt1_h( 0, cvRound(height/2.0));
+  // Point pt2_h( width, cvRound(height/2.0));
+  // line( standard_hough, pt1_h, pt2_h, Scalar(0,255,255), 1, CV_AA);
 
   // display edge+hough+vp for degbugging
   if (DISPLAY_IMG)
