@@ -1,0 +1,10 @@
+
+To load the driver into the running kernel, run:
+
+  sudo ./load-driver.sh
+
+To install the driver so that it will automatically get loaded on future reboots, run:
+
+  sudo ./install-driver.sh
+
+
