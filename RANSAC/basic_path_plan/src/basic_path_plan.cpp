@@ -179,8 +179,6 @@ equation_parameters run_msac_and_regression(lidar_dist* dists, int num_dists, in
   best.flag = 0;
 
   if(num_inliers_best != 0) {
-	printf("MSAC: %f\n", best.m); 
-	/* Generate set of inliers */	
 	lidar_dist *inlier_set = (lidar_dist *)malloc(sizeof(lidar_dist) * num_inliers_best);
 	if(!inlier_set) {
 		printf("Warning; malloc failed in %s\n", __func__);
@@ -282,11 +280,11 @@ float saturate_float(float val, float min, float max) {
 /* Todo:	1. either make ang_des an argument or allow it to be changed elsewhere 
 *					2. reset function for integral term if using it  */ 
 float pid_steering(float cur_slope) {
-	static const float kp = .1;
+	static const float kp = 1.5;
 	static const float kd = 0.0;
 	static const float ki = 0.0;
 
-	static const float ang_des = 5;
+	static const float ang_des = 0;
 
 	static float err_cur = 0.0;
 	static float err_old = 0.0;
@@ -340,7 +338,7 @@ void scanReceiveCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
 
 	/* Check for a wall */
   //ROS_INFO("==%f==", get_dist_from_ang(0.0, DEGREE).range);
-  equation_parameters temp = determine_wall_slope(70, 110, 500);
+  equation_parameters temp = determine_wall_slope(40, 110, 500);
   if(num_m < 5) {
     m_buf[4-num_m] = temp.m;
     num_m++;
