@@ -28,7 +28,9 @@ int main(int argc, char **argv)
    * The first NodeHandle constructed will fully initialize this node, and the last
    * NodeHandle destructed will close down the node.
    */
-  ros::NodeHandle n;
+  ros::NodeHandle n("~");
+  int ip = 0;
+  n.getParam("stop",ip);
 
   /**
    * The advertise() function is how you tell ROS that you want to
@@ -50,7 +52,7 @@ int main(int argc, char **argv)
   //ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
 //  ros::Publisher chatter_pub = n.advertise<std_msgs::UInt8>("chatter", 1000);
 
-  ros::Publisher emergency_publisher = n.advertise<std_msgs::UInt8>("nine11", 1000);
+  ros::Publisher emergency_publisher = n.advertise<std_msgs::UInt8>("/nine11", 1000);
   
   custom_messages::driveMessage drive_it;
   
@@ -63,7 +65,7 @@ int main(int argc, char **argv)
  
  std_msgs:: UInt8 em_msg;
 
- em_msg.data = 1;
+ em_msg.data = ip;
 
   ros::Rate loop_rate(10); // 10 times a second
 

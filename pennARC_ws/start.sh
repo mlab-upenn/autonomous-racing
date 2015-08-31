@@ -21,7 +21,7 @@ screen -S vanishing -X stuff 'rosrun beginner_tutorials vanishing_node^M'
 # start PID ros
 echo "Starting pid euler ros node..."
 screen -dmS pidEuler
-screen -S pidEuler -X stuff 'rosrun beginner_tutorials PID_Euler^M'
+screen -S pidEuler -X stuff 'rosrun beginner_tutorials PID_Euler_Event^M'
 
 # start talker ros
 echo "Starting talker ros node.."

@@ -35,7 +35,6 @@ class VanishingPoint
 
   // vanishing point algo parameters
   Mat frame, edges;
-  Mat frame_gray;
   Mat standard_hough;
   int min_threshold;
   int max_trackbar;
@@ -286,8 +285,8 @@ void VanishingPoint::vp_detection()
     circle(frame, vp_lp, 3,  Scalar(0,255,0), 2, 8, 0 );
 
   } // end of ransac (if > 2 lines available)
-
-  // draw cross hair
+ else {ROS_INFO("not enough lines!"); }
+  //idraw cross hair
   Point pt1_v( cvRound(width/2.0), 0);
   Point pt2_v( cvRound(width/2.0), height);
   line( standard_hough, pt1_v, pt2_v, Scalar(0,255,255), 1, CV_AA);

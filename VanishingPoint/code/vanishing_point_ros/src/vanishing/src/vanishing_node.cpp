@@ -18,7 +18,6 @@ static const std::string VP_TOPIC = "vanishing_point_topic";
 // topic where the image is being published
 static const std::string VP_IMG_TOPIC = "/vp/output_video";
 
-
 using namespace cv;
 using namespace std;
 
