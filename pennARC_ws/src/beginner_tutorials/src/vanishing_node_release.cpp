@@ -130,8 +130,6 @@ public:
     frame = cv_ptr_->image;
     vp_detection();
 
-    // Update GUI Window
-    // cv::imshow(OPENCV_WINDOW, frame);
     cv::waitKey(30);
 
     // // compute vanishing point and error
@@ -303,17 +301,6 @@ int VanishingPoint::findInliers(const vector<Vec2f>& s_lines, const Point& inter
     double a = cos(t), b = sin(t);
     int x = intersectingPt.x, y = intersectingPt.y;
     double d = abs(a*x + b*y - r) / sqrt(pow(a,2) + pow(b,2));
-
-    // // debugging
-    // double alpha = 1000;
-    // double cos_t = cos(t), sin_t = sin(t);
-    // double x0 = r*cos_t, y0 = r*sin_t;
-    // Point pt1( cvRound(x0 + alpha*(-sin_t)), cvRound(y0 + alpha*cos_t) );
-    // Point pt2( cvRound(x0 - alpha*(-sin_t)), cvRound(y0 - alpha*cos_t) );
-    // line( tmp, pt1, pt2, Scalar(0,255,255), 2, CV_AA);
-
-    // imshow("temp_", tmp);
-    // waitKey(0);
 
     // find inliers
     if (d < threshold_ransac) { inliers++; }
