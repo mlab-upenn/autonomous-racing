@@ -51,13 +51,15 @@ class VanishingPoint
   // ransac parameters
   int N_iterations; // # of iterations for ransac
   int threshold_ransac; // distance within which the hypothesis is classified as an inlier
-  // low pass parameters
-  //int window [LP_WINDOW][2];
+  // moving average parameters
   int **window;
-  //int *window;
   int lp_pointer;
-  // int running_sum [2];
   int *running_sum;
+  // lpf parameters
+  Point vp_prev, vp_lp_prev;
+  bool initFlag; 
+  int freq_sampling; 
+  int freq_c;
 
 public:
 
@@ -84,21 +86,17 @@ public:
     // ransac parameters
     N_iterations = 100; // # of iterations for ransac
     threshold_ransac = 10; // distance within which the hypothesis is classified as an inlier
-    // low pass parameters
+    // moving avg parameters
     lp_pointer = 0;
-    // window [LP_WINDOW][2] = {};
-    // running_sum [2] = {};
-    //window = new int[LP_WINDOW][2]();
-    
     window = new int*[LP_WINDOW];
     for (int i = 0; i < LP_WINDOW; i++) { 
       window[i] = new int[2](); 
     }
-    //window = new int[LP_WINDOW*2]();
-
     running_sum = new int[2]();
-
-    //cv::namedWindow(OPENCV_WINDOW);
+    // lpf params
+    initFlag; = true;
+    freq_sampling; = 25;
+    freq_c; = 40;
   } 
 
   ~VanishingPoint()
@@ -149,7 +147,8 @@ private:
   void vp_detection();
   bool findIntersectingPoint(float, float, float, float, Point&);
   int findInliers(const vector<Vec2f>&, const Point&);
-  int* lowPass (int, int); 
+  void movingAvg (Point&, const Point&);
+  void lpf (Point&, const Point&);
 };
 
 
@@ -178,22 +177,6 @@ void VanishingPoint::vp_detection()
     if (t_deg < 5 || t_deg > 175)  s_lines.erase(s_lines.begin() + i);
   }
 
-  ////////////////////////////////////////////////////
-  /// Show the result
-  //print//printf("number of lines: %zu\n",s_lines.size());
-  // for( size_t i = 0; i < s_lines.size(); i++ )
-  // {
-  //   float r = s_lines[i][0], t = s_lines[i][1];
-  //   double cos_t = cos(t), sin_t = sin(t);
-  //   double x0 = r*cos_t, y0 = r*sin_t;
-  //   double alpha = 1000;
-
-  //   Point pt1( cvRound(x0 + alpha*(-sin_t)), cvRound(y0 + alpha*cos_t) );
-  //   Point pt2( cvRound(x0 - alpha*(-sin_t)), cvRound(y0 - alpha*cos_t) );
-  //   line( standard_hough, pt1, pt2, Scalar(255,0,0), 1, CV_AA);
-  // }
-  ////////////////////////////////////////////////////
-
   // 3. RANSAC if > 2 lines available
   if (static_cast<int>(s_lines.size()) > 1) 
   {
@@ -219,26 +202,6 @@ void VanishingPoint::vp_detection()
       // skip if not found
       if (!found) continue;
       
-    // else 
-    // {
-    //   //print//cout << "Point: " << intersectingPt.x << ", " << intersectingPt.y << endl;
-    // }
-
-    // // // draw for debugging purposes
-    // double alpha = 1000;
-    // double cos_t = cos(t_1), sin_t = sin(t_1);
-    // Point pt1( cvRound(r_1*cos_t + alpha*(-sin_t)), cvRound(r_1*sin_t + alpha*cos_t) );
-    // Point pt2( cvRound(r_1*cos_t - alpha*(-sin_t)), cvRound(r_1*sin_t - alpha*cos_t) );
-    // line(tempImg, pt1, pt2, Scalar(255,255,0), 2, CV_AA);
-
-    // cos_t = cos(t_2); sin_t = sin(t_2);
-    // Point pt11( cvRound(r_2*cos_t + alpha*(-sin_t)), cvRound(r_2*sin_t + alpha*cos_t) );
-    // Point pt22( cvRound(r_2*cos_t - alpha*(-sin_t)), cvRound(r_2*sin_t - alpha*cos_t) );
-    // line(tempImg, pt11, pt22, Scalar(255,255,0), 2, CV_AA);
-
-    // circle(tempImg, intersectingPt, 2,  Scalar(0,0,255), 2, 8, 0 );
-    // imshow("temp", tempImg);
-    // waitKey(0);
 
       // 3. find error for each line (shortest distance b/w point above and line: perpendicular bisector)
       // 4. find # inliers (error < threshold)
@@ -262,11 +225,9 @@ void VanishingPoint::vp_detection()
     if (vp.y > height) vp.y = height;
     if (vp.y < 0) vp.y = 0;
 
-    // apply low pass filter over frames
-    int *avg = lowPass (vp.x, vp.y);
-    vp_lp.x = *(avg);
-    vp_lp.y = *(avg + 1);
-    free(avg); // free avg to avoid memory leaks
+    // apply moving average/lpf filter over frames
+    // movingAvg(vp_lp, vp);
+    lpf(vp_lp, vp);
 
     // compute error signal 
     float error = (vp_lp.x - cvRound(width/2.0)) / width;
@@ -357,43 +318,65 @@ int VanishingPoint::findInliers(const vector<Vec2f>& s_lines, const Point& inter
     // find inliers
     if (d < threshold_ransac) { inliers++; }
   }
-  //print//cout << endl;
+
   return inliers;
 }
 
-/* -----------------------------------------LPF --------------------------------------------*/
+/* -----------------------------------------Moving average-----------------------------------------*/
 
  // // low pass parameters
  // const int LP_WINDOW = 20;
  // int window [LP_WINDOW][2] = {};
  // int lp_pointer = 0;
  // int sum [2] = {};
-int* VanishingPoint::lowPass (int vp_x, int vp_y) 
+ // input vp gets filtered and saved in vp_lp
+void VanishingPoint::movingAvg (Point& vp_lp, const Point& vp) 
 {
   // remove element from running sum
   running_sum[0] -= window[lp_pointer][0];
   running_sum[1] -= window[lp_pointer][1];
 
   // update window with new vanishing point
-  window[lp_pointer][0] = vp_x;
-  window[lp_pointer][1] = vp_y;
+  window[lp_pointer][0] = vp.x;
+  window[lp_pointer][1] = vp.y;
 
   // update sum
   running_sum[0] += window[lp_pointer][0];
   running_sum[1] += window[lp_pointer][1];
 
   // update running avg
-  int *avg = (int *) malloc(sizeof (int) * 2);
-  avg[0] = (int) (float)running_sum[0]/LP_WINDOW;
-  avg[1] = (int) (float)running_sum[1]/LP_WINDOW;
+  vp_lp.x = (int) (float)running_sum[0]/movingAvg_window;
+  vp_lp.y = (int) (float)running_sum[1]/movingAvg_window;
 
   // increment lp_pointer and keep within bounds
   lp_pointer++;
-  if (lp_pointer >= LP_WINDOW) lp_pointer = 0;
-
-  return avg;
+  if (lp_pointer >= movingAvg_window) lp_pointer = 0;
 }
 
+/* ---------------------1st order LPF (discretized using tustin approx)--------------------------*/
+// input vp gets filtered and saved in vp_lp
+// int freq_sampling | int freq_c
+void VanishingPoint::lpf (Point& vp_lp, const Point& vp) 
+{
+  // first time initialization
+  if (initFlag) 
+  {
+    vp_lp_prev.x = vp.x;
+    vp_prev.x = vp.x;
+    vp_lp.x = vp.x;
+    vp_lp_prev.y = vp.y;
+    vp_prev.y = vp.y;
+    vp_lp.y = vp.y;
+    initFlag = false;
+    return;
+  }
+
+  float Tw = 1.0/freq_sampling * 2.0 * CV_PI * freq_c;
+  vp_lp.x = (int) (Tw*(vp.x + vp_prev.x) - (Tw-2)*vp_lp_prev.x)/(Tw+2);
+  vp_lp.y = (int) (Tw*(vp.y + vp_prev.y) - (Tw-2)*vp_lp_prev.y)/(Tw+2);
+
+  return;
+}
 
 
 /* -------------------------------------- main --------------------------------------------*/
@@ -406,35 +389,5 @@ int main(int argc, char** argv)
   VanishingPoint vp;
   ros::spin();
   return 0;
-
-  // -------------------------------//
-  // // initialize node handle
-  // ros::NodeHandle nh;
-
-  // // create a publisher object with topic: vanishing point
-  // ros::Publisher vp_pub = n.advertise<std_msgs::Int8>("vanishing_point_topic", 1000);
-
-  // // frequency of publishing: 10 Hz
-  // ros::Rate loop_rate(10);
-
-  // image_transport::ImageTransport it (nh);
-  // image_transport::Subscriber image_sub;
-  // std_msgs::Int8 error;
-
-  // // Subscribe to input video feed and publish output video feed
-  // image_sub = it.subscribe("/camera/image_raw", 1, imageCallBack);
-
-  // while (ros::ok())
-  // { 
-  //   // compute vanishing point and error
-  //   error.data = 10;
-  //   ROS_INFO("%d", error.data);
-
-  //   // publish the error
-  //   vp_pub.publish(error);
-
-  //   ros::spinOnce();
-  //   loop_rate.sleep();
-  // }
 
 }

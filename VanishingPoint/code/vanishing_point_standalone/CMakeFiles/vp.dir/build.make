@@ -31,11 +31,14 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
+# Escaping for special characters.
+EQUALS = =
+
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone
+CMAKE_SOURCE_DIR = /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone
+CMAKE_BINARY_DIR = /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone
 
 # Include any dependencies generated for this target.
 include CMakeFiles/vp.dir/depend.make
@@ -48,17 +51,17 @@ include CMakeFiles/vp.dir/flags.make
 
 CMakeFiles/vp.dir/vanishing_point_video.cpp.o: CMakeFiles/vp.dir/flags.make
 CMakeFiles/vp.dir/vanishing_point_video.cpp.o: vanishing_point_video.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/vp.dir/vanishing_point_video.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/vp.dir/vanishing_point_video.cpp.o -c /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/vanishing_point_video.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/vp.dir/vanishing_point_video.cpp.o -c /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/vanishing_point_video.cpp
 
 CMakeFiles/vp.dir/vanishing_point_video.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/vp.dir/vanishing_point_video.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/vanishing_point_video.cpp > CMakeFiles/vp.dir/vanishing_point_video.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/vanishing_point_video.cpp > CMakeFiles/vp.dir/vanishing_point_video.cpp.i
 
 CMakeFiles/vp.dir/vanishing_point_video.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/vp.dir/vanishing_point_video.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/vanishing_point_video.cpp -o CMakeFiles/vp.dir/vanishing_point_video.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/vanishing_point_video.cpp -o CMakeFiles/vp.dir/vanishing_point_video.cpp.s
 
 CMakeFiles/vp.dir/vanishing_point_video.cpp.o.requires:
 .PHONY : CMakeFiles/vp.dir/vanishing_point_video.cpp.o.requires
@@ -77,24 +80,43 @@ vp_OBJECTS = \
 vp_EXTERNAL_OBJECTS =
 
 vp: CMakeFiles/vp.dir/vanishing_point_video.cpp.o
-vp: /usr/lib/libopencv_calib3d.so
-vp: /usr/lib/libopencv_contrib.so
-vp: /usr/lib/libopencv_core.so
-vp: /usr/lib/libopencv_features2d.so
-vp: /usr/lib/libopencv_flann.so
-vp: /usr/lib/libopencv_gpu.so
-vp: /usr/lib/libopencv_highgui.so
-vp: /usr/lib/libopencv_imgproc.so
-vp: /usr/lib/libopencv_legacy.so
-vp: /usr/lib/libopencv_ml.so
-vp: /usr/lib/libopencv_nonfree.so
-vp: /usr/lib/libopencv_objdetect.so
-vp: /usr/lib/libopencv_photo.so
-vp: /usr/lib/libopencv_stitching.so
-vp: /usr/lib/libopencv_ts.so
-vp: /usr/lib/libopencv_video.so
-vp: /usr/lib/libopencv_videostab.so
 vp: CMakeFiles/vp.dir/build.make
+vp: /usr/lib/libopencv_vstab.so.2.4.10
+vp: /usr/lib/libopencv_tegra.so.2.4.10
+vp: /usr/lib/libopencv_imuvstab.so.2.4.10
+vp: /usr/lib/libopencv_facedetect.so.2.4.10
+vp: /usr/lib/libopencv_esm_panorama.so.2.4.10
+vp: /usr/lib/libopencv_videostab.so.2.4.10
+vp: /usr/lib/libopencv_video.so.2.4.10
+vp: /usr/lib/libopencv_ts.a
+vp: /usr/lib/libopencv_superres.so.2.4.10
+vp: /usr/lib/libopencv_stitching.so.2.4.10
+vp: /usr/lib/libopencv_photo.so.2.4.10
+vp: /usr/lib/libopencv_objdetect.so.2.4.10
+vp: /usr/lib/libopencv_ml.so.2.4.10
+vp: /usr/lib/libopencv_legacy.so.2.4.10
+vp: /usr/lib/libopencv_imgproc.so.2.4.10
+vp: /usr/lib/libopencv_highgui.so.2.4.10
+vp: /usr/lib/libopencv_gpu.so.2.4.10
+vp: /usr/lib/libopencv_flann.so.2.4.10
+vp: /usr/lib/libopencv_features2d.so.2.4.10
+vp: /usr/lib/libopencv_core.so.2.4.10
+vp: /usr/lib/libopencv_contrib.so.2.4.10
+vp: /usr/lib/libopencv_calib3d.so.2.4.10
+vp: /usr/lib/libopencv_tegra.so.2.4.10
+vp: /usr/lib/libopencv_stitching.so.2.4.10
+vp: /usr/lib/libopencv_gpu.so.2.4.10
+vp: /usr/lib/libopencv_photo.so.2.4.10
+vp: /usr/lib/libopencv_objdetect.so.2.4.10
+vp: /usr/lib/libopencv_legacy.so.2.4.10
+vp: /usr/lib/libopencv_video.so.2.4.10
+vp: /usr/lib/libopencv_ml.so.2.4.10
+vp: /usr/lib/libopencv_calib3d.so.2.4.10
+vp: /usr/lib/libopencv_features2d.so.2.4.10
+vp: /usr/lib/libopencv_highgui.so.2.4.10
+vp: /usr/lib/libopencv_imgproc.so.2.4.10
+vp: /usr/lib/libopencv_flann.so.2.4.10
+vp: /usr/lib/libopencv_core.so.2.4.10
 vp: CMakeFiles/vp.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable vp"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/vp.dir/link.txt --verbose=$(VERBOSE)
@@ -111,6 +133,6 @@ CMakeFiles/vp.dir/clean:
 .PHONY : CMakeFiles/vp.dir/clean
 
 CMakeFiles/vp.dir/depend:
-	cd /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone /home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/CMakeFiles/vp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone /home/ubuntu/myGit/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/CMakeFiles/vp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/vp.dir/depend
 
