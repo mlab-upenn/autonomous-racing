@@ -4,7 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/talker.cpp" "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/beginner_tutorials/CMakeFiles/talker.dir/src/talker.cpp.o"
+  "/home/ubuntu/pennARC_ws/src/beginner_tutorials/src/talker.cpp" "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/beginner_tutorials/CMakeFiles/talker.dir/src/talker.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -21,8 +21,8 @@ SET(CMAKE_TARGET_LINKED_INFO_FILES
 
 # The include file search paths:
 SET(CMAKE_C_TARGET_INCLUDE_PATH
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/include"
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/include"
+  "/home/ubuntu/pennARC_ws/devel/include"
+  "/home/ubuntu/pennARC_ws/src/beginner_tutorials/include"
   "/opt/ros/indigo/include"
   "/usr/include/opencv"
   "/usr/include/ncursesw"

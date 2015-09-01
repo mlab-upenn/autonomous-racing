@@ -39,7 +39,7 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src
+CMAKE_SOURCE_DIR = /home/ubuntu/pennARC_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build

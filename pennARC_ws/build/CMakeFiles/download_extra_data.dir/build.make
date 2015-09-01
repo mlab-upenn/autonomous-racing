@@ -35,7 +35,7 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src
+CMAKE_SOURCE_DIR = /home/ubuntu/pennARC_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build
@@ -60,6 +60,6 @@ CMakeFiles/download_extra_data.dir/clean:
 .PHONY : CMakeFiles/download_extra_data.dir/clean
 
 CMakeFiles/download_extra_data.dir/depend:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/CMakeFiles/download_extra_data.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/pennARC_ws/src /home/ubuntu/pennARC_ws/src /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/CMakeFiles/download_extra_data.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/download_extra_data.dir/depend
 

@@ -1,8 +1,8 @@
-prefix=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/install
+prefix=/home/ubuntu/pennARC_ws/install
 
 Name: beginner_tutorials
 Description: Description of beginner_tutorials
 Version: 0.0.0
-Cflags: -I/home/ubuntu/myGit/autonomous-racing/pennARC_ws/install/include
-Libs: -L/home/ubuntu/myGit/autonomous-racing/pennARC_ws/install/lib 
+Cflags: -I/home/ubuntu/pennARC_ws/install/include
+Libs: -L/home/ubuntu/pennARC_ws/install/lib 
 Requires: message_runtime

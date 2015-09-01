@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/vanishing_node.cpp
+/home/ubuntu/pennARC_ws/src/beginner_tutorials/src/vanishing_node.cpp
 ros/ros.h
 -
 image_transport/image_transport.h
@@ -20,7 +20,7 @@ opencv2/imgproc/imgproc.hpp
 opencv2/highgui/highgui.hpp
 -
 std_msgs/Int16.h
-/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/std_msgs/Int16.h
+/home/ubuntu/pennARC_ws/src/beginner_tutorials/src/std_msgs/Int16.h
 iostream
 -
 stdio.h

@@ -41,7 +41,7 @@ float sum_m = 0.0;
 int num_m = 0;
 
 /* Drive commands */
-const float throttle_cmd = .4;	// Constant until we want to change it 
+const float throttle_cmd = .41;	// Constant until we want to change it 
 float steering_cmd;
 const float STEERING_CMD_MAX = 2.0;
 const float STEERING_CMD_MIN = -2.0;
@@ -107,7 +107,6 @@ float msac_dist(lidar_dist p1, lidar_dist p2, lidar_dist p_test) {
 	float b = (p2.dist_x - p1.dist_x) * p_test.dist_y;
 	float c = p2.dist_x * p1.dist_y - p2.dist_y * p1.dist_x;
 	float d = sqrt(pow(p2.dist_y - p1.dist_y, 2) + pow(p2.dist_x - p1.dist_x, 2));
-
 	float res = fabsf((p2.dist_y - p1.dist_y) * p_test.dist_x - 
 						 (p2.dist_x - p1.dist_x) * p_test.dist_y +
 						  p2.dist_x * p1.dist_y - p2.dist_y * p1.dist_x) /
@@ -280,7 +279,7 @@ float saturate_float(float val, float min, float max) {
 /* Todo:	1. either make ang_des an argument or allow it to be changed elsewhere 
 *					2. reset function for integral term if using it  */ 
 float pid_steering(float cur_slope) {
-	static const float kp = 1.5;
+	static const float kp = 6;
 	static const float kd = 0.0;
 	static const float ki = 0.0;
 
@@ -371,7 +370,7 @@ int main(int argc, char **argv)
   ros::Subscriber sub = n.subscribe("scan", 1000, scanReceiveCallback);
 
 	/* Initialize publisher */
-	drive_cmd_publisher = n.advertise<basic_path_plan::driveCmd>("lidar_path_plan", 1000);
+	drive_cmd_publisher = n.advertise<basic_path_plan::driveCmd>("teleop_commands", 1000);
 
 
 	ros::spin();

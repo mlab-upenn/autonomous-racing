@@ -51,7 +51,7 @@ Boost_THREAD_LIBRARY_RELEASE:FILEPATH=/usr/lib/arm-linux-gnueabihf/libboost_thre
 CATKIN_BLACKLIST_PACKAGES:STRING=
 
 //catkin devel space
-CATKIN_DEVEL_PREFIX:PATH=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel
+CATKIN_DEVEL_PREFIX:PATH=/home/ubuntu/pennARC_ws/devel
 
 //Catkin enable testing
 CATKIN_ENABLE_TESTING:BOOL=ON
@@ -131,7 +131,7 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=OFF
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/install
+CMAKE_INSTALL_PREFIX:PATH=/home/ubuntu/pennARC_ws/install
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=/usr/bin/ld
@@ -267,7 +267,7 @@ PYTHON_VERSION:STRING=
 Project_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build
 
 //Value Computed by CMake
-Project_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src
+Project_SOURCE_DIR:STATIC=/home/ubuntu/pennARC_ws/src
 
 //Path to a library.
 RT_LIBRARY:FILEPATH=/usr/lib/arm-linux-gnueabihf/librt.so
@@ -288,10 +288,16 @@ _CATKIN_GTEST_INCLUDE:FILEPATH=/usr/include/gtest/gtest.h
 _CATKIN_GTEST_SRC:FILEPATH=/usr/src/gtest/src/gtest.cc
 
 //Value Computed by CMake
+basic_path_plan_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/basic_path_plan
+
+//Value Computed by CMake
+basic_path_plan_SOURCE_DIR:STATIC=/home/ubuntu/pennARC_ws/src/basic_path_plan
+
+//Value Computed by CMake
 beginner_tutorials_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/beginner_tutorials
 
 //Value Computed by CMake
-beginner_tutorials_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials
+beginner_tutorials_SOURCE_DIR:STATIC=/home/ubuntu/pennARC_ws/src/beginner_tutorials
 
 //The directory containing a CMake configuration file for catkin.
 catkin_DIR:PATH=/opt/ros/indigo/share/catkin/cmake
@@ -309,13 +315,16 @@ cpp_common_DIR:PATH=/opt/ros/indigo/share/cpp_common/cmake
 custom_messages_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/custom_messages
 
 //The directory containing a CMake configuration file for custom_messages.
-custom_messages_DIR:PATH=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/share/custom_messages/cmake
+custom_messages_DIR:PATH=/home/ubuntu/pennARC_ws/devel/share/custom_messages/cmake
 
 //Value Computed by CMake
-custom_messages_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/custom_messages
+custom_messages_SOURCE_DIR:STATIC=/home/ubuntu/pennARC_ws/src/custom_messages
 
 //The directory containing a CMake configuration file for cv_bridge.
 cv_bridge_DIR:PATH=/opt/ros/indigo/share/cv_bridge/cmake
+
+//The directory containing a CMake configuration file for dynamic_reconfigure.
+dynamic_reconfigure_DIR:PATH=/opt/ros/indigo/share/dynamic_reconfigure/cmake
 
 //The directory containing a CMake configuration file for gencpp.
 gencpp_DIR:PATH=/opt/ros/indigo/share/gencpp/cmake
@@ -361,7 +370,7 @@ gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 image_transport_DIR:PATH=/opt/ros/indigo/share/image_transport/cmake
 
 //Path to a library.
-lib:FILEPATH=/opt/ros/indigo/lib/libroslib.so
+lib:FILEPATH=/opt/ros/indigo/lib/librostime.so
 
 //Value Computed by CMake
 mavlink_serial_client_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/px-ros-pkg-master/drivers/mavlink_serial_client
@@ -389,6 +398,12 @@ px_comm_DIR:PATH=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/share/px_
 
 //Value Computed by CMake
 px_comm_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/px-ros-pkg-master/px_comm
+
+//Value Computed by CMake
+razor_imu_9dof_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/razor_imu_9dof
+
+//Value Computed by CMake
+razor_imu_9dof_SOURCE_DIR:STATIC=/home/ubuntu/pennARC_ws/src/razor_imu_9dof
 
 //The directory containing a CMake configuration file for rosconsole.
 rosconsole_DIR:PATH=/opt/ros/indigo/share/rosconsole/cmake
@@ -543,7 +558,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=4
+CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=6
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

@@ -3,5 +3,6 @@
 	<param name="/lidar/skip" value="0" type="int" />
 	<param name="/lidar/min_ang" value="-2.09" />
 	<param name="/lidar/max_ang" value="2.09" />
+	<param name="/lidar/port" value="/dev/ttyACM1" />
 	<node name="lidar" pkg="hokuyo_node" type="hokuyo_node" />
 </launch>

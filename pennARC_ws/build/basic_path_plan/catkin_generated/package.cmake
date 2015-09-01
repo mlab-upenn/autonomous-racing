@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "basic_path_plan")
+set(basic_path_plan_MAINTAINER "Ben Kramer <krab@seas.upenn.edu>")
+set(basic_path_plan_DEPRECATED "")
+set(basic_path_plan_VERSION "0.0.0")
+set(basic_path_plan_BUILD_DEPENDS "roscpp" "rospy" "std_msgs" "sensor_msgs" "message_generation")
+set(basic_path_plan_RUN_DEPENDS "roscpp" "rospy" "std_msgs" "sensor_msgs" "message_runtime")
+set(basic_path_plan_BUILDTOOL_DEPENDS "catkin")
