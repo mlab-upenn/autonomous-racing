@@ -11,6 +11,9 @@
 #include <iostream>
 #include <stdio.h>  
 #include <string>
+#include <time.h>
+
+ #define BILLION 1000000000L
 
 // #include "FlyCapture2.h"
 
@@ -23,6 +26,10 @@
  Mat standard_hough;
  int min_threshold = 50;
  int max_trackbar = 150;
+  // image dimensions
+ int width = 640;
+ int height = 480;
+
  // canny 
  int lowThreshold = 60;
  int const max_lowThreshold = 100;
@@ -31,23 +38,27 @@
  // hough
  int s_trackbar = 50;
  const char* standard_name = "Standard Hough Lines Demo";
- // image dimensions
- int width = 640;
- int height = 480;
-
  // ransac parameters
  int N_iterations = 50; // # of iterations for ransac
  int threshold_ransac = 10; // distance within which the hypothesis is classified as an inlier
 
- // low pass parameters
- const int lowPass_window = 10;
- int window [lowPass_window][2] = {};
+ // moving average parameters
+ const int movingAvg_window = 10;
+ int window [movingAvg_window][2] = {};
  int lp_pointer = 0;
  int running_sum [2] = {};
 
+ // lpf parameters
+ Point vp_prev, vp_lp_prev;
+ bool initFlag = true;
+ int freq_sampling = 25;
+ int freq_c = 40;
+ 
  unsigned long ind = 0;
-
  vector<int> compression_params;
+
+  uint64_t diff;
+  struct timespec start, end;
 
  // Function Headers
  void help();
@@ -142,37 +153,67 @@ int findInliers(const vector<Vec2f>& s_lines, const Point& intersectingPt)
   return inliers;
 }
 
-/* -----------------------------------------LPF --------------------------------------------*/
+/* -----------------------------------------Moving average-----------------------------------------*/
 
- // // low pass parameters
- // const int lowPass_window = 20;
- // int window [lowPass_window][2] = {};
+ // // moving average parameters
+ // const int movingAvg_window = 20;
+ // int window [movingAvg_window][2] = {};
  // int lp_pointer = 0;
  // int sum [2] = {};
-int* lowPass (int vp_x, int vp_y) 
+// input vp gets filtered and saved in vp_lp
+void movingAvg (Point& vp_lp, const Point& vp) 
 {
+
   // remove element from running sum
   running_sum[0] -= window[lp_pointer][0];
   running_sum[1] -= window[lp_pointer][1];
 
   // update window with new vanishing point
-  window[lp_pointer][0] = vp_x;
-  window[lp_pointer][1] = vp_y;
+  window[lp_pointer][0] = vp.x;
+  window[lp_pointer][1] = vp.y;
 
   // update sum
   running_sum[0] += window[lp_pointer][0];
   running_sum[1] += window[lp_pointer][1];
 
   // update running avg
-  int *avg = (int *) malloc(sizeof (int) * 2);
-  avg[0] = (int) (float)running_sum[0]/lowPass_window;
-  avg[1] = (int) (float)running_sum[1]/lowPass_window;
+  // int *avg = (int *) malloc(sizeof (int) * 2);
+  // avg[0] = (int) (float)running_sum[0]/movingAvg_window;
+  // avg[1] = (int) (float)running_sum[1]/movingAvg_window;
+  vp_lp.x = (int) (float)running_sum[0]/movingAvg_window;
+  vp_lp.y = (int) (float)running_sum[1]/movingAvg_window;
 
   // increment lp_pointer and keep within bounds
   lp_pointer++;
-  if (lp_pointer >= lowPass_window) lp_pointer = 0;
+  if (lp_pointer >= movingAvg_window) lp_pointer = 0;
 
-  return avg;
+}
+
+
+
+/* ---------------------1st order LPF (discretized using tustin approx)--------------------------*/
+// input vp gets filtered and saved in vp_lp
+// int freq_sampling | int freq_c
+void lpf (Point& vp_lp, const Point& vp) 
+{
+  // first time initialization
+  if (initFlag) 
+  {
+    vp_lp_prev.x = vp.x;
+    vp_prev.x = vp.x;
+    vp_lp.x = vp.x;
+    vp_lp_prev.y = vp.y;
+    vp_prev.y = vp.y;
+    vp_lp.y = vp.y;
+    initFlag = false;
+    return;
+  }
+
+  float Tw = 1.0/freq_sampling * 2.0 * CV_PI * freq_c;
+  vp_lp.x = (int) (Tw*(vp.x + vp_prev.x) - (Tw-2)*vp_lp_prev.x)/(Tw+2);
+  vp_lp.y = (int) (Tw*(vp.y + vp_prev.y) - (Tw-2)*vp_lp_prev.y)/(Tw+2);
+
+  return;
 }
 
 /* -------------------------------------- vp detection --------------------------------------------*/
@@ -180,17 +221,26 @@ int* lowPass (int vp_x, int vp_y)
  {
   vector<Vec2f> s_lines;
 
+  
   // 1(a) Reduce noise with a kernel 3x3
   blur( frame, edges, Size(3,3) );
 
+  clock_gettime(CLOCK_MONOTONIC, &start); /* mark start time */
   // 1(b) Apply Canny edge detector
   Canny( edges, edges, lowThreshold, lowThreshold*ratio, kernel_size);
 
+  clock_gettime(CLOCK_MONOTONIC, &end); /* mark the end time */
+  diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+  printf(" edge = %llu ns", (long long unsigned int) diff);
+
   cvtColor( edges, standard_hough, CV_GRAY2BGR );
 
+  clock_gettime(CLOCK_MONOTONIC, &start); /* mark start time */
   // 2. Use Standard Hough Transform
   HoughLines(edges, s_lines, 1, CV_PI/180, min_threshold + s_trackbar, 0, 0 );
-
+  clock_gettime(CLOCK_MONOTONIC, &end); /* mark the end time */
+  diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+  printf(" hough = %llu ns", (long long unsigned int) diff);
 
   //preprocessing: remove vertical lines within +-3 degrees
   for (int i = static_cast<int> (s_lines.size()) - 1; i>=0; i--) 
@@ -216,6 +266,7 @@ int* lowPass (int vp_x, int vp_y)
   }
   ////////////////////////////////////////////////////
 
+  clock_gettime(CLOCK_MONOTONIC, &start); /* mark start time */
   // 3. RANSAC if > 2 lines available
   if (static_cast<int>(s_lines.size()) > 1) 
   {
@@ -283,11 +334,9 @@ int* lowPass (int vp_x, int vp_y)
     if (vp.x > width) vp.x = width;
     if (vp.y > height) vp.y = height;
 
-    // apply low pass filter over frames
-    int *avg = lowPass (vp.x, vp.y);
-    vp_lp.x = *(avg);
-    vp_lp.y = *(avg + 1);
-    free(avg); // free avg to avoid memory leaks
+    // apply moving average/lpf filter over frames
+    // movingAvg(vp_lp, vp);
+    lpf(vp_lp, vp);
 
     // compute error signal 
     int error = (vp_lp.x - cvRound(width/2.0));
@@ -300,6 +349,9 @@ int* lowPass (int vp_x, int vp_y)
     circle(frame, vp_lp, 3,  Scalar(0,255,0), 2, 8, 0 );
 
   } // end of ransac (if > 2 lines available)
+  clock_gettime(CLOCK_MONOTONIC, &end); /* mark the end time */
+  diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+  printf(" ransac = %llu ns", (long long unsigned int) diff);
 
   // draw cross hair
   Point pt1_v( cvRound(width/2.0), 0);
@@ -312,15 +364,13 @@ int* lowPass (int vp_x, int vp_y)
   imshow( standard_name, standard_hough );
   imshow("Original", frame);
 
-  char str[50], str2[50];
-  sprintf(str, "images_og/image_%lu.png",ind);
-  sprintf(str2, "images_behind_the_scenes/image_%lu.png",ind);
-
-
-  imwrite( str, frame , compression_params);
-  imwrite( str2, standard_hough, compression_params );
-  cout << "Writing image " << ind << endl;
-  ind++;
+  // char str[50], str2[50];
+  // sprintf(str, "images_og/image_%lu.png",ind);
+  // sprintf(str2, "images_behind_the_scenes/image_%lu.png",ind);
+  // imwrite( str, frame , compression_params);
+  // imwrite( str2, standard_hough, compression_params );
+  // cout << "Writing image " << ind << endl;
+  // ind++;
 
 
 }
