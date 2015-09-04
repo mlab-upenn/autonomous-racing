@@ -1,0 +1,7 @@
+code/vanishing_point_standalone/CMakeCache.txt
+code/vanishing_point_standalone/CMakeFiles/
+code/vanishing_point_standalone/Makefile
+code/vanishing_point_standalone/cmake_install.cmake
+simulations/*.autosave
+code/vanishing_point_standalone/vp*
+
