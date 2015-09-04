@@ -4,7 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/vanishing_point_video.cpp" "/home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_standalone/CMakeFiles/vp.dir/vanishing_point_video.cpp.o"
+  "/home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_video.cpp" "/home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/CMakeFiles/vp.dir/vanishing_point_video.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 

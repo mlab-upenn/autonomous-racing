@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/vanishing_point_video.cpp
+opencv2/highgui/highgui.hpp
+/home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/opencv2/highgui/highgui.hpp
+opencv2/imgproc/imgproc.hpp
+/home/dhruva/Documents/mlab/autonomous-racing/VanishingPoint/code/opencv2/imgproc/imgproc.hpp
+iostream
+-
+stdio.h
+-
+string
+-
+

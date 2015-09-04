@@ -49,10 +49,10 @@
  int running_sum [2] = {};
 
  // lpf parameters
- Point vp_prev, vp_lp_prev;
- bool initFlag = true;
- int freq_sampling = 25;
- int freq_c = 40;
+ Point vp_prev, vp_filter_prev;
+ bool initFlag_vp, initFlag_mid = true;
+ int freq_sampling = 10;
+ int freq_c = 20;
  
  unsigned long ind = 0;
  vector<int> compression_params;
@@ -160,8 +160,8 @@ int findInliers(const vector<Vec2f>& s_lines, const Point& intersectingPt)
  // int window [movingAvg_window][2] = {};
  // int lp_pointer = 0;
  // int sum [2] = {};
-// input vp gets filtered and saved in vp_lp
-void movingAvg (Point& vp_lp, const Point& vp) 
+// input vp gets filtered and saved in vp_filter
+void movingAvg (Point& vp_filter, const Point& vp) 
 {
 
   // remove element from running sum
@@ -180,8 +180,8 @@ void movingAvg (Point& vp_lp, const Point& vp)
   // int *avg = (int *) malloc(sizeof (int) * 2);
   // avg[0] = (int) (float)running_sum[0]/movingAvg_window;
   // avg[1] = (int) (float)running_sum[1]/movingAvg_window;
-  vp_lp.x = (int) (float)running_sum[0]/movingAvg_window;
-  vp_lp.y = (int) (float)running_sum[1]/movingAvg_window;
+  vp_filter.x = (int) (float)running_sum[0]/movingAvg_window;
+  vp_filter.y = (int) (float)running_sum[1]/movingAvg_window;
 
   // increment lp_pointer and keep within bounds
   lp_pointer++;
@@ -192,28 +192,74 @@ void movingAvg (Point& vp_lp, const Point& vp)
 
 
 /* ---------------------1st order LPF (discretized using tustin approx)--------------------------*/
-// input vp gets filtered and saved in vp_lp
+// input vp gets filtered and saved in vp_filter
 // int freq_sampling | int freq_c
-void lpf (Point& vp_lp, const Point& vp) 
+void lpf (Point& vp_filter, const Point& vp, bool initFlag) 
 {
   // first time initialization
   if (initFlag) 
   {
-    vp_lp_prev.x = vp.x;
+    vp_filter_prev.x = vp.x;
     vp_prev.x = vp.x;
-    vp_lp.x = vp.x;
-    vp_lp_prev.y = vp.y;
+    vp_filter.x = vp.x;
+    vp_filter_prev.y = vp.y;
     vp_prev.y = vp.y;
-    vp_lp.y = vp.y;
+    vp_filter.y = vp.y;
     initFlag = false;
     return;
   }
 
   float Tw = 1.0/freq_sampling * 2.0 * CV_PI * freq_c;
-  vp_lp.x = (int) (Tw*(vp.x + vp_prev.x) - (Tw-2)*vp_lp_prev.x)/(Tw+2);
-  vp_lp.y = (int) (Tw*(vp.y + vp_prev.y) - (Tw-2)*vp_lp_prev.y)/(Tw+2);
+  vp_filter.x = (int) (Tw*(vp.x + vp_prev.x) - (Tw-2)*vp_filter_prev.x)/(Tw+2);
+  vp_filter.y = (int) (Tw*(vp.y + vp_prev.y) - (Tw-2)*vp_filter_prev.y)/(Tw+2);
 
   return;
+}
+
+/* ------------------------------------- middle point ------------------------------------------*/
+// Takes in the 2 best lines and computes the middle point between the intersection of those lines with the x-axis
+int computeMiddlePt(int a_best, int b_best, const vector<Vec2f>& s_lines) 
+{
+  // corner case: take care of a_best / b_best out of bounds
+  if (a_best < 0 || a_best > static_cast<int>(s_lines.size()) || b_best < 0 || b_best > static_cast<int>(s_lines.size())) 
+  {
+    return (int) (width/2.0);
+  }
+
+  Point intersectingPt;
+  float r_1, t_1, r_2, t_2;
+  int x1, x2;
+  bool found;
+  r_1 = s_lines[a_best][0]; t_1 = s_lines[a_best][1]; // 1st line
+  r_2 = height/2.0; t_2 = CV_PI/2; // horizontal line
+  
+  found = findIntersectingPoint(r_1, t_1, r_2, t_2, intersectingPt);
+  // if intersecting point not found set it at the left border of the image
+  if (found) { x1 = intersectingPt.x; }
+  else 
+  {
+    if (t_1 * 180/CV_PI < CV_PI/2 ) { x1 = 0; } 
+    else { x1 = width; }
+  }
+  
+  r_1 = s_lines[b_best][0]; t_1 = s_lines[b_best][1]; // 2nd line
+  found= findIntersectingPoint(r_1, t_1, r_2, t_2, intersectingPt);
+  // if intersecting point not found set it at the right border of the image
+  if (found) { x2 = intersectingPt.x; }
+  else 
+  {
+    if (t_1 * 180/CV_PI < CV_PI/2 ) { x2 = 0; } 
+    else { x2 = width; }
+  }
+
+  int x_m = (int) (x1 + x2)/2.0;
+// int x_m = 0;
+  // limit within bounds
+  if (x_m > width) x_m = width;
+  if (x_m < 0) x_m = 0;
+
+  return x_m;
+
 }
 
 /* -------------------------------------- vp detection --------------------------------------------*/
@@ -272,14 +318,14 @@ void lpf (Point& vp_lp, const Point& vp)
   {
     // ransac
     // input: s_lines | 
-    //Mat tempImg;
+    Mat tempImg;
     //cout << "Size of image: " << standard_hough.rows << ", "<< standard_hough.cols << endl;
-    int maxInliers = 0;
-    Point vp, vp_lp;
+    int maxInliers = 0; int a_best, b_best;
+    Point vp, vp_filter, vp_filter2;
     for (int i = 0; i<N_iterations; i++) 
     {
       
-      //tempImg = standard_hough.clone();;
+      tempImg = standard_hough.clone();;
       // 1. randomly select 2 lines
       int a = rand() % static_cast<int>(s_lines.size());
       int b = rand() % static_cast<int>(s_lines.size());
@@ -298,21 +344,32 @@ void lpf (Point& vp_lp, const Point& vp)
     //   //print//cout << "Point: " << intersectingPt.x << ", " << intersectingPt.y << endl;
     // }
 
-    // // // draw for debugging purposes
-    // double alpha = 1000;
-    // double cos_t = cos(t_1), sin_t = sin(t_1);
-    // Point pt1( cvRound(r_1*cos_t + alpha*(-sin_t)), cvRound(r_1*sin_t + alpha*cos_t) );
-    // Point pt2( cvRound(r_1*cos_t - alpha*(-sin_t)), cvRound(r_1*sin_t - alpha*cos_t) );
-    // line(tempImg, pt1, pt2, Scalar(255,255,0), 2, CV_AA);
+    // // // draw pairs of lines and intersecting pt for debugging purposes
+//     double alpha = 1000;
+//     double cos_t = cos(t_1), sin_t = sin(t_1);
+//     Point pt1( cvRound(r_1*cos_t + alpha*(-sin_t)), cvRound(r_1*sin_t + alpha*cos_t) );
+//     Point pt2( cvRound(r_1*cos_t - alpha*(-sin_t)), cvRound(r_1*sin_t - alpha*cos_t) );
+//     line(tempImg, pt1, pt2, Scalar(255,255,0), 2, CV_AA);
+// // 
+//     cos_t = cos(t_2); sin_t = sin(t_2);
+//     Point pt11( cvRound(r_2*cos_t + alpha*(-sin_t)), cvRound(r_2*sin_t + alpha*cos_t) );
+//     Point pt22( cvRound(r_2*cos_t - alpha*(-sin_t)), cvRound(r_2*sin_t - alpha*cos_t) );
+//     line(tempImg, pt11, pt22, Scalar(255,255,0), 2, CV_AA);
 
-    // cos_t = cos(t_2); sin_t = sin(t_2);
-    // Point pt11( cvRound(r_2*cos_t + alpha*(-sin_t)), cvRound(r_2*sin_t + alpha*cos_t) );
-    // Point pt22( cvRound(r_2*cos_t - alpha*(-sin_t)), cvRound(r_2*sin_t - alpha*cos_t) );
-    // line(tempImg, pt11, pt22, Scalar(255,255,0), 2, CV_AA);
+//     int x_m = computeMiddlePt(a, b, s_lines);
+//     Point mid;
+//     mid.x = x_m;
+//     mid.y = (int) height/2.0;
 
-    // circle(tempImg, intersectingPt, 2,  Scalar(0,0,255), 2, 8, 0 );
-    // imshow("temp", tempImg);
-    // waitKey(0);
+//     // horizontal line
+//     Point pt1_h( 0, cvRound(height/2.0));
+//     Point pt2_h( width, cvRound(height/2.0));
+//     line( tempImg, pt1_h, pt2_h, Scalar(0,255,255), 1, CV_AA);
+
+//     circle(tempImg, intersectingPt, 2,  Scalar(0,0,255), 2, 8, 0 );
+//     circle(tempImg, mid, 2,  Scalar(0,255,255), 2, 8, 0 );
+//     imshow("temp", tempImg);
+//     waitKey(0);
 
       // 3. find error for each line (shortest distance b/w point above and line: perpendicular bisector)
       // 4. find # inliers (error < threshold)
@@ -326,27 +383,43 @@ void lpf (Point& vp_lp, const Point& vp)
         maxInliers = inliers;
         vp.x = intersectingPt.x; 
         vp.y = intersectingPt.y;
+        a_best = a;
+        b_best = b;
       }
 
     } // end of ransac iterations
     
     // limit vanishing point to be within image bounds
     if (vp.x > width) vp.x = width;
+    if (vp.x < 0) vp.x = 0;
     if (vp.y > height) vp.y = height;
+    if (vp.y < 0) vp.y = 0;
 
-    // apply moving average/lpf filter over frames
-    // movingAvg(vp_lp, vp);
-    lpf(vp_lp, vp);
+    // compute middle point x_m
+    int x_m = computeMiddlePt(a_best, b_best, s_lines);
+    Point mid, mid_filter; 
+    mid.x = x_m;
+    mid.y = (int) height/2.0;
+
+    // apply moving average/lpf filter over frames for vp
+    // movingAvg(vp_filter, vp);
+    // movingAvg(mid_filter, mid);
+    lpf(vp_filter, vp, initFlag_vp);
+    lpf(mid_filter, mid, initFlag_mid);
 
     // compute error signal 
-    int error = (vp_lp.x - cvRound(width/2.0));
+    int error = (vp_filter.x - cvRound(width/2.0));
+    // int error2 = (vp_filter2.x - cvRound(width/2.0));
     cout << "Vanishing point = " << vp.x << "," << vp.y << "| Inliers: " << maxInliers << "| error: "<< error << endl;
 
     // plot vanishing point on images
     // circle(standard_hough, vp, 2,  Scalar(0,0,255), 2, 8, 0 );
     // circle(frame, vp, 3,  Scalar(0,0,255), 2, 8, 0 );
-    circle(standard_hough, vp_lp, 2,  Scalar(0,255,0), 2, 8, 0 );
-    circle(frame, vp_lp, 3,  Scalar(0,255,0), 2, 8, 0 );
+    circle(standard_hough, vp_filter, 2,  Scalar(0,255,0), 2, 8, 0 );
+    circle(standard_hough, mid_filter, 2,  Scalar(0,0,255), 2, 8, 0 );
+    // circle(standard_hough, vp_filter2, 2,  Scalar(0,255,255), 2, 8, 0 );
+    circle(frame, vp_filter, 3,  Scalar(0,255,0), 2, 8, 0 );
+    circle(frame, mid_filter, 3,  Scalar(0,0,255), 2, 8, 0 );
 
   } // end of ransac (if > 2 lines available)
   clock_gettime(CLOCK_MONOTONIC, &end); /* mark the end time */
