@@ -36,7 +36,7 @@
  int ratio = 3;
  int kernel_size = 3;
  // hough
- int s_trackbar = 50;
+ int s_trackbar = 30;
  const char* standard_name = "Standard Hough Lines Demo";
  // ransac parameters
  int N_iterations = 50; // # of iterations for ransac
@@ -235,7 +235,13 @@ int computeMiddlePt(int a_best, int b_best, const vector<Vec2f>& s_lines)
   
   found = findIntersectingPoint(r_1, t_1, r_2, t_2, intersectingPt);
   // if intersecting point not found set it at the left border of the image
-  if (found) { x1 = intersectingPt.x; }
+  if (found) 
+  { 
+    x1 = intersectingPt.x;
+    // limit
+    if (x1<0) x1 = 0;
+    if (x1>width) x1 = width; 
+  }
   else 
   {
     if (t_1 * 180/CV_PI < CV_PI/2 ) { x1 = 0; } 
@@ -245,7 +251,13 @@ int computeMiddlePt(int a_best, int b_best, const vector<Vec2f>& s_lines)
   r_1 = s_lines[b_best][0]; t_1 = s_lines[b_best][1]; // 2nd line
   found= findIntersectingPoint(r_1, t_1, r_2, t_2, intersectingPt);
   // if intersecting point not found set it at the right border of the image
-  if (found) { x2 = intersectingPt.x; }
+  if (found) 
+  { 
+    x2 = intersectingPt.x; 
+    // limit
+    if (x2<0) x2 = 0;
+    if (x2>width) x2 = width; 
+  }
   else 
   {
     if (t_1 * 180/CV_PI < CV_PI/2 ) { x2 = 0; } 
@@ -291,10 +303,20 @@ int computeMiddlePt(int a_best, int b_best, const vector<Vec2f>& s_lines)
   //preprocessing: remove vertical lines within +-3 degrees
   for (int i = static_cast<int> (s_lines.size()) - 1; i>=0; i--) 
   {
-    int t_deg = s_lines[i][1] * 180/CV_PI;
+    int t_deg = (int) s_lines[i][1] * 180.0/CV_PI;
     // it looks like theta ranges from 0 to 180 degrees
     if (t_deg < 5 || t_deg > 175)  s_lines.erase(s_lines.begin() + i);
+    
   }
+
+  // for (int i = static_cast<int> (s_lines.size()) - 1; i>=0; i--) 
+  // {
+  //   int t_deg = s_lines[i][1] * 180/CV_PI;
+  //   // remove horizontal lines
+  //   if (t_deg >= 88 && t_deg <=92)  s_lines.erase(s_lines.begin() + i);
+  // }
+  
+  // cout << endl << s_lines.size() << endl;
 
   ////////////////////////////////////////////////////
   /// Show the result
@@ -312,6 +334,16 @@ int computeMiddlePt(int a_best, int b_best, const vector<Vec2f>& s_lines)
   }
   ////////////////////////////////////////////////////
 
+  // split the lines into 2 lists based on theta. ransac will randomly (not so random) choose 2 lines
+  // from the 2 lists respectively. 
+  vector<int> lines_1, lines_2;
+  for (vector<int>::size_type i = 0; i!=s_lines.size(); i++)
+  {
+    int t_deg = (int) s_lines[i][1] * 180.0/CV_PI;
+    if (t_deg < CV_PI/2.0) lines_1.push_back(i);
+    else lines_2.push_back(i);
+  }
+
   clock_gettime(CLOCK_MONOTONIC, &start); /* mark start time */
   // 3. RANSAC if > 2 lines available
   if (static_cast<int>(s_lines.size()) > 1) 
@@ -324,11 +356,21 @@ int computeMiddlePt(int a_best, int b_best, const vector<Vec2f>& s_lines)
     Point vp, vp_filter, vp_filter2;
     for (int i = 0; i<N_iterations; i++) 
     {
-      
       tempImg = standard_hough.clone();;
       // 1. randomly select 2 lines
-      int a = rand() % static_cast<int>(s_lines.size());
-      int b = rand() % static_cast<int>(s_lines.size());
+      // edit: not so random. chose lines from 2 buckets categorized according to theta
+      // if the list is not empty
+      int a,b;
+      if (!lines_1.empty() && !lines_2.empty())
+      {
+        a = rand() % static_cast<int>(lines_1.size());
+        a = lines_1[a];
+        b = rand() % static_cast<int>(lines_2.size());
+        b = lines_2[b];
+      } else {
+        a = rand() % static_cast<int>(s_lines.size());
+        b = rand() % static_cast<int>(s_lines.size());
+      }
 
       // 2. find intersecting point (x_v, y_v)
       Point intersectingPt;
@@ -395,9 +437,49 @@ int computeMiddlePt(int a_best, int b_best, const vector<Vec2f>& s_lines)
     if (vp.y > height) vp.y = height;
     if (vp.y < 0) vp.y = 0;
 
+    int x_m;  Point mid;
+    ////////////////////////////////////////////////////////////////////////
+//     Point intersectingPt;
+//       float r_1 = s_lines[a_best][0], t_1 = s_lines[a_best][1];
+//       float r_2 = s_lines[b_best][0], t_2 = s_lines[b_best][1];
+//       bool found= findIntersectingPoint(r_1, t_1, r_2, t_2, intersectingPt);
+      
+//     // else 
+//     // {
+//     //   //print//cout << "Point: " << intersectingPt.x << ", " << intersectingPt.y << endl;
+//     // }
+
+//     // // // draw pairs of lines and intersecting pt for debugging purposes
+//     double alpha = 1000;
+//     double cos_t = cos(t_1), sin_t = sin(t_1);
+//     Point pt1( cvRound(r_1*cos_t + alpha*(-sin_t)), cvRound(r_1*sin_t + alpha*cos_t) );
+//     Point pt2( cvRound(r_1*cos_t - alpha*(-sin_t)), cvRound(r_1*sin_t - alpha*cos_t) );
+//     line(tempImg, pt1, pt2, Scalar(0,0,255), 2, CV_AA);
+// // 
+//     cos_t = cos(t_2); sin_t = sin(t_2);
+//     Point pt11( cvRound(r_2*cos_t + alpha*(-sin_t)), cvRound(r_2*sin_t + alpha*cos_t) );
+//     Point pt22( cvRound(r_2*cos_t - alpha*(-sin_t)), cvRound(r_2*sin_t - alpha*cos_t) );
+//     line(tempImg, pt11, pt22, Scalar(0,0,255), 2, CV_AA);
+
+//     x_m = computeMiddlePt(a_best, b_best, s_lines);
+   
+//     mid.x = x_m;
+//     mid.y = (int) height/2.0;
+
+//     // horizontal line
+//     Point pt1_h( 0, cvRound(height/2.0));
+//     Point pt2_h( width, cvRound(height/2.0));
+//     line( tempImg, pt1_h, pt2_h, Scalar(0,255,255), 1, CV_AA);
+
+//     circle(tempImg, intersectingPt, 2,  Scalar(0,0,255), 2, 8, 0 );
+//     circle(tempImg, mid, 2,  Scalar(0,255,255), 2, 8, 0 );
+//     imshow("temp", tempImg);
+//     waitKey(0);
+    //////////////////////////////////////////////////////////////////////////
+
     // compute middle point x_m
-    int x_m = computeMiddlePt(a_best, b_best, s_lines);
-    Point mid, mid_filter; 
+    x_m = computeMiddlePt(a_best, b_best, s_lines);
+    Point mid_filter; 
     mid.x = x_m;
     mid.y = (int) height/2.0;
 
