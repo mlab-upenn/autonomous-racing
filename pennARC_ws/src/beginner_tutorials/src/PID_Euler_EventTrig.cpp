@@ -139,7 +139,7 @@ class PID_Event_Trig
 		// PID for velocity
 
 		// feed forward term if any for vel
-		ff_vel = 0.4;
+		ff_vel = 0.5;
 
 		//error signal for velocity
 		//progress time first, information is old
