@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/ubuntu/pennARC_ws/devel/include/beginner_tutorials/Num.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/include/beginner_tutorials/Num.h
 string
 -
 vector
@@ -22,7 +22,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/ubuntu/pennARC_ws/devel/include/custom_messages/driveMessage.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/include/custom_messages/driveMessage.h
 string
 -
 vector
@@ -38,19 +38,19 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/ubuntu/pennARC_ws/src/beginner_tutorials/src/emergency_stop.cpp
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/emergency_stop.cpp
 ros/ros.h
-/home/ubuntu/pennARC_ws/src/beginner_tutorials/src/ros/ros.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/ros/ros.h
 std_msgs/String.h
-/home/ubuntu/pennARC_ws/src/beginner_tutorials/src/std_msgs/String.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/std_msgs/String.h
 std_msgs/UInt8.h
-/home/ubuntu/pennARC_ws/src/beginner_tutorials/src/std_msgs/UInt8.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/std_msgs/UInt8.h
 sstream
 -
 beginner_tutorials/Num.h
-/home/ubuntu/pennARC_ws/src/beginner_tutorials/src/beginner_tutorials/Num.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/beginner_tutorials/Num.h
 custom_messages/driveMessage.h
-/home/ubuntu/pennARC_ws/src/beginner_tutorials/src/custom_messages/driveMessage.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/custom_messages/driveMessage.h
 
 /opt/ros/indigo/include/XmlRpcDecl.h
 ros/macros.h

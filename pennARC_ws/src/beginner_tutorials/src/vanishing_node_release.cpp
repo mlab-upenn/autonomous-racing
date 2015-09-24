@@ -4,13 +4,17 @@
 #include <sensor_msgs/image_encodings.h>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "opencv2/gpu/gpu.hpp"
 #include "std_msgs/Int16.h"
 #include "std_msgs/Float32.h"
 #include <iostream>
 #include <stdio.h>  
 #include <string>
+#include <fstream>
+#include <vector>
+#include <sstream>
 
-#define LP_WINDOW 10
+#define MA_WINDOW 10
 #define DISPLAY_IMG 0
 
 static const std::string OPENCV_WINDOW = "Vanishing point";
@@ -30,13 +34,15 @@ class VanishingPoint
   image_transport::Subscriber image_sub_;
   image_transport::Publisher image_pub_;
   ros::Publisher vp_pub_; 
-  std_msgs::Int16 error_;
+  std_msgs::Float32 error_;
   cv_bridge::CvImagePtr cv_ptr_;
   cv_bridge::CvImage out_msg_;
 
   // vanishing point algo parameters
   Mat frame, edges;
   Mat standard_hough;
+  gpu::GpuMat d_lines;
+  gpu::GpuMat gpu_src;
   int min_threshold;
   int max_trackbar;
   // canny 
@@ -44,7 +50,9 @@ class VanishingPoint
   int ratio;
   int kernel_size;
   // hough
-  int s_trackbar;
+ // int s_trackbar;
+  vector<Vec2f> s_lines;
+  gpu::HoughLinesBuf d_buf;
   // image dimensions
   int width;
   int height;
@@ -60,6 +68,9 @@ class VanishingPoint
   bool initFlag; 
   int freq_sampling; 
   int freq_c;
+  // cost function
+  unsigned long int gpuFreq, cpuFreq;
+  int sBlur, sCanny, sHough;
 
 public:
 
@@ -71,6 +82,13 @@ public:
     image_sub_ = it_.subscribe("/camera/image_raw", 1, &VanishingPoint::imageCB, this);
     image_pub_ = it_.advertise(VP_IMG_TOPIC, 1);
 
+    //exec("screen -r cpu");
+    //exec("echo 0 > /sys/devices/system/cpu/cpuquiet/tegra_cpuquiet/enable");
+    //exec("echo 1 > /sys/devices/system/cpu/cpu0/online");
+    //exec("echo 1 > /sys/devices/system/cpu/cpu1/online");
+    //exec("echo 1 > /sys/devices/system/cpu/cpu2/online");
+    //exec("echo 1 > /sys/devices/system/cpu/cpu3/online");
+
     // init vp parameters
     min_threshold = 50;
     max_trackbar = 150;
@@ -79,7 +97,7 @@ public:
     ratio = 3;
     kernel_size = 3;
     // hough
-    s_trackbar = 50;
+    //s_trackbar = 50;
     // image dimensions
     width = 640;
     height = 480;
@@ -88,16 +106,20 @@ public:
     threshold_ransac = 10; // distance within which the hypothesis is classified as an inlier
     // moving avg parameters
     lp_pointer = 0;
-    window = new int*[LP_WINDOW];
-    for (int i = 0; i < LP_WINDOW; i++) { 
+    window = new int*[MA_WINDOW];
+    for (int i = 0; i < MA_WINDOW; i++) { 
       window[i] = new int[2](); 
     }
     running_sum = new int[2]();
     // lpf params
-    initFlag; = true;
-    freq_sampling; = 25;
-    freq_c; = 40;
-  } 
+    initFlag = true;
+    freq_sampling = 25;
+    freq_c = 40;
+    //cost function
+    sBlur=0;
+    sCanny=0;
+    sHough=1;
+  }
 
   ~VanishingPoint()
   {
@@ -130,7 +152,7 @@ public:
     frame = cv_ptr_->image;
     vp_detection();
 
-    cv::waitKey(30);
+    //cv::waitKey(30);
 
     // // compute vanishing point and error
     // error_.data = 10;
@@ -147,25 +169,35 @@ private:
   int findInliers(const vector<Vec2f>&, const Point&);
   void movingAvg (Point&, const Point&);
   void lpf (Point&, const Point&);
+  void cost(float error);
+  vector<string> split(string str, char delimiter);
+  std::string exec(const char* cmd);
 };
 
 
 /* -------------------------------------- vp detection --------------------------------------------*/
 void VanishingPoint::vp_detection() 
 {
-  vector<Vec2f> s_lines;
 
   // 1(a) Reduce noise with a kernel 3x3
+
+  //gpu::blur(gpu_src, gpu_dst, Size(3,3));
   blur( frame, edges, Size(3,3) );
 
   // 1(b) Apply Canny edge detector
+ 
+  //gpu::Canny( gpu_dst, gpu_dst, lowThreshold, lowThreshold*ratio, kernel_size);
   Canny( edges, edges, lowThreshold, lowThreshold*ratio, kernel_size);
 
-  cvtColor( edges, standard_hough, CV_GRAY2BGR );
-
   // 2. Use Standard Hough Transform
-  HoughLines(edges, s_lines, 1, CV_PI/180, min_threshold + s_trackbar, 0, 0 );
+  gpu_src.upload(edges);
+  gpu::HoughLines(gpu_src, d_lines, d_buf, 1.0f, (float) (CV_PI / 180.0f), 50, 5 );
+  gpu::HoughLinesDownload(d_lines, s_lines);
 
+  gpu_src.download(edges);
+  //HoughLines(edges, s_lines, 1, CV_PI/180, min_threshold + s_trackbar, 0, 0 );
+
+  cvtColor( edges, standard_hough, CV_GRAY2BGR );
 
   //preprocessing: remove vertical lines within +-3 degrees
   for (int i = static_cast<int> (s_lines.size()) - 1; i>=0; i--) 
@@ -173,6 +205,22 @@ void VanishingPoint::vp_detection()
     int t_deg = s_lines[i][1] * 180/CV_PI;
     // it looks like theta ranges from 0 to 180 degrees
     if (t_deg < 5 || t_deg > 175)  s_lines.erase(s_lines.begin() + i);
+  }
+
+  if (DISPLAY_IMG) 
+  {
+    //// display hough lines
+    for( size_t i = 0; i < s_lines.size(); i++ )
+    {
+      float r = s_lines[i][0], t = s_lines[i][1];
+      double cos_t = cos(t), sin_t = sin(t);
+      double x0 = r*cos_t, y0 = r*sin_t;
+      double alpha = 1000;
+
+      Point pt1( cvRound(x0 + alpha*(-sin_t)), cvRound(y0 + alpha*cos_t) );
+      Point pt2( cvRound(x0 - alpha*(-sin_t)), cvRound(y0 - alpha*cos_t) );
+      line( standard_hough, pt1, pt2, Scalar(255,0,0), 1, CV_AA);
+    }
   }
 
   // 3. RANSAC if > 2 lines available
@@ -228,36 +276,46 @@ void VanishingPoint::vp_detection()
     lpf(vp_lp, vp);
 
     // compute error signal 
-    float error = (vp_lp.x - cvRound(width/2.0)) / width;
+    float error = 1.0*(vp_lp.x - cvRound(width/2.0)) / width;
     // cout << "Vanishing point = " << vp.x << "," << vp.y << "| Inliers: " << maxInliers << "| error: "<< error << endl;
     // cout << "VP_LP_x: " << vp_lp.x << " | " << "center: " << cvRound(width/2.0) << endl;
     error_.data = error;
-    ROS_INFO("Error: %.4f | VP_LP_x: %d | center_x: %d ", error_.data, vp_lp.x, (width/2.0));
-
+    ROS_INFO("Error: %.4f | VP_LP_x: %d | center_x: %d ", error_.data, vp_lp.x, (int)(width/2.0));
+    cost (error);
     // publish the error to topic defined before (vanishing_point_topic)
     vp_pub_.publish(error_);
 
-    // plot vanishing point on images
-    // circle(standard_hough, vp, 2,  Scalar(0,0,255), 2, 8, 0 );
-    // circle(frame, vp, 3,  Scalar(0,0,255), 2, 8, 0 );
-    // circle(standard_hough, vp_lp, 2,  Scalar(0,255,0), 2, 8, 0 );
-    // circle(frame, vp_lp, 3,  Scalar(0,255,0), 2, 8, 0 );
+    if (DISPLAY_IMG)
+    {
+      //// plot vanishing point on images
+      circle(standard_hough, vp, 2,  Scalar(0,0,255), 2, 8, 0 );
+      circle(frame, vp, 3,  Scalar(0,0,255), 2, 8, 0 );
+      circle(standard_hough, vp_lp, 2,  Scalar(0,255,0), 2, 8, 0 );
+      circle(frame, vp_lp, 3,  Scalar(0,255,0), 2, 8, 0 );
+    }
 
   } // end of ransac (if > 2 lines available)
+  else
+	{
+		ROS_INFO("LESS THAN 2 LINES");
+	}	
 
-  // draw cross hair
-  // Point pt1_v( cvRound(width/2.0), 0);
-  // Point pt2_v( cvRound(width/2.0), height);
-  // line( standard_hough, pt1_v, pt2_v, Scalar(0,255,255), 1, CV_AA);
-  // Point pt1_h( 0, cvRound(height/2.0));
-  // Point pt2_h( width, cvRound(height/2.0));
-  // line( standard_hough, pt1_h, pt2_h, Scalar(0,255,255), 1, CV_AA);
+  if (DISPLAY_IMG) 
+  {
+    //// draw cross hair
+    Point pt1_v( cvRound(width/2.0), 0);
+    Point pt2_v( cvRound(width/2.0), height);
+    line( standard_hough, pt1_v, pt2_v, Scalar(0,255,255), 1, CV_AA);
+    Point pt1_h( 0, cvRound(height/2.0));
+    Point pt2_h( width, cvRound(height/2.0));
+    line( standard_hough, pt1_h, pt2_h, Scalar(0,255,255), 1, CV_AA);
+  // }
 
   // display edge+hough+vp for degbugging
-  if (DISPLAY_IMG)
-  {
-    imshow( "houghlines", standard_hough );
-    imshow("Original", frame);
+  // if (DISPLAY_IMG)
+  // {
+  //  imshow( "houghlines", standard_hough );
+  //  imshow("Original", frame);
   }
   
   // Debugging: Output modified video stream
@@ -312,8 +370,8 @@ int VanishingPoint::findInliers(const vector<Vec2f>& s_lines, const Point& inter
 /* -----------------------------------------Moving average-----------------------------------------*/
 
  // // low pass parameters
- // const int LP_WINDOW = 20;
- // int window [LP_WINDOW][2] = {};
+ // const int MA_WINDOW = 20;
+ // int window [MA_WINDOW][2] = {};
  // int lp_pointer = 0;
  // int sum [2] = {};
  // input vp gets filtered and saved in vp_lp
@@ -332,12 +390,12 @@ void VanishingPoint::movingAvg (Point& vp_lp, const Point& vp)
   running_sum[1] += window[lp_pointer][1];
 
   // update running avg
-  vp_lp.x = (int) (float)running_sum[0]/movingAvg_window;
-  vp_lp.y = (int) (float)running_sum[1]/movingAvg_window;
+  vp_lp.x = (int) (float)running_sum[0]/MA_WINDOW;
+  vp_lp.y = (int) (float)running_sum[1]/MA_WINDOW;
 
   // increment lp_pointer and keep within bounds
   lp_pointer++;
-  if (lp_pointer >= movingAvg_window) lp_pointer = 0;
+  if (lp_pointer >= MA_WINDOW) lp_pointer = 0;
 }
 
 /* ---------------------1st order LPF (discretized using tustin approx)--------------------------*/
@@ -365,6 +423,95 @@ void VanishingPoint::lpf (Point& vp_lp, const Point& vp)
   return;
 }
 
+/* ---------------------Cost function--------------------------*/
+// input gets PID error
+void VanishingPoint::cost (float error) 
+{
+  float alpha = error;
+  long int a,b;
+  double c,d;
+  int e,f,g;
+  string line;
+  float tempCost, minCost=0;
+  
+  std::ifstream file("/home/ubuntu//myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/final.csv");
+  
+  if (file.is_open())
+  {
+    while ( getline (file,line,'\n') )
+    {
+	vector<string> sep = split(line, ',');
+	istringstream(sep[0]) >> a;
+	istringstream(sep[1]) >> b;
+	istringstream(sep[2]) >> c;
+	istringstream(sep[3]) >> d;
+	istringstream(sep[4]) >> e;
+	istringstream(sep[5]) >> f;
+	istringstream(sep[6]) >> g;
+
+	tempCost = (alpha*c/24.83) + (1-alpha)*0.6259848508/d;
+        if(tempCost>minCost)
+	{
+	   gpuFreq = b;
+	   cpuFreq = a;
+	   sBlur = e;
+	   sCanny = f;
+	   sHough = g;
+	   minCost = tempCost;
+	}
+    }
+    file.close();
+  }
+  else
+  {
+	cout << "Cannot open File" << endl;
+  }
+
+//  cout << gpuFreq << " " << cpuFreq << endl;
+
+  ////// change GPU and CPU speeds  ////
+ // ostringstream os;
+
+ // exec("screen -r cpu");
+ // exec("echo \"userspace\" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor");
+ // os << "echo " << cpuFreq << " > /sys/devices/system/cpu/cpu0/cpufreq/scaling_setspeed";
+ // os << "echo " << cpuFreq << " > /sys/devices/system/cpu/cpu1/cpufreq/scaling_setspeed";
+ // os << "echo " << cpuFreq << " > /sys/devices/system/cpu/cpu2/cpufreq/scaling_setspeed";
+ // os << "echo " << cpuFreq << " > /sys/devices/system/cpu/cpu3/cpufreq/scaling_setspeed";
+ // string s = os.str();
+ // exec(s.c_str());
+
+ // os << "echo " << gpuFreq << " > /sys/kernel/debug/clock/override.gbus/rate";
+ // s = os.str();
+ // exec(s.c_str());
+ // exec("echo 1 > /sys/kernel/debug/clock/override.gbus/state");
+  return;
+}
+
+vector<string> VanishingPoint::split(string str, char delimiter) {
+  vector<string> internal;
+  stringstream ss(str); // Turn the string into a stream.
+  string tok;
+  
+  while(getline(ss, tok, delimiter)) {
+    internal.push_back(tok);
+  }
+  
+  return internal;
+}
+
+std::string VanishingPoint::exec(const char* cmd) {
+    FILE* pipe = popen(cmd, "r");
+    if (!pipe) return "ERROR";
+    char buffer[128];
+    std::string result = "";
+    while(!feof(pipe)) {
+    	if(fgets(buffer, 128, pipe) != NULL)
+    		result += buffer;
+    }
+    pclose(pipe);
+    return result;
+}
 
 /* -------------------------------------- main --------------------------------------------*/
 

@@ -1,0 +1,60 @@
+\subsubsection usage Usage
+\verbatim
+<node name="Camera1394" pkg="camera1394" type="Camera1394">
+  <param name="guid" type="str" value="" />
+  <param name="video_mode" type="str" value="640x480_mono8" />
+  <param name="frame_id" type="str" value="camera" />
+  <param name="frame_rate" type="double" value="15.0" />
+  <param name="iso_speed" type="int" value="400" />
+  <param name="num_dma_buffers" type="int" value="4" />
+  <param name="camera_info_url" type="str" value="" />
+  <param name="reset_on_open" type="bool" value="False" />
+  <param name="use_ros_time" type="bool" value="False" />
+  <param name="time_offset" type="double" value="0.0" />
+  <param name="binning_x" type="int" value="0" />
+  <param name="binning_y" type="int" value="0" />
+  <param name="roi_width" type="int" value="0" />
+  <param name="roi_height" type="int" value="0" />
+  <param name="x_offset" type="int" value="0" />
+  <param name="y_offset" type="int" value="0" />
+  <param name="format7_packet_size" type="int" value="0" />
+  <param name="format7_color_coding" type="str" value="mono8" />
+  <param name="bayer_pattern" type="str" value="" />
+  <param name="bayer_method" type="str" value="" />
+  <param name="auto_brightness" type="int" value="1" />
+  <param name="brightness" type="double" value="0.0" />
+  <param name="auto_exposure" type="int" value="1" />
+  <param name="exposure" type="double" value="0.0" />
+  <param name="auto_focus" type="int" value="1" />
+  <param name="focus" type="double" value="0.0" />
+  <param name="auto_gain" type="int" value="1" />
+  <param name="gain" type="double" value="0.0" />
+  <param name="auto_gamma" type="int" value="1" />
+  <param name="gamma" type="double" value="2.2" />
+  <param name="auto_hue" type="int" value="1" />
+  <param name="hue" type="double" value="0.0" />
+  <param name="auto_iris" type="int" value="1" />
+  <param name="iris" type="double" value="8.0" />
+  <param name="auto_pan" type="int" value="1" />
+  <param name="pan" type="double" value="0.0" />
+  <param name="auto_saturation" type="int" value="1" />
+  <param name="saturation" type="double" value="1.0" />
+  <param name="auto_sharpness" type="int" value="1" />
+  <param name="sharpness" type="double" value="1.0" />
+  <param name="auto_shutter" type="int" value="1" />
+  <param name="shutter" type="double" value="1.0" />
+  <param name="external_trigger" type="bool" value="False" />
+  <param name="software_trigger" type="bool" value="False" />
+  <param name="trigger_mode" type="str" value="mode_0" />
+  <param name="trigger_source" type="str" value="source_0" />
+  <param name="trigger_polarity" type="str" value="active_low" />
+  <param name="auto_trigger" type="int" value="1" />
+  <param name="trigger" type="double" value="0.0" />
+  <param name="auto_white_balance" type="int" value="1" />
+  <param name="white_balance_BU" type="double" value="0.0" />
+  <param name="white_balance_RV" type="double" value="0.0" />
+  <param name="auto_zoom" type="int" value="1" />
+  <param name="zoom" type="double" value="0.0" />
+</node>
+\endverbatim
+

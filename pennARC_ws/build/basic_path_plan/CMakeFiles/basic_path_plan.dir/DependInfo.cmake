@@ -4,7 +4,7 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/ubuntu/pennARC_ws/src/basic_path_plan/src/basic_path_plan.cpp" "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/basic_path_plan/CMakeFiles/basic_path_plan.dir/src/basic_path_plan.cpp.o"
+  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/basic_path_plan/src/basic_path_plan.cpp" "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/basic_path_plan/CMakeFiles/basic_path_plan.dir/src/basic_path_plan.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -21,7 +21,7 @@ SET(CMAKE_TARGET_LINKED_INFO_FILES
 
 # The include file search paths:
 SET(CMAKE_C_TARGET_INCLUDE_PATH
-  "/home/ubuntu/pennARC_ws/devel/include"
+  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/include"
   "/opt/ros/indigo/include"
   )
 SET(CMAKE_CXX_TARGET_INCLUDE_PATH ${CMAKE_C_TARGET_INCLUDE_PATH})

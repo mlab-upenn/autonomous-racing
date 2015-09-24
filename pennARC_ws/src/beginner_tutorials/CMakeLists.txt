@@ -50,7 +50,12 @@ add_executable(PID_Euler_Event src/PID_Euler_EventTrig.cpp)
 target_link_libraries(PID_Euler_Event ${catkin_LIBRARIES})
 add_dependencies(PID_Euler_Event beginner_tutorials_generate_messages_cpp)
 
-add_executable(vanishing_node src/vanishing_node.cpp)
+add_executable(ORB_translate src/ORB_translate.cpp)
+target_link_libraries(ORB_translate ${catkin_LIBRARIES})
+add_dependencies(ORB_translate beginner_tutorials_generate_messages_cpp)
+
+
+add_executable(vanishing_node src/vanishing_node_release.cpp)
 target_link_libraries(vanishing_node
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}

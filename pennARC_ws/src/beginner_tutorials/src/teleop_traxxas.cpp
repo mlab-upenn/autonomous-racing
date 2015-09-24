@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	ros::NodeHandle n;
 
 	//Declare the publisher
-	ros::Publisher pub_teleop = n.advertise<beginner_tutorials::driveCmd>("teleop_commands",1000);
+	ros::Publisher pub_teleop = n.advertise<beginner_tutorials::driveCmd>("teleop_commands",10);
 
 	//The vaeaible that has to be published
 	beginner_tutorials::driveCmd tele_cmd;
@@ -88,14 +88,14 @@ int main(int argc, char **argv)
 			}
 			else if(key == 67)
 			{
-				current_steer_state = old_steer_state + 0.01;
+				current_steer_state = old_steer_state + 0.1;
 					if (current_steer_state > 4)
 						current_steer_state = 4;
 //				ROS_INFO("R");
 			}
 			else if(key == 68)
 			{
-				current_steer_state = old_steer_state - 0.01;
+				current_steer_state = old_steer_state - 0.1;
 				if(current_steer_state < -4)
 					current_steer_state = -4;
 //				ROS_INFO("L");

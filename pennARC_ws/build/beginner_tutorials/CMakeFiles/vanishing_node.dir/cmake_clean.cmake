@@ -1,7 +1,7 @@
 FILE(REMOVE_RECURSE
-  "CMakeFiles/vanishing_node.dir/src/vanishing_node.cpp.o"
-  "/home/ubuntu/pennARC_ws/devel/lib/beginner_tutorials/vanishing_node.pdb"
-  "/home/ubuntu/pennARC_ws/devel/lib/beginner_tutorials/vanishing_node"
+  "CMakeFiles/vanishing_node.dir/src/vanishing_node_release.cpp.o"
+  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/vanishing_node.pdb"
+  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/vanishing_node"
 )
 
 # Per-language clean rules from dependency scanning.

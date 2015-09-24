@@ -1,7 +1,7 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/PID_Euler_Event.dir/src/PID_Euler_EventTrig.cpp.o"
-  "/home/ubuntu/pennARC_ws/devel/lib/beginner_tutorials/PID_Euler_Event.pdb"
-  "/home/ubuntu/pennARC_ws/devel/lib/beginner_tutorials/PID_Euler_Event"
+  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/PID_Euler_Event.pdb"
+  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/PID_Euler_Event"
 )
 
 # Per-language clean rules from dependency scanning.

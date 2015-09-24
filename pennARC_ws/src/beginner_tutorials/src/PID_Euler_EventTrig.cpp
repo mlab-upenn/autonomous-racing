@@ -77,7 +77,7 @@ class PID_Event_Trig
 		pub_teleop.publish(tele_cmd);		
 		ROS_INFO("Initialised motors with 0 throttle and steering");
 		// init PID params
-		sampling_rate = 7.5; //in Hz
+		sampling_rate = 22; //in Hz
 		h = 1/sampling_rate;
 		ub = 5;
 		lb = -5;
@@ -88,9 +88,9 @@ class PID_Event_Trig
 		Kd_vel = 0;
 		Ki_vel = 0;
 
-		Kp_steer = 0.01;
+		Kp_steer = 5;
 		Kd_steer = 0;
-		Ki_steer = 0;
+		Ki_steer = 0.1;
 
 
 		//init vars	
@@ -112,11 +112,11 @@ class PID_Event_Trig
 
 
 
-	void vp_listen(const std_msgs::Int16::ConstPtr& msg)
+	void vp_listen(const std_msgs::Float32::ConstPtr& msg)
 	{
 		ROS_INFO("I Heard vp");
-		temp_steer_int = msg->data;
-		temp_steer_float = 1.0*temp_steer_int; // this goes to e_k_steer
+		temp_steer_float = msg->data;
+		//temp_steer_float = 1.0*temp_steer_int; // this goes to e_k_steer
 
 		PID_Event_Trig::PID_Event_steer();
 		PID_Event_Trig::PID_Event_vel();
@@ -139,7 +139,7 @@ class PID_Event_Trig
 		// PID for velocity
 
 		// feed forward term if any for vel
-		ff_vel = 0.4;
+		ff_vel = 0.5;
 
 		//error signal for velocity
 		//progress time first, information is old

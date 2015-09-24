@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/ubuntu/pennARC_ws/src/beginner_tutorials/src/vanishing_node.cpp
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/vanishing_node_release.cpp
 ros/ros.h
 -
 image_transport/image_transport.h
@@ -19,13 +19,23 @@ opencv2/imgproc/imgproc.hpp
 -
 opencv2/highgui/highgui.hpp
 -
+opencv2/gpu/gpu.hpp
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/opencv2/gpu/gpu.hpp
 std_msgs/Int16.h
-/home/ubuntu/pennARC_ws/src/beginner_tutorials/src/std_msgs/Int16.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/std_msgs/Int16.h
+std_msgs/Float32.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials/src/std_msgs/Float32.h
 iostream
 -
 stdio.h
 -
 string
+-
+fstream
+-
+vector
+-
+sstream
 -
 
 /opt/ros/indigo/include/XmlRpcDecl.h
@@ -810,6 +820,22 @@ ros/message_operations.h
 stdexcept
 -
 string
+-
+
+/opt/ros/indigo/include/std_msgs/Float32.h
+string
+-
+vector
+-
+map
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
 -
 
 /opt/ros/indigo/include/std_msgs/Header.h

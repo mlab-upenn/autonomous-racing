@@ -29,18 +29,6 @@ Boost_INCLUDE_DIR:PATH=/usr/include
 //Boost library directory
 Boost_LIBRARY_DIR:PATH=/usr/lib/arm-linux-gnueabihf
 
-//Boost signals library (debug)
-Boost_SIGNALS_LIBRARY_DEBUG:FILEPATH=/usr/lib/arm-linux-gnueabihf/libboost_signals.so
-
-//Boost signals library (release)
-Boost_SIGNALS_LIBRARY_RELEASE:FILEPATH=/usr/lib/arm-linux-gnueabihf/libboost_signals.so
-
-//Boost system library (debug)
-Boost_SYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/lib/arm-linux-gnueabihf/libboost_system.so
-
-//Boost system library (release)
-Boost_SYSTEM_LIBRARY_RELEASE:FILEPATH=/usr/lib/arm-linux-gnueabihf/libboost_system.so
-
 //Boost thread library (debug)
 Boost_THREAD_LIBRARY_DEBUG:FILEPATH=/usr/lib/arm-linux-gnueabihf/libboost_thread.so
 
@@ -51,7 +39,7 @@ Boost_THREAD_LIBRARY_RELEASE:FILEPATH=/usr/lib/arm-linux-gnueabihf/libboost_thre
 CATKIN_BLACKLIST_PACKAGES:STRING=
 
 //catkin devel space
-CATKIN_DEVEL_PREFIX:PATH=/home/ubuntu/pennARC_ws/devel
+CATKIN_DEVEL_PREFIX:PATH=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel
 
 //Catkin enable testing
 CATKIN_ENABLE_TESTING:BOOL=ON
@@ -131,7 +119,7 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=OFF
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=/home/ubuntu/pennARC_ws/install
+CMAKE_INSTALL_PREFIX:PATH=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/install
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=/usr/bin/ld
@@ -218,11 +206,14 @@ CMAKE_USE_RELATIVE_PATHS:BOOL=OFF
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//Path to a file.
+DC1394_INCLUDE_DIR:PATH=DC1394_INCLUDE_DIR-NOTFOUND
+
+//Path to a library.
+DC1394_LIBRARY:FILEPATH=/usr/lib/arm-linux-gnueabihf/libdc1394.so
+
 //Path to a program.
 DOXYGEN_EXECUTABLE:FILEPATH=DOXYGEN_EXECUTABLE-NOTFOUND
-
-//Path to a file.
-EIGEN_INCLUDE_DIR:PATH=EIGEN_INCLUDE_DIR-NOTFOUND
 
 //Path to a program.
 EMPY_EXECUTABLE:FILEPATH=/usr/bin/empy
@@ -267,7 +258,7 @@ PYTHON_VERSION:STRING=
 Project_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build
 
 //Value Computed by CMake
-Project_SOURCE_DIR:STATIC=/home/ubuntu/pennARC_ws/src
+Project_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src
 
 //Path to a library.
 RT_LIBRARY:FILEPATH=/usr/lib/arm-linux-gnueabihf/librt.so
@@ -287,26 +278,50 @@ _CATKIN_GTEST_INCLUDE:FILEPATH=/usr/include/gtest/gtest.h
 //Path to a file.
 _CATKIN_GTEST_SRC:FILEPATH=/usr/src/gtest/src/gtest.cc
 
+//Path to a file.
+_file_name:FILEPATH=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/tests/no_device_nodelet.test
+
+//The directory containing a CMake configuration file for actionlib.
+actionlib_DIR:PATH=/opt/ros/indigo/share/actionlib/cmake
+
+//The directory containing a CMake configuration file for actionlib_msgs.
+actionlib_msgs_DIR:PATH=/opt/ros/indigo/share/actionlib_msgs/cmake
+
 //Value Computed by CMake
 basic_path_plan_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/basic_path_plan
 
 //Value Computed by CMake
-basic_path_plan_SOURCE_DIR:STATIC=/home/ubuntu/pennARC_ws/src/basic_path_plan
+basic_path_plan_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/basic_path_plan
 
 //Value Computed by CMake
 beginner_tutorials_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/beginner_tutorials
 
 //Value Computed by CMake
-beginner_tutorials_SOURCE_DIR:STATIC=/home/ubuntu/pennARC_ws/src/beginner_tutorials
+beginner_tutorials_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials
+
+//The directory containing a CMake configuration file for bond.
+bond_DIR:PATH=/opt/ros/indigo/share/bond/cmake
+
+//The directory containing a CMake configuration file for bondcpp.
+bondcpp_DIR:PATH=/opt/ros/indigo/share/bondcpp/cmake
+
+//Value Computed by CMake
+camera1394_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/camera1394
+
+//Value Computed by CMake
+camera1394_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394
+
+//Dependencies for the target
+camera1394_nodelet_LIB_DEPENDS:STATIC=general;/opt/ros/indigo/lib/libcamera_info_manager.so;general;/opt/ros/indigo/lib/libdynamic_reconfigure_config_init_mutex.so;general;/opt/ros/indigo/lib/libimage_transport.so;general;/opt/ros/indigo/lib/libnodeletlib.so;general;/opt/ros/indigo/lib/libbondcpp.so;general;/usr/lib/arm-linux-gnueabihf/libuuid.so;general;/usr/lib/arm-linux-gnueabihf/libtinyxml.so;general;/opt/ros/indigo/lib/libclass_loader.so;general;/usr/lib/libPocoFoundation.so;general;/usr/lib/arm-linux-gnueabihf/libdl.so;general;/opt/ros/indigo/lib/libroslib.so;general;/opt/ros/indigo/lib/libtf.so;general;/opt/ros/indigo/lib/libtf2_ros.so;general;/opt/ros/indigo/lib/libactionlib.so;general;/opt/ros/indigo/lib/libmessage_filters.so;general;/opt/ros/indigo/lib/libroscpp.so;general;/usr/lib/arm-linux-gnueabihf/libboost_signals.so;general;/usr/lib/arm-linux-gnueabihf/libboost_filesystem.so;general;/opt/ros/indigo/lib/libxmlrpcpp.so;general;/opt/ros/indigo/lib/libtf2.so;general;/opt/ros/indigo/lib/libroscpp_serialization.so;general;/opt/ros/indigo/lib/librosconsole.so;general;/opt/ros/indigo/lib/librosconsole_log4cxx.so;general;/opt/ros/indigo/lib/librosconsole_backend_interface.so;general;/usr/lib/liblog4cxx.so;general;/usr/lib/arm-linux-gnueabihf/libboost_regex.so;general;/opt/ros/indigo/lib/librostime.so;general;/usr/lib/arm-linux-gnueabihf/libboost_date_time.so;general;/opt/ros/indigo/lib/libcpp_common.so;general;/usr/lib/arm-linux-gnueabihf/libboost_system.so;general;/usr/lib/arm-linux-gnueabihf/libboost_thread.so;general;/usr/lib/arm-linux-gnueabihf/libpthread.so;general;/usr/lib/arm-linux-gnueabihf/libconsole_bridge.so;general;/usr/lib/arm-linux-gnueabihf/libdc1394.so;
+
+//The directory containing a CMake configuration file for camera_info_manager.
+camera_info_manager_DIR:PATH=/opt/ros/indigo/share/camera_info_manager/cmake
 
 //The directory containing a CMake configuration file for catkin.
 catkin_DIR:PATH=/opt/ros/indigo/share/catkin/cmake
 
 //The directory containing a CMake configuration file for class_loader.
 class_loader_DIR:PATH=/opt/ros/indigo/share/class_loader/cmake
-
-//The directory containing a CMake configuration file for cmake_modules.
-cmake_modules_DIR:PATH=/opt/ros/indigo/share/cmake_modules/cmake
 
 //The directory containing a CMake configuration file for cpp_common.
 cpp_common_DIR:PATH=/opt/ros/indigo/share/cpp_common/cmake
@@ -315,13 +330,22 @@ cpp_common_DIR:PATH=/opt/ros/indigo/share/cpp_common/cmake
 custom_messages_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/custom_messages
 
 //The directory containing a CMake configuration file for custom_messages.
-custom_messages_DIR:PATH=/home/ubuntu/pennARC_ws/devel/share/custom_messages/cmake
+custom_messages_DIR:PATH=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/share/custom_messages/cmake
 
 //Value Computed by CMake
-custom_messages_SOURCE_DIR:STATIC=/home/ubuntu/pennARC_ws/src/custom_messages
+custom_messages_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/custom_messages
 
 //The directory containing a CMake configuration file for cv_bridge.
 cv_bridge_DIR:PATH=/opt/ros/indigo/share/cv_bridge/cmake
+
+//The directory containing a CMake configuration file for diagnostic_msgs.
+diagnostic_msgs_DIR:PATH=/opt/ros/indigo/share/diagnostic_msgs/cmake
+
+//The directory containing a CMake configuration file for diagnostic_updater.
+diagnostic_updater_DIR:PATH=/opt/ros/indigo/share/diagnostic_updater/cmake
+
+//The directory containing a CMake configuration file for driver_base.
+driver_base_DIR:PATH=/opt/ros/indigo/share/driver_base/cmake
 
 //The directory containing a CMake configuration file for dynamic_reconfigure.
 dynamic_reconfigure_DIR:PATH=/opt/ros/indigo/share/dynamic_reconfigure/cmake
@@ -370,13 +394,7 @@ gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 image_transport_DIR:PATH=/opt/ros/indigo/share/image_transport/cmake
 
 //Path to a library.
-lib:FILEPATH=/opt/ros/indigo/lib/librostime.so
-
-//Value Computed by CMake
-mavlink_serial_client_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/px-ros-pkg-master/drivers/mavlink_serial_client
-
-//Value Computed by CMake
-mavlink_serial_client_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/px-ros-pkg-master/drivers/mavlink_serial_client
+lib:FILEPATH=/opt/ros/indigo/lib/libtf2.so
 
 //The directory containing a CMake configuration file for message_filters.
 message_filters_DIR:PATH=/opt/ros/indigo/share/message_filters/cmake
@@ -387,23 +405,17 @@ message_generation_DIR:PATH=/opt/ros/indigo/share/message_generation/cmake
 //The directory containing a CMake configuration file for message_runtime.
 message_runtime_DIR:PATH=/opt/ros/indigo/share/message_runtime/cmake
 
+//The directory containing a CMake configuration file for nodelet.
+nodelet_DIR:PATH=/opt/ros/indigo/share/nodelet/cmake
+
 //The directory containing a CMake configuration file for pluginlib.
 pluginlib_DIR:PATH=/opt/ros/indigo/share/pluginlib/cmake
-
-//Value Computed by CMake
-px_comm_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/px-ros-pkg-master/px_comm
-
-//The directory containing a CMake configuration file for px_comm.
-px_comm_DIR:PATH=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/share/px_comm/cmake
-
-//Value Computed by CMake
-px_comm_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/px-ros-pkg-master/px_comm
 
 //Value Computed by CMake
 razor_imu_9dof_BINARY_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/razor_imu_9dof
 
 //Value Computed by CMake
-razor_imu_9dof_SOURCE_DIR:STATIC=/home/ubuntu/pennARC_ws/src/razor_imu_9dof
+razor_imu_9dof_SOURCE_DIR:STATIC=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/razor_imu_9dof
 
 //The directory containing a CMake configuration file for rosconsole.
 rosconsole_DIR:PATH=/opt/ros/indigo/share/rosconsole/cmake
@@ -417,6 +429,9 @@ roscpp_serialization_DIR:PATH=/opt/ros/indigo/share/roscpp_serialization/cmake
 //The directory containing a CMake configuration file for roscpp_traits.
 roscpp_traits_DIR:PATH=/opt/ros/indigo/share/roscpp_traits/cmake
 
+//The directory containing a CMake configuration file for rosgraph.
+rosgraph_DIR:PATH=/opt/ros/indigo/share/rosgraph/cmake
+
 //The directory containing a CMake configuration file for rosgraph_msgs.
 rosgraph_msgs_DIR:PATH=/opt/ros/indigo/share/rosgraph_msgs/cmake
 
@@ -426,14 +441,35 @@ roslib_DIR:PATH=/opt/ros/indigo/share/roslib/cmake
 //The directory containing a CMake configuration file for rospy.
 rospy_DIR:PATH=/opt/ros/indigo/share/rospy/cmake
 
+//The directory containing a CMake configuration file for rostest.
+rostest_DIR:PATH=/opt/ros/indigo/share/rostest/cmake
+
 //The directory containing a CMake configuration file for rostime.
 rostime_DIR:PATH=/opt/ros/indigo/share/rostime/cmake
 
 //The directory containing a CMake configuration file for sensor_msgs.
 sensor_msgs_DIR:PATH=/opt/ros/indigo/share/sensor_msgs/cmake
 
+//The directory containing a CMake configuration file for smclib.
+smclib_DIR:PATH=/opt/ros/indigo/share/smclib/cmake
+
 //The directory containing a CMake configuration file for std_msgs.
 std_msgs_DIR:PATH=/opt/ros/indigo/share/std_msgs/cmake
+
+//The directory containing a CMake configuration file for tf2.
+tf2_DIR:PATH=/opt/ros/indigo/share/tf2/cmake
+
+//The directory containing a CMake configuration file for tf2_msgs.
+tf2_msgs_DIR:PATH=/opt/ros/indigo/share/tf2_msgs/cmake
+
+//The directory containing a CMake configuration file for tf2_py.
+tf2_py_DIR:PATH=/opt/ros/indigo/share/tf2_py/cmake
+
+//The directory containing a CMake configuration file for tf2_ros.
+tf2_ros_DIR:PATH=/opt/ros/indigo/share/tf2_ros/cmake
+
+//The directory containing a CMake configuration file for tf.
+tf_DIR:PATH=/opt/ros/indigo/share/tf/cmake
 
 //The directory containing a CMake configuration file for xmlrpcpp.
 xmlrpcpp_DIR:PATH=/opt/ros/indigo/share/xmlrpcpp/cmake
@@ -449,14 +485,6 @@ Boost_DIR-ADVANCED:INTERNAL=1
 Boost_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_LIBRARY_DIR
 Boost_LIBRARY_DIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: Boost_SIGNALS_LIBRARY_DEBUG
-Boost_SIGNALS_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: Boost_SIGNALS_LIBRARY_RELEASE
-Boost_SIGNALS_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_DEBUG
-Boost_SYSTEM_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: Boost_SYSTEM_LIBRARY_RELEASE
-Boost_SYSTEM_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_THREAD_LIBRARY_DEBUG
 Boost_THREAD_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_THREAD_LIBRARY_RELEASE
@@ -558,7 +586,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=6
+CMAKE_NUMBER_OF_LOCAL_GENERATORS:INTERNAL=8
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -599,6 +627,40 @@ CMAKE_UNAME:INTERNAL=/bin/uname
 CMAKE_USE_RELATIVE_PATHS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+DC1394_PKGCONF_CFLAGS:INTERNAL=
+DC1394_PKGCONF_CFLAGS_I:INTERNAL=
+DC1394_PKGCONF_CFLAGS_OTHER:INTERNAL=
+DC1394_PKGCONF_FOUND:INTERNAL=1
+DC1394_PKGCONF_INCLUDEDIR:INTERNAL=/usr/include
+DC1394_PKGCONF_INCLUDE_DIRS:INTERNAL=
+DC1394_PKGCONF_LDFLAGS:INTERNAL=-ldc1394
+DC1394_PKGCONF_LDFLAGS_OTHER:INTERNAL=
+DC1394_PKGCONF_LIBDIR:INTERNAL=/usr/lib/arm-linux-gnueabihf
+DC1394_PKGCONF_LIBRARIES:INTERNAL=dc1394
+DC1394_PKGCONF_LIBRARY_DIRS:INTERNAL=
+DC1394_PKGCONF_LIBS:INTERNAL=
+DC1394_PKGCONF_LIBS_L:INTERNAL=
+DC1394_PKGCONF_LIBS_OTHER:INTERNAL=
+DC1394_PKGCONF_LIBS_PATHS:INTERNAL=
+DC1394_PKGCONF_PREFIX:INTERNAL=/usr
+DC1394_PKGCONF_STATIC_CFLAGS:INTERNAL=
+DC1394_PKGCONF_STATIC_CFLAGS_I:INTERNAL=
+DC1394_PKGCONF_STATIC_CFLAGS_OTHER:INTERNAL=
+DC1394_PKGCONF_STATIC_INCLUDE_DIRS:INTERNAL=
+DC1394_PKGCONF_STATIC_LDFLAGS:INTERNAL=-ldc1394
+DC1394_PKGCONF_STATIC_LDFLAGS_OTHER:INTERNAL=
+DC1394_PKGCONF_STATIC_LIBDIR:INTERNAL=
+DC1394_PKGCONF_STATIC_LIBRARIES:INTERNAL=dc1394
+DC1394_PKGCONF_STATIC_LIBRARY_DIRS:INTERNAL=
+DC1394_PKGCONF_STATIC_LIBS:INTERNAL=
+DC1394_PKGCONF_STATIC_LIBS_L:INTERNAL=
+DC1394_PKGCONF_STATIC_LIBS_OTHER:INTERNAL=
+DC1394_PKGCONF_STATIC_LIBS_PATHS:INTERNAL=
+DC1394_PKGCONF_VERSION:INTERNAL=2.2.1
+DC1394_PKGCONF_libdc1394-2_INCLUDEDIR:INTERNAL=
+DC1394_PKGCONF_libdc1394-2_LIBDIR:INTERNAL=
+DC1394_PKGCONF_libdc1394-2_PREFIX:INTERNAL=
+DC1394_PKGCONF_libdc1394-2_VERSION:INTERNAL=
 //Details about finding PkgConfig
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v0.26()]
 //Details about finding PythonInterp
@@ -620,30 +682,6 @@ GTEST_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 GTEST_MAIN_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: GTEST_MAIN_LIBRARY_DEBUG
 GTEST_MAIN_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
-PC_EIGEN_CFLAGS:INTERNAL=
-PC_EIGEN_CFLAGS_I:INTERNAL=
-PC_EIGEN_CFLAGS_OTHER:INTERNAL=
-PC_EIGEN_FOUND:INTERNAL=
-PC_EIGEN_INCLUDEDIR:INTERNAL=
-PC_EIGEN_LIBDIR:INTERNAL=
-PC_EIGEN_LIBS:INTERNAL=
-PC_EIGEN_LIBS_L:INTERNAL=
-PC_EIGEN_LIBS_OTHER:INTERNAL=
-PC_EIGEN_LIBS_PATHS:INTERNAL=
-PC_EIGEN_PREFIX:INTERNAL=
-PC_EIGEN_STATIC_CFLAGS:INTERNAL=
-PC_EIGEN_STATIC_CFLAGS_I:INTERNAL=
-PC_EIGEN_STATIC_CFLAGS_OTHER:INTERNAL=
-PC_EIGEN_STATIC_LIBDIR:INTERNAL=
-PC_EIGEN_STATIC_LIBS:INTERNAL=
-PC_EIGEN_STATIC_LIBS_L:INTERNAL=
-PC_EIGEN_STATIC_LIBS_OTHER:INTERNAL=
-PC_EIGEN_STATIC_LIBS_PATHS:INTERNAL=
-PC_EIGEN_VERSION:INTERNAL=
-PC_EIGEN_eigen3_INCLUDEDIR:INTERNAL=
-PC_EIGEN_eigen3_LIBDIR:INTERNAL=
-PC_EIGEN_eigen3_PREFIX:INTERNAL=
-PC_EIGEN_eigen3_VERSION:INTERNAL=
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
 PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: PYTHON_EXECUTABLE
@@ -653,14 +691,14 @@ PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 // it will install things.
 PYTHON_INSTALL_DIR:INTERNAL=lib/python2.7/dist-packages
 //Components requested for this build tree.
-_Boost_COMPONENTS_SEARCHED:INTERNAL=signals;system;thread
+_Boost_COMPONENTS_SEARCHED:INTERNAL=thread
 //Last used Boost_INCLUDE_DIR value.
 _Boost_INCLUDE_DIR_LAST:INTERNAL=/usr/include
 //Last used Boost_LIBRARY_DIR value.
 _Boost_LIBRARY_DIR_LAST:INTERNAL=/usr/lib/arm-linux-gnueabihf
 //Last used Boost_USE_MULTITHREADED value.
 _Boost_USE_MULTITHREADED_LAST:INTERNAL=TRUE
-__pkg_config_checked_PC_EIGEN:INTERNAL=1
+__pkg_config_checked_DC1394_PKGCONF:INTERNAL=1
 __pkg_config_checked_ncurses++:INTERNAL=1
 ncurses++_CFLAGS:INTERNAL=-I/usr/include/ncursesw
 ncurses++_CFLAGS_I:INTERNAL=

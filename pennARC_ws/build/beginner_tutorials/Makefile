@@ -39,7 +39,7 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ubuntu/pennARC_ws/src
+CMAKE_SOURCE_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build
@@ -148,6 +148,20 @@ preinstall/fast:
 depend:
 	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+# Convenience name for target.
+beginner_tutorials/CMakeFiles/ORB_translate.dir/rule:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 beginner_tutorials/CMakeFiles/ORB_translate.dir/rule
+.PHONY : beginner_tutorials/CMakeFiles/ORB_translate.dir/rule
+
+# Convenience name for target.
+ORB_translate: beginner_tutorials/CMakeFiles/ORB_translate.dir/rule
+.PHONY : ORB_translate
+
+# fast build rule for target.
+ORB_translate/fast:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/ORB_translate.dir/build.make beginner_tutorials/CMakeFiles/ORB_translate.dir/build
+.PHONY : ORB_translate/fast
 
 # Convenience name for target.
 beginner_tutorials/CMakeFiles/PID_Euler.dir/rule:
@@ -401,6 +415,30 @@ vanishing_node/fast:
 	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/vanishing_node.dir/build.make beginner_tutorials/CMakeFiles/vanishing_node.dir/build
 .PHONY : vanishing_node/fast
 
+src/ORB_translate.o: src/ORB_translate.cpp.o
+.PHONY : src/ORB_translate.o
+
+# target to build an object file
+src/ORB_translate.cpp.o:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/ORB_translate.dir/build.make beginner_tutorials/CMakeFiles/ORB_translate.dir/src/ORB_translate.cpp.o
+.PHONY : src/ORB_translate.cpp.o
+
+src/ORB_translate.i: src/ORB_translate.cpp.i
+.PHONY : src/ORB_translate.i
+
+# target to preprocess a source file
+src/ORB_translate.cpp.i:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/ORB_translate.dir/build.make beginner_tutorials/CMakeFiles/ORB_translate.dir/src/ORB_translate.cpp.i
+.PHONY : src/ORB_translate.cpp.i
+
+src/ORB_translate.s: src/ORB_translate.cpp.s
+.PHONY : src/ORB_translate.s
+
+# target to generate assembly for a file
+src/ORB_translate.cpp.s:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/ORB_translate.dir/build.make beginner_tutorials/CMakeFiles/ORB_translate.dir/src/ORB_translate.cpp.s
+.PHONY : src/ORB_translate.cpp.s
+
 src/PID_Euler.o: src/PID_Euler.cpp.o
 .PHONY : src/PID_Euler.o
 
@@ -569,29 +607,29 @@ src/teleop_traxxas.cpp.s:
 	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/teleop_traxxas.dir/build.make beginner_tutorials/CMakeFiles/teleop_traxxas.dir/src/teleop_traxxas.cpp.s
 .PHONY : src/teleop_traxxas.cpp.s
 
-src/vanishing_node.o: src/vanishing_node.cpp.o
-.PHONY : src/vanishing_node.o
+src/vanishing_node_release.o: src/vanishing_node_release.cpp.o
+.PHONY : src/vanishing_node_release.o
 
 # target to build an object file
-src/vanishing_node.cpp.o:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/vanishing_node.dir/build.make beginner_tutorials/CMakeFiles/vanishing_node.dir/src/vanishing_node.cpp.o
-.PHONY : src/vanishing_node.cpp.o
+src/vanishing_node_release.cpp.o:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/vanishing_node.dir/build.make beginner_tutorials/CMakeFiles/vanishing_node.dir/src/vanishing_node_release.cpp.o
+.PHONY : src/vanishing_node_release.cpp.o
 
-src/vanishing_node.i: src/vanishing_node.cpp.i
-.PHONY : src/vanishing_node.i
+src/vanishing_node_release.i: src/vanishing_node_release.cpp.i
+.PHONY : src/vanishing_node_release.i
 
 # target to preprocess a source file
-src/vanishing_node.cpp.i:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/vanishing_node.dir/build.make beginner_tutorials/CMakeFiles/vanishing_node.dir/src/vanishing_node.cpp.i
-.PHONY : src/vanishing_node.cpp.i
+src/vanishing_node_release.cpp.i:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/vanishing_node.dir/build.make beginner_tutorials/CMakeFiles/vanishing_node.dir/src/vanishing_node_release.cpp.i
+.PHONY : src/vanishing_node_release.cpp.i
 
-src/vanishing_node.s: src/vanishing_node.cpp.s
-.PHONY : src/vanishing_node.s
+src/vanishing_node_release.s: src/vanishing_node_release.cpp.s
+.PHONY : src/vanishing_node_release.s
 
 # target to generate assembly for a file
-src/vanishing_node.cpp.s:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/vanishing_node.dir/build.make beginner_tutorials/CMakeFiles/vanishing_node.dir/src/vanishing_node.cpp.s
-.PHONY : src/vanishing_node.cpp.s
+src/vanishing_node_release.cpp.s:
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f beginner_tutorials/CMakeFiles/vanishing_node.dir/build.make beginner_tutorials/CMakeFiles/vanishing_node.dir/src/vanishing_node_release.cpp.s
+.PHONY : src/vanishing_node_release.cpp.s
 
 # Help Target
 help:
@@ -599,6 +637,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... ORB_translate"
 	@echo "... PID_Euler"
 	@echo "... PID_Euler_Event"
 	@echo "... _beginner_tutorials_generate_messages_check_deps_Num"
@@ -624,6 +663,9 @@ help:
 	@echo "... teleop_traxxas"
 	@echo "... test"
 	@echo "... vanishing_node"
+	@echo "... src/ORB_translate.o"
+	@echo "... src/ORB_translate.i"
+	@echo "... src/ORB_translate.s"
 	@echo "... src/PID_Euler.o"
 	@echo "... src/PID_Euler.i"
 	@echo "... src/PID_Euler.s"
@@ -645,9 +687,9 @@ help:
 	@echo "... src/teleop_traxxas.o"
 	@echo "... src/teleop_traxxas.i"
 	@echo "... src/teleop_traxxas.s"
-	@echo "... src/vanishing_node.o"
-	@echo "... src/vanishing_node.i"
-	@echo "... src/vanishing_node.s"
+	@echo "... src/vanishing_node_release.o"
+	@echo "... src/vanishing_node_release.i"
+	@echo "... src/vanishing_node_release.s"
 .PHONY : help
 
 

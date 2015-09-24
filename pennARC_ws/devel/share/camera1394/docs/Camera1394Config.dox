@@ -1,0 +1,59 @@
+\subsubsection parameters ROS parameters
+
+Reads and maintains the following parameters on the ROS server
+
+- \b "~guid" : \b [str] Global Unique ID of camera, 16 hex digits (use first camera if null). min: , default: , max: 
+- \b "~video_mode" : \b [str] IIDC video mode. min: , default: 640x480_mono8, max: 
+- \b "~frame_id" : \b [str] ROS tf frame of reference, resolved with tf_prefix unless absolute. min: , default: camera, max: 
+- \b "~frame_rate" : \b [double] Camera speed (frames per second). min: 1.875, default: 15.0, max: 240.0
+- \b "~iso_speed" : \b [int] Total IEEE 1394 bus bandwidth (Megabits/second). min: 100, default: 400, max: 3200
+- \b "~num_dma_buffers" : \b [int] Number of frames in the DMA ring buffer. min: 1, default: 4, max: 1024
+- \b "~camera_info_url" : \b [str] Camera [[camera_info_manager#URL_Names|calibration URL]] for this video_mode (uncalibrated if null). min: , default: , max: 
+- \b "~reset_on_open" : \b [bool] Reset camera when opening the device. min: False, default: False, max: True
+- \b "~use_ros_time" : \b [bool] Timestamp Image and CameraInfo using ros::Time::now() min: False, default: False, max: True
+- \b "~time_offset" : \b [double] Offset to add to ros::Time::now() min: -5.0, default: 0.0, max: 1.0
+- \b "~binning_x" : \b [int] Number of pixels combined for Format7 horizontal binning, use device hints if zero. min: 0, default: 0, max: 4
+- \b "~binning_y" : \b [int] Number of pixels combined for Format7 vertical binning, use device hints if zero. min: 0, default: 0, max: 4
+- \b "~roi_width" : \b [int] Width of Format7 Region of Interest in unbinned pixels, full width if zero. min: 0, default: 0, max: 65535
+- \b "~roi_height" : \b [int] Height of Format7 Region of Interest in unbinned pixels, full height if zero. min: 0, default: 0, max: 65535
+- \b "~x_offset" : \b [int] Horizontal offset for left side of Format7 ROI in unbinned pixels. min: 0, default: 0, max: 65535
+- \b "~y_offset" : \b [int] Vertical offset for top of Format7 ROI in unbinned pixels. min: 0, default: 0, max: 65535
+- \b "~format7_packet_size" : \b [int] Format7 packet size (bytes), device-recommended size if zero. min: 0, default: 0, max: 39320
+- \b "~format7_color_coding" : \b [str] Color coding (only for Format7 modes) min: , default: mono8, max: 
+- \b "~bayer_pattern" : \b [str] Bayer color encoding pattern (default: none). min: , default: , max: 
+- \b "~bayer_method" : \b [str] Bayer decoding method (default: ROS image_proc). min: , default: , max: 
+- \b "~auto_brightness" : \b [int] Brightness control state. min: 0, default: 1, max: 4
+- \b "~brightness" : \b [double] Black level offset. min: 0.0, default: 0.0, max: 4095.0
+- \b "~auto_exposure" : \b [int] Combined Gain, Iris & Shutter control. min: 0, default: 1, max: 4
+- \b "~exposure" : \b [double] Auto exposure value (like contrast). min: -10.0, default: 0.0, max: 4095.0
+- \b "~auto_focus" : \b [int] Focus control state. min: 0, default: 1, max: 4
+- \b "~focus" : \b [double] Focus control. min: 0.0, default: 0.0, max: 4095.0
+- \b "~auto_gain" : \b [int] Gain control state. min: 0, default: 1, max: 4
+- \b "~gain" : \b [double] Relative circuit gain. min: -10.0, default: 0.0, max: 4095.0
+- \b "~auto_gamma" : \b [int] Gamma control state. min: 0, default: 1, max: 4
+- \b "~gamma" : \b [double] Gamma expansion exponent. min: 0.0, default: 2.2, max: 10.0
+- \b "~auto_hue" : \b [int] Hue control state. min: 0, default: 1, max: 4
+- \b "~hue" : \b [double] Color phase. min: 0.0, default: 0.0, max: 4095.0
+- \b "~auto_iris" : \b [int] Iris control state. min: 0, default: 1, max: 4
+- \b "~iris" : \b [double] Iris control. min: 0.0, default: 8.0, max: 4095.0
+- \b "~auto_pan" : \b [int] Pan control state. min: 0, default: 1, max: 4
+- \b "~pan" : \b [double] Pan control. min: 0.0, default: 0.0, max: 4095.0
+- \b "~auto_saturation" : \b [int] Saturation control state. min: 0, default: 1, max: 4
+- \b "~saturation" : \b [double] Color saturation. min: 0.0, default: 1.0, max: 4095.0
+- \b "~auto_sharpness" : \b [int] Sharpness control state. min: 0, default: 1, max: 4
+- \b "~sharpness" : \b [double] Image sharpness. min: 0.0, default: 1.0, max: 4095.0
+- \b "~auto_shutter" : \b [int] Shutter control state. min: 0, default: 1, max: 4
+- \b "~shutter" : \b [double] Shutter speed. min: 0.0, default: 1.0, max: 4095.0
+- \b "~external_trigger" : \b [bool] External trigger power state min: False, default: False, max: True
+- \b "~software_trigger" : \b [bool] Software trigger power state min: False, default: False, max: True
+- \b "~trigger_mode" : \b [str] External trigger mode min: , default: mode_0, max: 
+- \b "~trigger_source" : \b [str] External trigger source min: , default: source_0, max: 
+- \b "~trigger_polarity" : \b [str] Trigger polarity min: , default: active_low, max: 
+- \b "~auto_trigger" : \b [int] Trigger control state. min: 0, default: 1, max: 4
+- \b "~trigger" : \b [double] Trigger parameter N min: 0.0, default: 0.0, max: 4095.0
+- \b "~auto_white_balance" : \b [int] White balance control state. min: 0, default: 1, max: 4
+- \b "~white_balance_BU" : \b [double] Blue or U component of white balance. min: 0.0, default: 0.0, max: 4095.0
+- \b "~white_balance_RV" : \b [double] Red or V component of white balance. min: 0.0, default: 0.0, max: 4095.0
+- \b "~auto_zoom" : \b [int] Zoom control state. min: 0, default: 1, max: 4
+- \b "~zoom" : \b [double] Zoom control. min: 0.0, default: 0.0, max: 4095.0
+

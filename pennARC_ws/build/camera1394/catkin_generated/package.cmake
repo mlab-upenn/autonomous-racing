@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "camera1394")
+set(camera1394_MAINTAINER "Jack O'Quin <jack.oquin@gmail.com>")
+set(camera1394_DEPRECATED "")
+set(camera1394_VERSION "1.10.0")
+set(camera1394_BUILD_DEPENDS "boost" "camera_info_manager" "diagnostic_updater" "driver_base" "dynamic_reconfigure" "image_transport" "libdc1394-dev" "message_generation" "nodelet" "roscpp" "sensor_msgs" "tf" "rostest")
+set(camera1394_RUN_DEPENDS "boost" "camera_info_manager" "diagnostic_updater" "dynamic_reconfigure" "image_transport" "libdc1394-dev" "message_runtime" "nodelet" "roscpp" "sensor_msgs" "tf")
+set(camera1394_BUILDTOOL_DEPENDS "catkin")

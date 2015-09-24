@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/ubuntu/pennARC_ws/devel/include/basic_path_plan/driveCmd.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/include/basic_path_plan/driveCmd.h
 string
 -
 vector
@@ -22,21 +22,21 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/ubuntu/pennARC_ws/src/basic_path_plan/src/basic_path_plan.cpp
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/basic_path_plan/src/basic_path_plan.cpp
 ros/ros.h
-/home/ubuntu/pennARC_ws/src/basic_path_plan/src/ros/ros.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/basic_path_plan/src/ros/ros.h
 std_msgs/String.h
-/home/ubuntu/pennARC_ws/src/basic_path_plan/src/std_msgs/String.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/basic_path_plan/src/std_msgs/String.h
 sensor_msgs/LaserScan.h
-/home/ubuntu/pennARC_ws/src/basic_path_plan/src/sensor_msgs/LaserScan.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/basic_path_plan/src/sensor_msgs/LaserScan.h
 math.h
-/home/ubuntu/pennARC_ws/src/basic_path_plan/src/math.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/basic_path_plan/src/math.h
 stdlib.h
 -
 sstream
 -
 basic_path_plan/driveCmd.h
-/home/ubuntu/pennARC_ws/src/basic_path_plan/src/basic_path_plan/driveCmd.h
+/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/basic_path_plan/src/basic_path_plan/driveCmd.h
 
 /opt/ros/indigo/include/XmlRpcDecl.h
 ros/macros.h

@@ -1,5 +1,5 @@
 # CMake generated Testfile for 
-# Source directory: /home/ubuntu/pennARC_ws/src/beginner_tutorials
+# Source directory: /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials
 # Build directory: /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/beginner_tutorials
 # 
 # This file includes the relevant testing commands required for 

@@ -35,7 +35,7 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ubuntu/pennARC_ws/src
+CMAKE_SOURCE_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build
@@ -60,6 +60,6 @@ beginner_tutorials/CMakeFiles/beginner_tutorials_gencpp.dir/clean:
 .PHONY : beginner_tutorials/CMakeFiles/beginner_tutorials_gencpp.dir/clean
 
 beginner_tutorials/CMakeFiles/beginner_tutorials_gencpp.dir/depend:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/pennARC_ws/src /home/ubuntu/pennARC_ws/src/beginner_tutorials /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/beginner_tutorials /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/beginner_tutorials/CMakeFiles/beginner_tutorials_gencpp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/beginner_tutorials /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/beginner_tutorials /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/beginner_tutorials/CMakeFiles/beginner_tutorials_gencpp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : beginner_tutorials/CMakeFiles/beginner_tutorials_gencpp.dir/depend
 

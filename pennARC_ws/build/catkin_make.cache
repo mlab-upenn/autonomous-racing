@@ -1,2 +1,2 @@
-basic_path_plan:beginner_tutorials:custom_messages:razor_imu_9dof
--DCATKIN_DEVEL_PREFIX=/home/ubuntu/pennARC_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ubuntu/pennARC_ws/install -G Unix Makefiles
+basic_path_plan:beginner_tutorials:camera1394:custom_messages:razor_imu_9dof
+-DCATKIN_DEVEL_PREFIX=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/install -G Unix Makefiles
