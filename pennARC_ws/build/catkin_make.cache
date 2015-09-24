@@ -1,2 +1,0 @@
-basic_path_plan:beginner_tutorials:camera1394:custom_messages:razor_imu_9dof
--DCATKIN_DEVEL_PREFIX=/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/devel -DCMAKE_INSTALL_PREFIX=/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/install
