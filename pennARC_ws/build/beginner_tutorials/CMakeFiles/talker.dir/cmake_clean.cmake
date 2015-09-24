@@ -1,7 +1,7 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/talker.dir/src/talker.cpp.o"
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/talker.pdb"
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/talker"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/talker.pdb"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/talker"
 )
 
 # Per-language clean rules from dependency scanning.

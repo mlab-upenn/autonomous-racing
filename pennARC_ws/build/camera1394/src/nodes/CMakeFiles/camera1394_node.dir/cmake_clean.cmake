@@ -7,8 +7,8 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/camera1394_node.dir/modes.cpp.o"
   "CMakeFiles/camera1394_node.dir/registers.cpp.o"
   "CMakeFiles/camera1394_node.dir/trigger.cpp.o"
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/camera1394/camera1394_node.pdb"
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/camera1394/camera1394_node"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/devel/lib/camera1394/camera1394_node.pdb"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/devel/lib/camera1394/camera1394_node"
 )
 
 # Per-language clean rules from dependency scanning.

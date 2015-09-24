@@ -31,14 +31,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src
+CMAKE_SOURCE_DIR = /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build
+CMAKE_BINARY_DIR = /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build
 
 # Utility rule file for dynamic_reconfigure_gencfg.
 
@@ -56,10 +53,10 @@ razor_imu_9dof/CMakeFiles/dynamic_reconfigure_gencfg.dir/build: dynamic_reconfig
 .PHONY : razor_imu_9dof/CMakeFiles/dynamic_reconfigure_gencfg.dir/build
 
 razor_imu_9dof/CMakeFiles/dynamic_reconfigure_gencfg.dir/clean:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/razor_imu_9dof && $(CMAKE_COMMAND) -P CMakeFiles/dynamic_reconfigure_gencfg.dir/cmake_clean.cmake
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build/razor_imu_9dof && $(CMAKE_COMMAND) -P CMakeFiles/dynamic_reconfigure_gencfg.dir/cmake_clean.cmake
 .PHONY : razor_imu_9dof/CMakeFiles/dynamic_reconfigure_gencfg.dir/clean
 
 razor_imu_9dof/CMakeFiles/dynamic_reconfigure_gencfg.dir/depend:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/razor_imu_9dof /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/razor_imu_9dof /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/razor_imu_9dof/CMakeFiles/dynamic_reconfigure_gencfg.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src/razor_imu_9dof /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build/razor_imu_9dof /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build/razor_imu_9dof/CMakeFiles/dynamic_reconfigure_gencfg.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : razor_imu_9dof/CMakeFiles/dynamic_reconfigure_gencfg.dir/depend
 

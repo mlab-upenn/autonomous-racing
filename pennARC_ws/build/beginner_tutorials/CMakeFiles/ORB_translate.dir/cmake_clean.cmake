@@ -1,7 +1,7 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/ORB_translate.dir/src/ORB_translate.cpp.o"
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/ORB_translate.pdb"
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/ORB_translate"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/ORB_translate.pdb"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/devel/lib/beginner_tutorials/ORB_translate"
 )
 
 # Per-language clean rules from dependency scanning.

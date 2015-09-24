@@ -2,7 +2,7 @@
 
 message(STATUS "camera1394: 0 messages, 2 services")
 
-set(MSG_I_FLAGS "-Istd_msgs:/opt/ros/indigo/share/std_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Istd_msgs:/opt/ros/hydro/share/std_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -10,20 +10,6 @@ find_package(genlisp REQUIRED)
 find_package(genpy REQUIRED)
 
 add_custom_target(camera1394_generate_messages ALL)
-
-# verify that message/service dependencies have not changed since configure
-
-
-
-get_filename_component(_filename "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/SetCameraRegisters.srv" NAME_WE)
-add_custom_target(_camera1394_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "camera1394" "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/SetCameraRegisters.srv" ""
-)
-
-get_filename_component(_filename "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/GetCameraRegisters.srv" NAME_WE)
-add_custom_target(_camera1394_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "camera1394" "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/GetCameraRegisters.srv" ""
-)
 
 #
 #  langs = gencpp;genlisp;genpy
@@ -34,13 +20,13 @@ add_custom_target(_camera1394_generate_messages_check_deps_${_filename}
 
 ### Generating Services
 _generate_srv_cpp(camera1394
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/SetCameraRegisters.srv"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src/camera1394/srv/GetCameraRegisters.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/camera1394
 )
 _generate_srv_cpp(camera1394
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/GetCameraRegisters.srv"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src/camera1394/srv/SetCameraRegisters.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/camera1394
@@ -57,12 +43,6 @@ add_custom_target(camera1394_generate_messages_cpp
 )
 add_dependencies(camera1394_generate_messages camera1394_generate_messages_cpp)
 
-# add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/SetCameraRegisters.srv" NAME_WE)
-add_dependencies(camera1394_generate_messages_cpp _camera1394_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/GetCameraRegisters.srv" NAME_WE)
-add_dependencies(camera1394_generate_messages_cpp _camera1394_generate_messages_check_deps_${_filename})
-
 # target for backward compatibility
 add_custom_target(camera1394_gencpp)
 add_dependencies(camera1394_gencpp camera1394_generate_messages_cpp)
@@ -75,13 +55,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS camera1394_generate_messages_cpp)
 
 ### Generating Services
 _generate_srv_lisp(camera1394
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/SetCameraRegisters.srv"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src/camera1394/srv/GetCameraRegisters.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/camera1394
 )
 _generate_srv_lisp(camera1394
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/GetCameraRegisters.srv"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src/camera1394/srv/SetCameraRegisters.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/camera1394
@@ -98,12 +78,6 @@ add_custom_target(camera1394_generate_messages_lisp
 )
 add_dependencies(camera1394_generate_messages camera1394_generate_messages_lisp)
 
-# add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/SetCameraRegisters.srv" NAME_WE)
-add_dependencies(camera1394_generate_messages_lisp _camera1394_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/GetCameraRegisters.srv" NAME_WE)
-add_dependencies(camera1394_generate_messages_lisp _camera1394_generate_messages_check_deps_${_filename})
-
 # target for backward compatibility
 add_custom_target(camera1394_genlisp)
 add_dependencies(camera1394_genlisp camera1394_generate_messages_lisp)
@@ -116,13 +90,13 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS camera1394_generate_messages_lisp)
 
 ### Generating Services
 _generate_srv_py(camera1394
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/SetCameraRegisters.srv"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src/camera1394/srv/GetCameraRegisters.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/camera1394
 )
 _generate_srv_py(camera1394
-  "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/GetCameraRegisters.srv"
+  "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src/camera1394/srv/SetCameraRegisters.srv"
   "${MSG_I_FLAGS}"
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/camera1394
@@ -138,12 +112,6 @@ add_custom_target(camera1394_generate_messages_py
   DEPENDS ${ALL_GEN_OUTPUT_FILES_py}
 )
 add_dependencies(camera1394_generate_messages camera1394_generate_messages_py)
-
-# add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/SetCameraRegisters.srv" NAME_WE)
-add_dependencies(camera1394_generate_messages_py _camera1394_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/srv/GetCameraRegisters.srv" NAME_WE)
-add_dependencies(camera1394_generate_messages_py _camera1394_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
 add_custom_target(camera1394_genpy)

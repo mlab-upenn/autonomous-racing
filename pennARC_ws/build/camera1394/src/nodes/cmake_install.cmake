@@ -1,8 +1,8 @@
-# Install script for directory: /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/camera1394/src/nodes
+# Install script for directory: /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src/camera1394/src/nodes
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,7 +39,7 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/camera1394/camera1394_node"
          RPATH "")
   ENDIF()
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera1394" TYPE EXECUTABLE FILES "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/camera1394/camera1394_node")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/camera1394" TYPE EXECUTABLE FILES "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/devel/lib/camera1394/camera1394_node")
   IF(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/camera1394/camera1394_node" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/camera1394/camera1394_node")
     FILE(RPATH_REMOVE
@@ -57,7 +57,7 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libcamera1394_nodelet.so"
          RPATH "")
   ENDIF()
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/ubuntu/myGit/autonomous-racing/pennARC_ws/devel/lib/libcamera1394_nodelet.so")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/devel/lib/libcamera1394_nodelet.so")
   IF(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libcamera1394_nodelet.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libcamera1394_nodelet.so")
     FILE(RPATH_REMOVE

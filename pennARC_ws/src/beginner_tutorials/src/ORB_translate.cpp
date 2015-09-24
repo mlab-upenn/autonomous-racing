@@ -34,16 +34,20 @@ class ORB_translate
 		ROS_INFO("I Heard ORB_SLAM");
 		ORB_Pose.header.frame_id = "/ORB_SLAM/World";
 		ORB_Pose.child_frame_id = "/ORB_SLAM/World";
-		ORB_Pose.transform.translation.x = ORB_Map.pose.position.x;
-		ORB_Pose.transform.translation.y = ORB_Map.pose.position.y;
-		ORB_Pose.transform.translation.z = ORB_Map.pose.position.z;
+		ROS_INFO("ID = %d",ORB_Map.id);
+		if (ORB_Map.id == 4)
+		{
+			ORB_Pose.transform.translation.x = ORB_Map.pose.position.x;
+			ORB_Pose.transform.translation.y = ORB_Map.pose.position.y;
+			ORB_Pose.transform.translation.z = ORB_Map.pose.position.z;
 
-		ORB_Pose.transform.rotation.x = ORB_Map.pose.orientation.x;
-		ORB_Pose.transform.rotation.y = ORB_Map.pose.orientation.y;
-		ORB_Pose.transform.rotation.z = ORB_Map.pose.orientation.z;
-		ORB_Pose.transform.rotation.w = ORB_Map.pose.orientation.w;
+			ORB_Pose.transform.rotation.x = ORB_Map.pose.orientation.x;
+			ORB_Pose.transform.rotation.y = ORB_Map.pose.orientation.y;
+			ORB_Pose.transform.rotation.z = ORB_Map.pose.orientation.z;
+			ORB_Pose.transform.rotation.w = ORB_Map.pose.orientation.w;
 
-		ORB_translate::PublishCommand();
+			ORB_translate::PublishCommand();
+		}
 	}
 
 

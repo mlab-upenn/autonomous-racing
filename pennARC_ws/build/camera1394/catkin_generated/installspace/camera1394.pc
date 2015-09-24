@@ -1,8 +1,8 @@
-prefix=/home/ubuntu/myGit/autonomous-racing/pennARC_ws/install
+prefix=/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/install
 
 Name: camera1394
 Description: Description of camera1394
 Version: 1.10.0
-Cflags: -I/home/ubuntu/myGit/autonomous-racing/pennARC_ws/install/include
-Libs: -L/home/ubuntu/myGit/autonomous-racing/pennARC_ws/install/lib 
+Cflags: -I/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/install/include
+Libs: -L/home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/install/lib 
 Requires: camera_info_manager diagnostic_updater dynamic_reconfigure image_transport message_runtime nodelet roscpp sensor_msgs tf

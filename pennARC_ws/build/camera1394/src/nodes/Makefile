@@ -35,14 +35,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src
+CMAKE_SOURCE_DIR = /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build
+CMAKE_BINARY_DIR = /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -120,14 +117,14 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/CMakeFiles /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/camera1394/src/nodes/CMakeFiles/progress.marks
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/CMakeFiles 0
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build/CMakeFiles /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build/camera1394/src/nodes/CMakeFiles/progress.marks
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/clean
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/clean
 .PHONY : clean
 
 # The main clean target
@@ -136,22 +133,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/preinstall
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/preinstall
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 camera1394/src/nodes/CMakeFiles/camera1394_node.dir/rule:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/CMakeFiles/camera1394_node.dir/rule
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/CMakeFiles/camera1394_node.dir/rule
 .PHONY : camera1394/src/nodes/CMakeFiles/camera1394_node.dir/rule
 
 # Convenience name for target.
@@ -160,12 +157,12 @@ camera1394_node: camera1394/src/nodes/CMakeFiles/camera1394_node.dir/rule
 
 # fast build rule for target.
 camera1394_node/fast:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build
 .PHONY : camera1394_node/fast
 
 # Convenience name for target.
 camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/rule:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/rule
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f CMakeFiles/Makefile2 camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/rule
 .PHONY : camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/rule
 
 # Convenience name for target.
@@ -174,7 +171,7 @@ camera1394_nodelet: camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/rule
 
 # fast build rule for target.
 camera1394_nodelet/fast:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build
 .PHONY : camera1394_nodelet/fast
 
 camera1394_node.o: camera1394_node.cpp.o
@@ -182,7 +179,7 @@ camera1394_node.o: camera1394_node.cpp.o
 
 # target to build an object file
 camera1394_node.cpp.o:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/camera1394_node.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/camera1394_node.cpp.o
 .PHONY : camera1394_node.cpp.o
 
 camera1394_node.i: camera1394_node.cpp.i
@@ -190,7 +187,7 @@ camera1394_node.i: camera1394_node.cpp.i
 
 # target to preprocess a source file
 camera1394_node.cpp.i:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/camera1394_node.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/camera1394_node.cpp.i
 .PHONY : camera1394_node.cpp.i
 
 camera1394_node.s: camera1394_node.cpp.s
@@ -198,7 +195,7 @@ camera1394_node.s: camera1394_node.cpp.s
 
 # target to generate assembly for a file
 camera1394_node.cpp.s:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/camera1394_node.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/camera1394_node.cpp.s
 .PHONY : camera1394_node.cpp.s
 
 dev_camera1394.o: dev_camera1394.cpp.o
@@ -206,8 +203,8 @@ dev_camera1394.o: dev_camera1394.cpp.o
 
 # target to build an object file
 dev_camera1394.cpp.o:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/dev_camera1394.cpp.o
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/dev_camera1394.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/dev_camera1394.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/dev_camera1394.cpp.o
 .PHONY : dev_camera1394.cpp.o
 
 dev_camera1394.i: dev_camera1394.cpp.i
@@ -215,8 +212,8 @@ dev_camera1394.i: dev_camera1394.cpp.i
 
 # target to preprocess a source file
 dev_camera1394.cpp.i:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/dev_camera1394.cpp.i
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/dev_camera1394.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/dev_camera1394.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/dev_camera1394.cpp.i
 .PHONY : dev_camera1394.cpp.i
 
 dev_camera1394.s: dev_camera1394.cpp.s
@@ -224,8 +221,8 @@ dev_camera1394.s: dev_camera1394.cpp.s
 
 # target to generate assembly for a file
 dev_camera1394.cpp.s:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/dev_camera1394.cpp.s
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/dev_camera1394.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/dev_camera1394.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/dev_camera1394.cpp.s
 .PHONY : dev_camera1394.cpp.s
 
 driver1394.o: driver1394.cpp.o
@@ -233,8 +230,8 @@ driver1394.o: driver1394.cpp.o
 
 # target to build an object file
 driver1394.cpp.o:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/driver1394.cpp.o
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/driver1394.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/driver1394.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/driver1394.cpp.o
 .PHONY : driver1394.cpp.o
 
 driver1394.i: driver1394.cpp.i
@@ -242,8 +239,8 @@ driver1394.i: driver1394.cpp.i
 
 # target to preprocess a source file
 driver1394.cpp.i:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/driver1394.cpp.i
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/driver1394.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/driver1394.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/driver1394.cpp.i
 .PHONY : driver1394.cpp.i
 
 driver1394.s: driver1394.cpp.s
@@ -251,8 +248,8 @@ driver1394.s: driver1394.cpp.s
 
 # target to generate assembly for a file
 driver1394.cpp.s:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/driver1394.cpp.s
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/driver1394.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/driver1394.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/driver1394.cpp.s
 .PHONY : driver1394.cpp.s
 
 features.o: features.cpp.o
@@ -260,8 +257,8 @@ features.o: features.cpp.o
 
 # target to build an object file
 features.cpp.o:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/features.cpp.o
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/features.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/features.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/features.cpp.o
 .PHONY : features.cpp.o
 
 features.i: features.cpp.i
@@ -269,8 +266,8 @@ features.i: features.cpp.i
 
 # target to preprocess a source file
 features.cpp.i:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/features.cpp.i
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/features.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/features.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/features.cpp.i
 .PHONY : features.cpp.i
 
 features.s: features.cpp.s
@@ -278,8 +275,8 @@ features.s: features.cpp.s
 
 # target to generate assembly for a file
 features.cpp.s:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/features.cpp.s
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/features.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/features.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/features.cpp.s
 .PHONY : features.cpp.s
 
 format7.o: format7.cpp.o
@@ -287,8 +284,8 @@ format7.o: format7.cpp.o
 
 # target to build an object file
 format7.cpp.o:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/format7.cpp.o
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/format7.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/format7.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/format7.cpp.o
 .PHONY : format7.cpp.o
 
 format7.i: format7.cpp.i
@@ -296,8 +293,8 @@ format7.i: format7.cpp.i
 
 # target to preprocess a source file
 format7.cpp.i:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/format7.cpp.i
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/format7.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/format7.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/format7.cpp.i
 .PHONY : format7.cpp.i
 
 format7.s: format7.cpp.s
@@ -305,8 +302,8 @@ format7.s: format7.cpp.s
 
 # target to generate assembly for a file
 format7.cpp.s:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/format7.cpp.s
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/format7.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/format7.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/format7.cpp.s
 .PHONY : format7.cpp.s
 
 modes.o: modes.cpp.o
@@ -314,8 +311,8 @@ modes.o: modes.cpp.o
 
 # target to build an object file
 modes.cpp.o:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/modes.cpp.o
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/modes.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/modes.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/modes.cpp.o
 .PHONY : modes.cpp.o
 
 modes.i: modes.cpp.i
@@ -323,8 +320,8 @@ modes.i: modes.cpp.i
 
 # target to preprocess a source file
 modes.cpp.i:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/modes.cpp.i
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/modes.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/modes.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/modes.cpp.i
 .PHONY : modes.cpp.i
 
 modes.s: modes.cpp.s
@@ -332,8 +329,8 @@ modes.s: modes.cpp.s
 
 # target to generate assembly for a file
 modes.cpp.s:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/modes.cpp.s
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/modes.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/modes.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/modes.cpp.s
 .PHONY : modes.cpp.s
 
 nodelet.o: nodelet.cpp.o
@@ -341,7 +338,7 @@ nodelet.o: nodelet.cpp.o
 
 # target to build an object file
 nodelet.cpp.o:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/nodelet.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/nodelet.cpp.o
 .PHONY : nodelet.cpp.o
 
 nodelet.i: nodelet.cpp.i
@@ -349,7 +346,7 @@ nodelet.i: nodelet.cpp.i
 
 # target to preprocess a source file
 nodelet.cpp.i:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/nodelet.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/nodelet.cpp.i
 .PHONY : nodelet.cpp.i
 
 nodelet.s: nodelet.cpp.s
@@ -357,7 +354,7 @@ nodelet.s: nodelet.cpp.s
 
 # target to generate assembly for a file
 nodelet.cpp.s:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/nodelet.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/nodelet.cpp.s
 .PHONY : nodelet.cpp.s
 
 registers.o: registers.cpp.o
@@ -365,8 +362,8 @@ registers.o: registers.cpp.o
 
 # target to build an object file
 registers.cpp.o:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/registers.cpp.o
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/registers.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/registers.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/registers.cpp.o
 .PHONY : registers.cpp.o
 
 registers.i: registers.cpp.i
@@ -374,8 +371,8 @@ registers.i: registers.cpp.i
 
 # target to preprocess a source file
 registers.cpp.i:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/registers.cpp.i
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/registers.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/registers.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/registers.cpp.i
 .PHONY : registers.cpp.i
 
 registers.s: registers.cpp.s
@@ -383,8 +380,8 @@ registers.s: registers.cpp.s
 
 # target to generate assembly for a file
 registers.cpp.s:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/registers.cpp.s
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/registers.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/registers.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/registers.cpp.s
 .PHONY : registers.cpp.s
 
 trigger.o: trigger.cpp.o
@@ -392,8 +389,8 @@ trigger.o: trigger.cpp.o
 
 # target to build an object file
 trigger.cpp.o:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/trigger.cpp.o
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/trigger.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/trigger.cpp.o
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/trigger.cpp.o
 .PHONY : trigger.cpp.o
 
 trigger.i: trigger.cpp.i
@@ -401,8 +398,8 @@ trigger.i: trigger.cpp.i
 
 # target to preprocess a source file
 trigger.cpp.i:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/trigger.cpp.i
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/trigger.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/trigger.cpp.i
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/trigger.cpp.i
 .PHONY : trigger.cpp.i
 
 trigger.s: trigger.cpp.s
@@ -410,8 +407,8 @@ trigger.s: trigger.cpp.s
 
 # target to generate assembly for a file
 trigger.cpp.s:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/trigger.cpp.s
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/trigger.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_node.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_node.dir/trigger.cpp.s
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(MAKE) -f camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/build.make camera1394/src/nodes/CMakeFiles/camera1394_nodelet.dir/trigger.cpp.s
 .PHONY : trigger.cpp.s
 
 # Help Target
@@ -467,6 +464,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

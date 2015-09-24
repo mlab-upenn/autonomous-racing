@@ -31,14 +31,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src
+CMAKE_SOURCE_DIR = /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build
+CMAKE_BINARY_DIR = /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build
 
 # Utility rule file for geometry_msgs_generate_messages_py.
 
@@ -56,10 +53,10 @@ basic_path_plan/CMakeFiles/geometry_msgs_generate_messages_py.dir/build: geometr
 .PHONY : basic_path_plan/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
 
 basic_path_plan/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/basic_path_plan && $(CMAKE_COMMAND) -P CMakeFiles/geometry_msgs_generate_messages_py.dir/cmake_clean.cmake
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build/basic_path_plan && $(CMAKE_COMMAND) -P CMakeFiles/geometry_msgs_generate_messages_py.dir/cmake_clean.cmake
 .PHONY : basic_path_plan/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean
 
 basic_path_plan/CMakeFiles/geometry_msgs_generate_messages_py.dir/depend:
-	cd /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src /home/ubuntu/myGit/autonomous-racing/pennARC_ws/src/basic_path_plan /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/basic_path_plan /home/ubuntu/myGit/autonomous-racing/pennARC_ws/build/basic_path_plan/CMakeFiles/geometry_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/src/basic_path_plan /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build/basic_path_plan /home/dhruva/Documents/mlab/autonomous-racing/pennARC_ws/build/basic_path_plan/CMakeFiles/geometry_msgs_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : basic_path_plan/CMakeFiles/geometry_msgs_generate_messages_py.dir/depend
 
