@@ -50,18 +50,22 @@ add_executable(PID_Euler_Event src/PID_Euler_EventTrig.cpp)
 target_link_libraries(PID_Euler_Event ${catkin_LIBRARIES})
 add_dependencies(PID_Euler_Event beginner_tutorials_generate_messages_cpp)
 
-add_executable(ORB_translate src/ORB_translate.cpp)
-target_link_libraries(ORB_translate ${catkin_LIBRARIES})
-add_dependencies(ORB_translate beginner_tutorials_generate_messages_cpp)
-
-
-add_executable(vanishing_node src/vanishing_node_release.cpp)
+add_executable(vanishing_node src/vanishing_node.cpp)
 target_link_libraries(vanishing_node
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )
 add_dependencies(vanishing_node vanishing_generate_messages_cpp)
 
+add_executable(approx_sync_node src/approx_syncTime.cpp)
+target_link_libraries(approx_sync_node ${catkin_LIBRARIES})
+add_dependencies(approx_sync_node beginner_tutorials_generate_messages_cpp)
 
+#add_executable(mySync src/mySync.cpp)
+#target_link_libraries(mySync ${catkin_LIBRARIES})
+#add_dependencies(mySync beginner_tutorials_generate_messages_cpp)
 
+add_executable(talkerim src/talkerim.cpp)
+target_link_libraries(talkerim ${catkin_LIBRARIES})
+add_dependencies(talkerim beginner_tutorials_generate_messages_cpp)
 
