@@ -2,7 +2,7 @@
 #include <std_msgs/Int8.h>
 #include <std_msgs/Int16.h>
 #include <beginner_tutorials/Num.h>
-#include <custom_messages/driveMessage.h>
+#include <custom_messages/driveMessage_timed.h>
 #include <std_msgs/UInt8.h>
 
 
@@ -71,7 +71,7 @@ void chatterCallback_driveMessage(const std_msgs::Int16& msg)
 }*/
 
 
-void chatterCallback_driveMessage(const custom_messages::driveMessage& msg)
+void chatterCallback_driveMessage(const custom_messages::driveMessage_timed& msg)
 {
   if (ENABLE) {
 
@@ -99,10 +99,10 @@ void chatterCallback_driveMessage(const custom_messages::driveMessage& msg)
 
 
 
-ros::Subscriber<custom_messages::driveMessage> sub("chatter", &chatterCallback_driveMessage);
+ros::Subscriber<custom_messages::driveMessage_timed> sub("chatter", &chatterCallback_driveMessage);
 
 
-//ros::Subscriber<std_msgs::Int16> sub("chatter", &chatterCallback_driveMessage);
+//ros::Subscriber<std_msgs::Int16> sub("chatter", &chatterCallback_driveMessage);ader
 ros::Subscriber <std_msgs::UInt8> emergency_sub("nine11", &emergency_listen);
 
 
